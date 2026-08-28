@@ -1,4 +1,5 @@
 date,start,end,hours,phase,hat,task,estimate_hours,blocked_hours,notes
 2026-08-24,15:45,18:00,2.25,inception,project-manager,read chapter 1 + on-page quiz + create repo + scaffolded + create README,.50,.00,underestimated the difficulty of the git repository
 2026-08-25,15:45,18:00,2.25,inception,project-manager,recreate repo + make board columns + WIP limit + 6 cards,2.00,.00,making the 6 cards on github took longer than I expected
-2026-08-26,12:30,17:15,4.75,inception,project-manager,Added hours logged csv + hours_report py + did the majority of the charter,5.00,.00,3 and 7 on the charter still need calendar input
+2026-08-26,12:30,17:15,4.75,inception,project-manager,added hours logged csv + hours_report py + did the majority of the charter,5.00,.00,3 and 7 on the charter still need calendar input
+2026-08-27,15:00,18:15,3.25,inception,project-manager,made, researched, and completed .gitignore file and completed ai-usage file and made and completed calendar and blocked off two broke weeks,5.00,.00,everything went a lot better than I expected they would

@@ -9,7 +9,7 @@
   than a charter that has always been right.
 -->
 
-**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-26
+**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-27
 
 ## 1. Purpose
 
@@ -27,7 +27,7 @@ The purpose of this capstone project is to give me a chance to step in each of t
 |---|---|
 | Hours available per week | 36 |
 | Total hours budgeted | 240 |
-| Weeks that are already broken (and where those hours move) | |
+| Weeks that are already broken (and where those hours move) | Broken Weeks: 8 & 14, Hours are resolved forward through spreading out the weeks hours through the 13 other working weeks |
 | Machine (OS, RAM, disk) | Windows, 32 GB, 368 GB free|
 | Administrator rights on that machine? | |
 | Money I will spend on this project | 100 dollars max |
@@ -60,7 +60,7 @@ The purpose of this capstone project is to give me a chance to step in each of t
 
 ## 7. Working agreement
 
-- **Sessions:** <days and times you are blocking on a real calendar>
+- **Sessions:** Work Hours: Sunday & Saturday 1-5pm and Monday-Friday 2-4pm, Broken weeks: 8 & 14 - hours are resolved forward through spreading out the weeks hours through the 13 other working weeks 
 - **Logging:** every session ends with a row in `docs/hours-log.csv`, written before I close the laptop.
 - **Board:** work-in-progress limit of 2; nothing moves to Done without its stopping condition met.
 - **Commits:** requirement identifier first in the subject line; one logical change per commit.
