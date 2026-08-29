@@ -1,4 +1,4 @@
-# Capstone — <working title>
+# Capstone — Capstone Project
 
 Senior capstone by Katherine Spencer, Fall 2026. **Status: Week 1 — engineering system only.
 No application code yet.** The project idea is chosen in Week 2.
