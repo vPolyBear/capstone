@@ -9,7 +9,7 @@
   than a charter that has always been right.
 -->
 
-**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-28
+**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-29
 
 ## 1. Purpose
 
@@ -64,7 +64,7 @@ This capstone project gives me the chance to step into each role on a profession
 - **Logging:** every session ends with a row in `docs/hours-log.csv`, written before I close the laptop.
 - **Board:** work-in-progress limit of 2; nothing moves to Done without its stopping condition met.
 - **Commits:** requirement identifier first in the subject line; one logical change per commit.
-- **When I fall behind, I cut in this order:** 1. I will cut any extra UI visual elements that are only for looks 2. Then I will cut any unnecessary features to function of the main system. I will not cut any features or documation that are necessary to the function of the main system 
+- **When I fall behind, I cut in this order:** 1. I will cut any extra UI visual elements that are only for looks 2. Then I will cut any unnecessary features to function of the main system. 3. I will cut down a main feature making it more simple. I will not cut any features or documation that are necessary to the function of the main system 
 - **AI use:** governed by `docs/ai-usage.md`; every Amber-zone use is logged the day it happens.
 
 ## 8. Signature
