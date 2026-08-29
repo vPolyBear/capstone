@@ -1,6 +1,6 @@
 # ai-usage
 
-# AI Usage Log — <project name>
+# AI Usage Log — Capstone Project
 
 <!--
   Milestone 1 template. Copy this file into your repository as docs/ai-usage.md.
@@ -9,7 +9,7 @@
   This file is a required artifact in the Week 16 submission.
 -->
 
-**Owner:** Katherine Spencer · **Policy set:** <2026-08-26> · **Last entry:** <2026-08-26>
+**Owner:** Katherine Spencer · **Policy set:** <2026-08-26> · **Last entry:** <2026-08-27>
 
 ## Policy
 

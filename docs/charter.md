@@ -9,11 +9,11 @@
   than a charter that has always been right.
 -->
 
-**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-27
+**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-28
 
 ## 1. Purpose
 
-The purpose of this capstone project is to give me a chance to step in each of the shoes that would be on a professional team. Allowing me to produce all required elements and documents necessary to produce a successful and working project, that can be easily cloneable and runnable. This will improve my overall skills making me a better pick for a full time software developer job.
+This capstone project gives me the chance to step into each role on a professional development team. Training me how to individually produce a successful and working system, that will have all the required elements, tests, and necessary documents. That then can easily be cloned from the repository and run based on the README without any input. 
 
 ## 2. Project (filled in Week 2, after the scoping decision)
 
@@ -64,7 +64,7 @@ The purpose of this capstone project is to give me a chance to step in each of t
 - **Logging:** every session ends with a row in `docs/hours-log.csv`, written before I close the laptop.
 - **Board:** work-in-progress limit of 2; nothing moves to Done without its stopping condition met.
 - **Commits:** requirement identifier first in the subject line; one logical change per commit.
-- **When I fall behind, I cut in this order:** <ranked, decided now, while it is cheap>
+- **When I fall behind, I cut in this order:** 1. I will cut any extra UI visual elements that are only for looks 2. Then I will cut any unnecessary features to function of the main system. I will not cut any features or documation that are necessary to the function of the main system 
 - **AI use:** governed by `docs/ai-usage.md`; every Amber-zone use is logged the day it happens.
 
 ## 8. Signature
