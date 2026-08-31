@@ -3,7 +3,9 @@ date,start,end,hours,phase,hat,task,estimate_hours,blocked_hours,notes
 2026-08-25,15:45,18:00,2.25,inception,project-manager,recreate repo + make board columns + WIP limit + 6 cards,2.00,.00,making the 6 cards on github took longer than I expected
 2026-08-26,12:30,17:15,4.75,inception,project-manager,added hours logged csv + hours_report py + did the majority of the charter,5.00,.00,3 and 7 on the charter still need calendar input
 2026-08-27,15:00,18:15,3.25,inception,project-manager,made + researched + and completed .gitignore file and completed ai-usage file and made and completed calendar and blocked off two broke weeks,5.00,.00,everything went a lot better than I expected they would
-2026-08-28,14:00,15:00,1.00,inception,project-manager,updated charter purpose statement and ranked what we would cut and made LICENSE file, 1.00, 0.00,LICENSE is deferred till Week 5
+2026-08-28,14:00,15:00,1.00,inception,project-manager,updated charter purpose statement and ranked what we would cut and made LICENSE file,1.00,.00,LICENSE is deferred till Week 5
 2026-08-28,18:30,19:15,0.75,inception,project-manager,completed the clean and clone smoke test,1.00,.00,the cleaning and cloning smoke test took less time than expected and it was successful
 2026-08-29,10:45,14:00,3.25,inception,project-manager,completed the hard tier extra credit cost memo paper and updated charter with another cut and ranked it,2.50,.00,the paper took a bit longer than I though that it would & I put it in an extra credit folder
 2026-08-29,14:30,16:15,1.75,inception,project-manager,completed the issue-card-temple medium tier extra credit & added in the blocked off calendar pictures and explanation to a folder and then send an email,1.50,.00,I put the extra credit in the new folder too and had troubles reaching Dr.Litman 
+2026-08-30,12:00,14:30,2.50,inception,project-owner,completed Week 1 Quiz & submitted the Week 1 repo & read Chapter 2 and did the in page quiz,2.00,.00,completed week 1 today and started week 2 reading
+2026-08-30,15:00,15:30,0.50,inception,project-owner,thought of 10 problems for rep 1,.50,.00,figuring out the 10 problems went very smoothly
