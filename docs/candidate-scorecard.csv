@@ -1,0 +1,8 @@
+candidate,features,integrations,auth,persistence,deploy,data,new_tech
+StressManager (first draft),5,2,no,yes,yes,moderate,2
+OutfitPlanning (first draft),7,1,yes,yes,yes,moderate,2
+PeriodPredictions (first draft),9,2,no,yes,yes,moderate,2
+
+StressManager (cut 2 features and 1 integration),3,1,no,yes,yes,moderate,2
+OutfitPlanning (rejected - cut 2 features and auth),5,1,no,yes,yes,moderate,2
+PeriodPredictions (rejected - cut 2 feature and 1 new tech),7,2,no,yes,yes,moderate,1
