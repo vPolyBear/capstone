@@ -63,7 +63,7 @@ testing and documentation, which are graded.
 | **Build** — novelty load ≤ 2 | pass | React Native (new) · Expo (new) · TypeScript (known) 2026-09-04 |
 | **Get** — every dependency exercised for real | pass | downloaded period dataset, saved dataset, 2026-09-05 |
 | **Ship** — a named deployment target, terms read | pass | Target - Apple App Store using Expo EAS, pricing page read on 2026-09-05 |
-| **Show** — a stranger sees it work in 10 minutes | pass / fail | 1. opens the app, 2. records period,  3. they can record affecting factors, 4. then they can check if the next predicted period start date changed, 5. they can check if ovulation date is different, 6. then they can check cycle length for the period, 7. then they can check variation in cycle and cycle phase, 8. then they can check the period calendar for predicted periods and lengths for the next 3 period, 9. then they can check the period history data is see differences, 10. after they can then leave the app when informed of period status |
+| **Show** — a stranger sees it work in 10 minutes | pass | 1. opens the app, 2. records period,  3. they can record affecting factors, 4. then they can check if the next predicted period start date changed, 5. they can check if ovulation date is different, 6. then they can check cycle length for the period, 7. then they can check variation in cycle and cycle phase, 8. then they can check the period calendar for predicted periods and lengths for the next 3 period, 9. then they can check the period history data is see differences, 10. after they can then leave the app when informed of period status |
 
 **Technologies:** React Native (new) · Expo (new) · TypeScript (known)
 **Novelty load:** 2
