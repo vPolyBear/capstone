@@ -59,7 +59,7 @@ testing and documentation, which are graded.
 | Gate | Verdict | Evidence (dated) |
 |---|---|---|
 | **Build** — novelty load ≤ 2 | pass | React Native (new) · Expo (new) · TypeScript (known) 2026-09-04 |
-| **Get** — every dependency exercised for real | pass | downloaded clothing dataset full & fashion recommendation dataset, saved datasets, 2026-09-05 |
+| **Get** — every dependency exercised for real | fail | downloaded clothing dataset full, but it can not be pushed to GitHub because of its file size & though fashion recommendation dataset was successful, saved datasets, 2026-09-05 |
 | **Ship** — a named deployment target, terms read | pass | Target - Apple App Store using Expo EAS, pricing page read on 2026-09-05 |
 | **Show** — a stranger sees it work in 10 minutes | pass | 1. opens the app, 2. logs in, 3. adds clothing items, 4. adds filters for what type of outfit they want to see, 5. moves to generating outfits from clothing items and based on filters, 6. if generated outfit is worn they can mark it off the available clothing list, 7. can add the generated outfit to a clothing list, 8. can save, edit, or delete clothing item, outfits, or lists on each page, 9. can go through adding more clothing, creating more outfits, and adding them to lists, 10. until outfit(s) is/are chosen then they can then leave app |
 
@@ -83,4 +83,4 @@ The hard part of this project will be generating the outfits as ensuring that th
 
 ## 8. If this candidate is rejected
 
-The evidence shows that this candidate should be rejected, this evidence being that scorecard scored the lowest and according to the candidate-scorecard.csv it has the second highest estimated time causing the verdict to say that I won't finish it in time even when cutting the two things it recommened, both 2 of the features and the need for user accounts. The condition under which I would revisit it, would be if I am able to lessen the time it would take to do it, if I am able to condense the amount of features, and if a fallback such as a shared join code fits in.
+The evidence shows that this candidate should be rejected, this evidence being that scorecard scored the lowest and according to the candidate-scorecard.csv it has the second highest estimated time causing the verdict to say that I won't finish it in time even when cutting the two things it recommened, both 2 of the features and the need for user accounts. Then the Gate that failed was the Get Gate because the key clothing dataset could not be pushed to GitHub because of its file size. The condition under which I would revisit it, would be if I am able to lessen the time it would take to do it, if I am able to condense the amount of features, if a fallback such as a shared join code fits in, and if the clothing dataset file size can be reduced.
