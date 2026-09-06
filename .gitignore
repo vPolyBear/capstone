@@ -15,6 +15,9 @@ build/
 # Logs
 *.log
 
+# Large local datasets
+datasets/clothing-dataset-full.zip
+
 # Testing and coverage
 coverage/
 
