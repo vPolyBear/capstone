@@ -1,10 +1,5 @@
 # Idea Canvas — Candidate <A>
 
-Copy this file once per candidate into your repository as `docs/ideas/candidate-a.md`
-(then `-b`, `-c`). Fill every field. A blank field is an answer: it means you do not
-know yet, and that is exactly what this page is for. Delete the bracketed guidance
-as you go.
-
 **Candidate name:** Stress Mangement
 **Date started:** 2026-08-31   **Well it came from:** campus
 
@@ -17,8 +12,8 @@ who                                 are very stressed because of tasks, deadline
 the problem is                      that they can not figure out how to manage their stress properly and identify what causes them stress from everything going on   
 what goes wrong, in their words     is that stress continually increases and they get stuck in a cycle of stress where they can not manage it
 which costs                         about 5-10 hours of wasted time each week stressing or trying to manage their stress
-Today they                          can try to manage it on their own or find a stress managing app like Stressbuoy or Silas that could help them
-which falls short because           trying to figure it out on are own can make them more stressed and apps today don't account for everybodies needs
+Today they                          can try to manage it on their own or find a stress managing aid that could help them
+which falls short because           trying to figure it out on our own can create more stress and most aids today because they don't account for everybodies needs
 
 ## 2. Evidence a user exists
 
@@ -26,7 +21,7 @@ which falls short because           trying to figure it out on are own can make 
 - **Date and length:** 2026-09-02, 30 minutes
 - **Three verbatim quotes:**
   1. "I have experienced lots of stress and anxiety in the past couple weeks due to going back to class. I expressed the way I felt to people around me and they supported me through it by telling me it is normal to feel stressed about certain things or places but I can do it because I'm a strong independent woman."
-  2. "Now, I deal with my anxiety day by day, facing my fears helping reduce the amount of anxiety therefore making it easier to go throough the day"
+  2. "Now, I deal with my anxiety day by day, facing my fears helping reduce the amount of anxiety therefore making it easier to go thorough the day"
   3. "It is still pretty scary and annoying to not be able to predict how much stress I am going to feel that day."
 - **The workaround they already use:** The work around she uses is to talk to people and to her therapist
 - **Full write-up:** `docs/interviews/2026-09-02-SM.md`
@@ -44,8 +39,7 @@ which falls short because           trying to figure it out on are own can make 
 | | Deployment + clean-machine test | 4 hr |
 | | **Construction total** | 67.5 |
 
-Budget: plan on **60 hours**, hard ceiling **75**. Above 75 you are borrowing from
-testing and documentation, which are graded.
+Budget: plan on **60 hours**, hard ceiling **75**. Above 75 you are borrowing from testing and documentation, which are graded.
 
 ## 3.5. Reconcile Two Estimates
 
@@ -71,43 +65,42 @@ The number I will plan against: 67.5 h     because I don't want to barrow from t
 
 | Gate | Verdict | Evidence (dated) |
 |---|---|---|
-| **Build** — novelty load ≤ 2 | pass / fail | <technology list, each marked known/new> |
-| **Get** — every dependency exercised for real | pass / fail | <status code, saved response, date> |
-| **Ship** — a named deployment target, terms read | pass / fail | <target + pricing page read on YYYY-MM-DD> |
-| **Show** — a stranger sees it work in 10 minutes | pass / fail | <the ten steps, written down> |
+| **Build** — novelty load ≤ 2 | pass | React Native (new) · Expo (new) · TypeScript (known) 2026-09-04 |
+| **Get** — every dependency exercised for real | pass | Google Gemini AI API - Verfified, 200, stress management prompt returned response, 2026-09-05 |
+| **Ship** — a named deployment target, terms read | pass | Target - Apple App Store using Expo EAS, pricing page read on 2026-09-05. |
+| **Show** — a stranger sees it work in 10 minutes | pass | 1. opens the app, 2. home screen with main pages, 3. can go through check-ins for how stress is, 4. can move to the general overview page, 5. can go to journal page and journal, 6. can go to the destressing activites sections page and can click on a section, 7. can pick a destressing actvity from the specific section, 8. can go to the AI Analysis page for more specific stress analysis, 9. AI Analysis can suggest a destressing activity, 10. can go through each page again if new changes in stress occur or can leave the app |
 
 **Technologies:** React Native (new) · Expo (new) · TypeScript (known)
 **Novelty load:** 2
 
 ## 6. The one hard part
 
-<Name exactly one. Say what makes it hard in two sentences. If you can name three, you have three projects.>
+The hard part of this project will be the AI Analysis and even if the fallback is necessary the fallback will still be the hardest part, mainly because it will need to take in all aspects of the project to create an overview that will actually be helpful. I also have never made AI do anything in a project before so it will be hard to figure out how to start and make it work as intend.
 
-## 6.5. Pre-Mortem - scope cut trigger???
+## 6.5. Pre-Mortem
 
-Failure	Mine /Earliest visible week / The trigger that would catch it
-1. 
-2. 
-3. 
-
+Failure	Mine / Earliest visible week / The trigger that would catch it
+1. The main features start to take too much time and become too complex / Week 9 / Work starts to take over 75 hours beause that's the hard ceiling so cutting less beneficial features will be necessary
+2. The AI analysis doesn't properly work / Week 9 / AI analysis continually fails its tests and starts taking longer than expected, the fallback then must be started right away to ensure an overview of at least general results are produced
+3. Bugs start to take over and cause everything to become a mess where only parts of each feature work / Week 9 / Testing will catch it, so continual testing before moving on is necessary
 Failure / model /	Earliest visible week /	The trigger that would catch it
-1. 
-2. 
-3. 
+1. React Native and Expo take longer to learn and integrate than expected, delaying the core features / Copilot - Auto / Week 5 / By the end of Week 5, the React Native and Expo setup or technology evaluation is still incomplete, so the walking skeleton cannot be started on schedule (Week 9).
+2. The project scope exceeds the available schedule, especially with five feature areas and AI analysis. / Copilot - Auto / Week 2 / The forecast exceeds 60 hours or a vertical slice is not working.
+3. AI analysis and cross-feature data integration are underestimated, leaving too little time for validation and testing / Copilot - Auto / Week 10 / A test dataset cannot complete the analysis path reliably.
+
+- Note: Both the AI and I had the same concerns with the AI analysis taking longer than it should or with complications arising.
 
 ## 7. Scorecard (1–5 each; weight in parentheses)
 
 | Criterion | (w) | Score | Weighted |
 |---|---:|---:|---:|
-| Evidence a user exists | 3 | | |
-| Fits ~45 hours of features | 3 | | |
-| Novelty load | 2 | | |
-| Dependencies verified | 2 | | |
-| Demonstrable in ten minutes | 1 | | |
-| **Total (max 55)** | | | |
+| Evidence a user exists | 3 | 5 | 15 |
+| Fits ~45 hours of features | 3 | 3 | 9 |
+| Novelty load | 2 | 4 | 8 |
+| Dependencies verified | 2 | 5 | 10 |
+| Demonstrable in ten minutes | 1 | 5 | 5|
+| **Total (max 55)** | | | 47 |
 
 ## 8. If this candidate is rejected
 
-<Write the rejection paragraph NOW, while you still like the idea. Name the gate it
-failed, the number that killed it, and the condition under which you would revisit
-it — or say plainly that it is closed, not deferred.>
+Not Rejecting

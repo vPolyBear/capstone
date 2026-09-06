@@ -9,17 +9,17 @@
   than a charter that has always been right.
 -->
 
-**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-08-29
+**Owner:** Katherine Spencer · **Course:** Capstone · **Started:** 2026-08-24 · **Last revised:** 2026-09-06
 
 ## 1. Purpose
 
 This capstone project gives me the chance to step into each role on a professional development team. Training me how to individually produce a successful and working system, that will have all the required elements, tests, and necessary documents. That then can easily be cloned from the repository and run based on the README without any input. 
 
-## 2. Project (filled in Week 2, after the scoping decision)
+## 2. Project
 
-- **One-sentence description:** <fill in Week 2>
-- **Primary user:** <a real person or role, not "users">
-- **The one thing it must do to be worth finishing:** <fill in Week 2>
+- **One-sentence description:** A stress management app that helps individuals through check ins, overviews, and destressing activities
+- **Primary user:** student
+- **The one thing it must do to be worth finishing:** Displays an overview of an individuals stress levels throughout time
 
 ## 3. Capacity and constraints
 
