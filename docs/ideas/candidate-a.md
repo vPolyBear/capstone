@@ -52,7 +52,7 @@ The number I will plan against: 67.5 h     because I don't want to barrow from t
 1. I will not build a login page
 2. I will not build it into a website or for a watch
 3. I will not build it to implement school related technology such as the canvas to-do
-4. I will not build an AI assisant for it that answers personal questions or gives advise, only if I have time to implement the AI feature will it be for analysing the data the user already inputted into the app such as the overview or journal
+4. I will not build an AI assisant for it that answers personal questions or gives advise, only if I have time to implement the AI feature will it be for analyzing the data the user already inputted into the app such as the overview or journal and only provides explainations of the patterns or suggestions only.
 5. I will not add notifications
 6. I will not build something that tells an individual that it can treat or diagnose them
 7. I will not build in more than 5 general destressing activity sections
@@ -75,7 +75,7 @@ The number I will plan against: 67.5 h     because I don't want to barrow from t
 
 ## 6. The one hard part
 
-The hard part of this project will be the AI Analysis and even if the fallback is necessary the fallback will still be the hardest part, mainly because it will need to take in all aspects of the project to create an overview that will actually be helpful. I also have never made AI do anything in a project before so it will be hard to figure out how to start and make it work as intend.
+The hard part of this project will be the AI Analysis and even if the fallback is necessary the fallback will still be the hardest part, mainly because it will need to take in both the check in and journal to create a word based search for a non advise related, but suggestion based explanation for the stress when the provider errors or is slow. I also have never made AI do anything in a project before so it will be hard to figure out how to start and make it work as intend.
 
 ## 6.5. Pre-Mortem
 

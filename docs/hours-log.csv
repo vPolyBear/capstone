@@ -18,3 +18,5 @@ date,start,end,hours,phase,hat,task,estimate_hours,blocked_hours,notes
 2026-09-03,22:00,22:30,0.50,inception,product-owner,reconciled the two estimates and wrote the eight things I will not build,0.50,0.00,picked the eight things I will not build
 2026-09-04,19:00,23:30,4.50,inception,product-owner,fully completed the all of the candidate files a-c and added the leading one to the scoping-decision-memo,4.00,0.00,I didn't truly think it would take so long to complete all of them
 2026-09-05,17:30,22:45,5.25,inception,product-owner,proved every dependency exists for each candidate,3.00,0.00,it took a while making sure that each dependency worked and was the right one for the candidate
+2026-09-06,16:00,16:15,0.25,inception,product-owner,fixed the Milestone 1 comments,0.50,0.00,fixing the changes was actually not that hard
+2026-09-06,17:00,18:00,1.00,inception,product-owner,added the must features to the project board and submitted repo link and did week 2 quiz,1.50,0.00,this wasn't too hard to do

@@ -44,7 +44,7 @@ The should features built only if there is room, time, and when all the main fea
 
 ## 5. Out of scope — will not be built
 
-I will not build a login page. I will not build it into a website or for a watch. I will not build it to implement school related technology such as the canvas to-do. I will not build an AI assisant for it that answers personal questions or gives advise, only if I have time to implement the AI feature will it be for analysing the data the user already inputted into the app such as the overview or journal. I will not add notifications. I will not build something that tells an individual that it can treat or diagnose them. I will not build in more than 5 general destressing activity sections. I will not build a way for individuals to communicate on the app to each other
+I will not build a login page. I will not build it into a website or for a watch. I will not build it to implement school related technology such as the canvas to-do. I will not build an AI assisant for it that answers personal questions or gives advise, only if I have time to implement the AI feature will it be for analyzing the data the user already inputted into the app such as the overview or journal and only provides explainations of the patterns or suggestions only. I will not add notifications. I will not build something that tells an individual that it can treat or diagnose them. I will not build in more than 5 general destressing activity sections. I will not build a way for individuals to communicate on the app to each other
 
 ## 6. Accepted tradeoffs
 
@@ -75,7 +75,7 @@ Yes, my construction fits inside the 60/75 line. I had to cut the should feature
 
 ## 9. The one hard part
 
-The hard part of this project will be the AI Analysis and even if the fallback is necessary the fallback will still be the hardest part, mainly because will in to take in all aspects of the project to create an overview that will actually be helpful. I also have never made AI do anything in a project before so it will be hard to figure out how to start and make it work as intend.
+The hard part of this project will be the AI Analysis and even if the fallback is necessary the fallback will still be the hardest part, mainly because it will need to take in both the check in and journal to create a word based search for a non advise related, but suggestion based explanation for the stress when the provider errors or is slow. I also have never made AI do anything in a project before so it will be hard to figure out how to start and make it work as intend.
 
 ## 10. Risks and the scope-cut trigger
 

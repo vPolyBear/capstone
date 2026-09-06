@@ -37,10 +37,10 @@ This capstone project gives me the chance to step into each role on a profession
 
 ## 4. Definition of finished
 
-- The systems main components necessary for the project idea should be functional and completed enough to relay the main idea intended from the project
-- The system should be cloneable and fully testable
-- The system should be run smoothly without any hiccups or errors
-- The system should fulfill all the requirements for the Capstone class to be completed fully based on the course description
+- An individual will be able to go through the projects screens and features understanding the purpose of the app without intervention.
+- An individual will be able to clone the repository, follow the README.md instructions, start the app, and run the test suite successfully on a clean machine without the need to change anything or guess how to do something.
+- An individual will be able to run the tests without errors or failed tests.
+- An individual will be able to check that the project meets and completed the Capstone rubric requirements when going through the app and its documents.
 
 ## 5. Non-goals — what I will NOT build or do
 
