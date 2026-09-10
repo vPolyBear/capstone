@@ -24,7 +24,7 @@ which falls short because           trying to figure it out on our own can creat
   2. "Now, I deal with my anxiety day by day, facing my fears helping reduce the amount of anxiety therefore making it easier to go thorough the day"
   3. "It is still pretty scary and annoying to not be able to predict how much stress I am going to feel that day."
 - **The workaround they already use:** The work around she uses is to talk to people and to her therapist
-- **Full write-up:** `docs/interviews/2026-09-02-SM.md`
+- **Full write-up:** `docs/interviews/2026-09-02-SS.md`
 
 ## 3. Candidate scope (Must features only)
 

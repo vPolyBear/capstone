@@ -11,7 +11,7 @@ For students, individuals that go to a school, such as college, who are very str
 ## 2. Evidence a user exists
 
 Interviewed Stella .S (SS) - College student on 2026-09-02, 30 minutes, past-tense questions only.
-Full write-up in `docs/interviews/2026-09-02-SM.md`.
+Full write-up in `docs/interviews/2026-09-02-SS.md`.
 
 - "I have experienced lots of stress and anxiety in the past couple weeks due to going back to class. I expressed the way I felt to people around me and they supported me through it by telling me it is normal to feel stressed about certain things or places but I can do it because I'm a strong independent woman."
 - "Now, I deal with my anxiety day by day, facing my fears helping reduce the amount of anxiety therefore making it easier to go throough the day"
