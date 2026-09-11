@@ -23,13 +23,13 @@ behavior before opinion.
    You want the *episode*, not the summary. Interrupt only to ask "and then what?"
 
 The last time I had serious stress was yesterday. F
-I was in a forest and I have a phobia of insets and some crawled on me and I had a panic attack because of it and I could not think straight. F
+I was in a forest and I have a phobia of insects and some crawled on me and I had a panic attack because of it and I could not think straight. F
 Though I have struggled with stress everyday since I've been born because life is stressful and there is always a lot of anxiety and anxious thoughts going through my brain. F
 
 2. **"What did you use to do it?"**
    A spreadsheet, a whiteboard, a group chat, a paper list, nothing. Whatever it is, that is your competition and your data model.
 
-I used the environment I was in and took a walk and I went where there was less inscets, I then focused on how I was feeling and expressed what I was feeling to other people and that helped it go away. F
+I used the environment I was in and took a walk and I went where there was less insects, I then focused on how I was feeling and expressed what I was feeling to other people and that helped it go away. F
 I also definitely use some breathing exercises to calm my nervous system down and I do things that I like if its things like going on a walk or petting my dog. F
 I talk to who knows me and can handle me if I'm in a crisis mode. F
 
