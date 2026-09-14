@@ -1,7 +1,9 @@
 # Capstone — Capstone Project
 
-Senior capstone by Katherine Spencer, Fall 2026. **Status: Week 1 — engineering system only.
-No application code yet.** The project idea is chosen in Week 2.
+Senior capstone by Katherine Spencer, Fall 2026. **Status: Week 3 — Software requirements specification, v1** 
+
+## Project idea
+The project idea is a stress management that aims to help individuals deal with their stress through check ins, overviews, journaling, destressing activities, and AI analysis.
 
 ## What is here
 - `docs/charter.md` — scope, constraints, non-goals, risks, working agreement
