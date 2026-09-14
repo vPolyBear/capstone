@@ -9,7 +9,7 @@
   This file is a required artifact in the Week 16 submission.
 -->
 
-**Owner:** Katherine Spencer · **Policy set:** <2026-08-26> · **Last entry:** <2026-08-27>
+**Owner:** Katherine Spencer · **Policy set:** <2026-08-26> · **Last entry:** <2026-09-11>
 
 ## Policy
 
@@ -48,6 +48,7 @@ memos, or the reflections is generated text.
 | 2026-08-27 | Copilot - Auto | How would I approach making a .gitignore file for a React Native app using Expo and TypeScript | I kept dependencies, expo, build output, typeScript cache, and the local environment ignore files that it created | I removed any extra unnecessary files, those being one local environment file line it added, a python file, and c# files it added. I added a logs, testing and coverage, operating-system files, and VS Code file ignores. | I researched what each line did to see if it was necessary for my project and researched ones that may be good to have |
 | 2026-08-27 | Copilot - Auto | Create for me a personal weekly calendar for 15 hours a week, blocked into sessions, with the milestone due dates marked based on this sixteen-week table from §1.2 | I kept the main struture of the calendar. Keeping the week number, phase, hat, milestone/checkpoint, and artifact(s)  | I changed how it laid out the times, adding the exact time to work each day instead of outside on an overall table and I added broken weeks of 8 and 14. Then I fixed the messed up dates. | I verified this calendar was right by comparing it to my real calendar and checked to ensure the total hours and dates were correct again |
 | 2026-09-04 | Copilot - Auto | It is Week 16. This project failed and I am writing the post-mortem. Give me the three most likely causes, in order of probability, each with the earliest week it would have become visible. | I kept the main struture that each created for both the failure and trigger sections. I kept 1 of the weeks it said. | Though I had to change and remove a lot of sentences, words, and excess file names as it made it messy, I had to change 2 of the weeks it said as it didn't know when something would actually start | How I verified that these changes and what it said were right was by double checking chapter 1 and the calendar to ensure that the weeks and what could go wrong were true | 
+| 2026-09-12 | Copilot - Auto | Here are my 18 functional requirements. Do not rewrite them. List every situation a user could get into that none of these requirements covers, and for each, name the identifier that should have covered it | I kept the main idea of each hole provided and only kept one fifth of the general ideas | I changed the whole sentence struture to fit the idea but used my orginal words and made the ideas align will my other given answers, and I only needed to generally add submission and data saving given worse case points | How I verified these changes was by ensuring they aligned with my goals for the functional requirement, I checked they aligned with the other functional requirement responses to ensure proper and non repeated responses, and I checked with the check_requirement.py to ensure no errors | 
 
 <!--
   A BAD entry (do not imitate):
