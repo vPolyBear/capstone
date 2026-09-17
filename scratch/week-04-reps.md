@@ -90,3 +90,33 @@ One row per data element you touch — including things you would not have calle
 | Google Gemini AI API Key | This is necessary in order to connect the stress management app to Gemini | Supabase Edge Function | N/A | N/A |
 
 - The two rows that I do not know the answer to are the 'Check in response and Journal Entries sent to the AI, Gemini' & 'Gemini AI API Key' rows in the columns 'How long you key it' and 'How a user gets rid of it'. The primary source I would read to find out is on Google Gemini's terms page for the 'Check in response and Journal Entries sent to the AI, Gemini' row and the Supabase terms page for the 'Gemini AI API Key' row.
+
+
+## Rep 5
+
+
+Did on email
+
+shift tabing to get to searching the mail
+
+
+| NFR | Priority | Metric | Threshold | Condition | Measurement method |
+|---|---|---|---|---|---|
+| NFR-USE-01 | Must | The visibility precentage of the composition buttons hovering | above 50% opacity | When hovering over the composition button it shall have a great visiblitiy recorded on a Windows computer | Hovering of the composition button 5 times to see if it is visible in different brightnesses and background colors |
+| NFR-USE-02 | Must | The minimal tabbing amount to get to the X out button on a email draft | less than 7 tabs | When tabbing over to the X button in the email draft it shall have minimal button switches to get to the X recorded on a Windows computer | Tabbing over to the X out button 5 times to see if the tabbing gets to the X in less than 7 tabs |
+| NFR-USE-03 | Must | The minimal shift tabbing get to the search email section on the page | less than 7 shift tabs | When shift tabbing over to the search email section on the page it shall have minimal button switches to get to the search section on a Windows computer | Shift tabbing over to the search email section 5 times to see if the shift tabbing gets to the search section in less than 7 shift tabs |
+
+
+## Rep 6
+
+This does not make sense for the current state of my project because there are no true UI elements inplace that could test the color nor three core tasks implemented.
+
+## Rep 7 — The prohibitions, and the history check
+
+- Stressed individuals shall not be able to see committed or have access to the Gemini AI API keys, tokens, or other keys when looking into the repository. This is measured by going over every commit made to GitHub and checking that there the .env is in the gitignore and that there are 0 secrets found when this is done. 
+- Stressed individuals responses and entries shall not be put into a query or command line when the user enters a response into the check in or journal entries. This is measured by testing for injectioin attacks and checking that there are 0 injection attack opportunities present.
+- Stressed individuals shall not be able to request for multiple AI analysis' when prompting over 5 times for either an analysis or an activity suggestion all at once or in less than 5 seconds. This is measured by sending 6 analysis' or activities' and on the 6th one the app should not accept it and throw an error message and this should check for how many times this happens and the amount of sent requests both should be 0.
+- Stressed individuals shall not be able to see system errors or messagse when running into trouble on a feature, instead in less than 15 seconds a user error should appear stating something went wrong. This is measured by checking what error message appeared and where, and the recording must show 0 times an error or message appeared.
+- Stressed individuals responses to the check ins and journal entries shall not be provided to Gemini AI unless the stressed individual prompts the AI Analysis with a request when they want a suggestion based explanation for their stress or an activity suggestion. This is measured by checking the AI request page after doing 7 check ins and 7 journal entries, where the recording must show that the check ins and jounray entries were sent 0 times to Gemini AI.
+
+- It found promptTokens, candidateTokenCount, and js-tokens, though these are found to be false posititives so they are not secrets.
