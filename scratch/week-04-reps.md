@@ -99,12 +99,11 @@ Did on email
 
 shift tabing to get to searching the mail
 
-
-| NFR | Priority | Metric | Threshold | Condition | Measurement method |
-|---|---|---|---|---|---|
-| NFR-USE-01 | Must | The visibility precentage of the composition buttons hovering | above 50% opacity | When hovering over the composition button it shall have a great visiblitiy recorded on a Windows computer | Hovering of the composition button 5 times to see if it is visible in different brightnesses and background colors |
-| NFR-USE-02 | Must | The minimal tabbing amount to get to the X out button on a email draft | less than 7 tabs | When tabbing over to the X button in the email draft it shall have minimal button switches to get to the X recorded on a Windows computer | Tabbing over to the X out button 5 times to see if the tabbing gets to the X in less than 7 tabs |
-| NFR-USE-03 | Must | The minimal shift tabbing get to the search email section on the page | less than 7 shift tabs | When shift tabbing over to the search email section on the page it shall have minimal button switches to get to the search section on a Windows computer | Shift tabbing over to the search email section 5 times to see if the shift tabbing gets to the search section in less than 7 shift tabs |
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-USE-01 | The visibility precentage of the composition buttons hovering feature shall be above 50% opacity when an individual hovers over the composition button this higher visiblitiy of black must be visible on a Windows computer in Chrome | Must | Hovering over the composition button 5 times to see if it is visible in different brightnesses and background colors |
+| NFR-USE-02 | The minimal tabbing amount to get to the X out button shall be less than 7 tabs when tabbing over to the X button in the email draft recorded on a Windows computer in Chrome | Must | Tabbing over to the X out button 5 times to see if the tabbing gets to the X in less than 7 tabs |
+| NFR-USE-03 | The minimal shift tabbing amount get to the a section on the page shall be less than 7 shift tabs when shift tabbing over to the search email section on the page with minimal button switches on a Windows computer in Chrome | Must | Shift tabbing over to the search email section 5 times to see if the shift tabbing gets to the search section in less than 7 shift tabs |
 
 
 ## Rep 6
