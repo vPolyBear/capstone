@@ -1,0 +1,18 @@
+req_id,type,priority,requirement,source,design_element,test_id,measurement_method,status
+FR-001,functional,Must,A signed-in user can add a food item with a name and an expiry date,charter,AddItemForm + POST /items,T-001,acceptance criteria AC-001..003,planned
+FR-002,functional,Must,A signed-in user can see all items sorted by soonest expiry,charter,PantryListView + GET /items,T-002,acceptance criteria AC-004..005,planned
+FR-003,functional,Must,A signed-in user can mark an item as used or discarded,charter,ItemRow action menu,T-003,acceptance criteria AC-006,planned
+FR-004,functional,Should,A user can look up an item by scanning or typing a barcode,stakeholder interview 2,BarcodeLookupService,,acceptance criteria AC-007,planned
+FR-005,functional,Should,A household can share one pantry between multiple accounts,stakeholder interview 1,,,acceptance criteria AC-008..009,planned
+FR-006,functional,Could,The app suggests one recipe from items expiring within three days,stakeholder interview 1,RecipeSuggestionService,T-006,acceptance criteria AC-010,planned
+NFR-PERF-01,non-functional,Must,p95 load of the pantry list under 1.5 s with 200 seeded records on a throttled Fast-3G profile,Ch4 performance,PantryListView + list index,T-101,"dev-tools throttling, 20 loads, record p95",planned
+NFR-PERF-02,non-functional,Should,Barcode lookup returns or times out within 3 s,Ch4 performance,BarcodeLookupService,T-102,,planned
+NFR-SEC-01,non-functional,Must,No credential token or key appears in the repository at any commit,Ch4 security,CI secret-scan step,T-103,secret scan over full history in CI with zero findings,planned
+NFR-SEC-02,non-functional,Must,Every write endpoint verifies the caller owns the target household server-side,Ch4 security,AuthorizationMiddleware,T-104,one negative test per write endpoint,planned
+NFR-PRIV-01,non-functional,Must,A user can delete their account and every row referencing it in one action,Ch4 privacy,AccountDeletionService,T-105,"create data, delete account, query every table for the user id, expect zero rows",planned
+NFR-PRIV-02,non-functional,Must,No item name or user identifier is sent to a third-party model without an explicit opt-in,Ch4 privacy,,,redaction unit test on the request builder,planned
+NFR-ACC-01,non-functional,Must,Every interactive control is keyboard reachable and operable with a visible focus indicator,Ch4 accessibility,global focus styles,T-106,manual pass with the mouse unplugged over the three core tasks,planned
+NFR-ACC-02,non-functional,Must,Body text meets a 4.5:1 contrast ratio against its background,Ch4 accessibility,design tokens,T-107,contrast checker on every token pair used for text,planned
+NFR-MNT-01,non-functional,Must,A clean clone reaches a running app in under 10 minutes using only the README,Ch4 maintainability,setup script + README,T-108,"clean-machine test, timed, once per iteration",planned
+NFR-ACC-02,non-functional,Must,Duplicate row left here on purpose so the checker has something to find,Ch4 accessibility,design tokens,T-107,contrast checker,planned
+,,,,,ExportToCsvButton,T-109,,in progress

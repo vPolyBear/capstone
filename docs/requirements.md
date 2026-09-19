@@ -238,8 +238,72 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ## 6. Non-Functional Requirements
 
-Placeholder for Week 4. Do not write vague quality words here now; write nothing
-and fill it in when you can make each one measurable.
+# Non-Functional Requirements, Constraints & Obligations — Template
+
+the Week-3 template left for you; constraints,
+assumptions, dependencies, and obligations **append as new §10–13** after the change
+log. Do not renumber anything from Week 3: §5 stays your functional requirements,
+§7 your out-of-scope table, §8 your open questions, §9 your change log. If you end up
+with two sections numbered 5, you have pasted over the work Milestone 3 was graded on.
+
+Delete every instruction line in angle brackets before you commit.
+
+Rule for this whole document: **no adjective survives without a number.**
+Every quality below needs four fields — METRIC, THRESHOLD, CONDITION, METHOD.
+If you cannot say how you would measure it in one afternoon, it is not a requirement yet.
+
+---
+
+## 6. Non-Functional Requirements
+
+<Replaces the Week-3 placeholder in this section. One table per category you are
+using. Use at least six of the eight. Delete the rest and write one sentence saying
+why that category does not apply to this project.>
+
+### 6.1 Performance
+
+| ID | Requirement (metric · threshold · condition) | Priority | How it is measured |
+|---|---|---|---|
+| NFR-PERF-01 | Stressed individuals shall be able to get a response from the AI Analysis in a p95 under 25 seconds when there is at least 1 check in and journal entry recorded on an iPhone with throttled "Fast 3G" connection in Expo Go. | Must | Measured with 20 prompts to the AI Analysis and recording the p95 result in `docs/measurements.md` expecting that it is under 25. |
+
+### 6.2 Reliability & Availability
+
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-REL-01 | Stressed individuals shall be able to run the app 9 out of 10 times when entering it with 0 unhandled exceptions and errors. | Must | Measured with 10 opening and closings of the app and the times it succeeded vs failed, which expects 9 successes out of the 10. |
+| NFR-AVA-01 | When Gemini is unavailable, the app shall display the predetermined fallback response within 30 seconds for 10 out of 10 simulated failures. | Must | Measured by testing with a simulated timeout, an API error, and an invalid response, then recording whether the fallback appears as expected in 10 simulated failures. |
+
+### 6.3 Security
+
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-SEC-01 | Stressed individuals data shall be breached 0 times when the repository has 0 AI API key's in any commit. | Must | Measured by scanning over the full history, going over every commit made to GitHub, going over every commit made to GitHub, and checking that the .env is in the gitignore, and expecting that there are 0 secrets found when this is done. |
+| NFR-SEC-02 | The app shall expose 0 technical error details, API keys, database errors, or provider error details in 10 simulated failure cases, instead it will proved general error messages. | Must | Measured by simulating 10 save, API, and database failures, then expecting that 0 are recorded with contain technical error details, API keys, or database information. |
+
+### 6.4 Privacy & Data Handling
+
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-PRIV-01 | Stressed individuals check in responses and journal entries shall be sent to Gemini AI 0 times unless the stressed individual prompts for an AI Analysis request | Must | Measured by checking the AI request page after doing 7 check ins and 7 journal entries, expecting that the responses and entries were sent 0 times to Gemini AI. |
+| NFR-PRIV-02 | Each AI request shall send only the check-in responses, journal entry, and the predetermined prompt when prompted for that analysis. It shall send 0 unrelated personal information or device information. | Must | Measured by sending 10 test requests with sample data, checking each request to make sure it includes 0 unrelated information. |
+
+### 6.5 Accessibility
+
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on, expecting 4 out the 5 individuals have 0 problems going through the app |
+| NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode and checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone and that all 5 main feature pass the 5 tests |
+
+### 6.6 Usability · 6.7 Maintainability · 6.8 Portability
+
+| ID | Requirement | Priority | How it is measured |
+|---|---|---|---|
+| NFR-USE-01 | Stressed individuals first time on the app 4 out of 5 of them shall be able to complete 1 check in, journal entry, and AI Anylsis prompt request when they go through the app, without help. | Should | Measured with 5 first time stressed individuals app usage completion expecting 4 passing out of 5 |
+| NFR-USE-02 | Stressed individuals first time on the app 4 out of 5 of them shall be able to correctly identify whether a journal entry or check-in was saved after both a successful and failed save attempt. | Should | Measured with 5 users in both scenarios with 0 assistance and recording their answers.|
+| NFR-MNT-01 | New stressed individuals shall be able to use only the README when creating a clean clone of the repository to reach a running app in under 10 minutes with 0 errors. | Must | Measured through testing this on a clean computer and that the app works on an iPhone in Expo Go, recording how long it took which expects under 10 mintues and expecting 0 errors. |
+| NFR-PORT-01 | Stressed individuals shall be able to run the app and complete the a least 1 check in, journal entry, and AI Anaylsis when on 2 different operting systems, both iOS and Android | Should | Measured through testing and recording that each feature works on an iPhone and Android expecting that all 5 main features have 0 errors. |
+| NFR-PORT-02 | The app shall work when in portrait mode and cut of 0 main buttons or controls. | Should | Measured by testing every main screen in portrait mode, expecting that all 5 main feautre work, recording any controls that are cut off or cannot be reached, though expecting 0 fail to work. |
+| NFR-PORT-03 | The app shall work when in landscape mode and cut of 0 main buttons or controls. | Could | Measured by testing every main screen in landscape mode, expecting that all 5 main feautre work, recording any controls that are cut off or cannot be reached, though expecting 0 fail to appear or work properly. |
 
 ## 7. Out of Scope (the Won't-Have List)
 
@@ -258,7 +322,7 @@ with one line of reasoning. A short list here means you have not thought hard en
 
 | # | Question | Who can answer it | Needed by |
 |---|---|---|---|
-| Each of the 20 question could be answered |
+| Each of the 20 questions could be answered |
 
 ## 9. Document Change Log
 
@@ -266,3 +330,45 @@ with one line of reasoning. A short list here means you have not thought hard en
 |---|---|---|---|
 | 2026-09-10 | 1.0 | Initial specification | Milestone 3 |
 | 2026-09-12 | 1.0 | Edited 10 sentences that could be inferred that two different programs could satisfy it | Ambiguity pass after external read |
+
+## 10. Constraints  <things you did NOT choose and cannot change>
+
+| ID | Constraint | Where it comes from | What it rules out |
+|---|---|---|---|
+| CON-01 | The system must be completed in 16 weeks and be demostratable by Week 16 | course deadlines | Extra features that cause the main features to not be completed in time |
+| CON-02 | The app must be able run on Expo Go on an iOS phone | app requirements | The main features can not run in Expo Go on iOS such as the AI Anaylsis |
+| CON-03 | I can only generally work 30 hours per week on the project if time is managed perfectly | my schedule | Extra features that would exceed time able to work on the project  |
+| CON-04 | The project must follow the course rubric and criteria | course rubric | The completed app doesn't follow the rubric |
+
+## 11. Assumptions  <things you are treating as true but have NOT verified>
+
+| ID | Assumption | Owner | Verify by | If it is false |
+|---|---|---|---|---|
+| ASM-01 | The Gemini AI API will still have a free tier in December or the paid tier will still not use the content to improve products | me | Week 5 | Try using a different AI API |
+| ASM-02 | Gemini AI will be able to response with proper and helpful suggestion based explanations based on the check ins and journal | me | Week 9 | Add in extra instructions, add in back up prewritten suggestions to the AI, or use the keyword fallback |
+| ASM-03 | The Supabase Edge Function will be able to safely store and call the Gemini AI API key | me | Week 6 | Use a server |
+| ASM-04 | Individuals will find the destressing activity suggestion range to pick from and use to be useful | me and stressed individuals testing it | Week 11 | Contuinally check with stressed individuals that the activities are helpful, in not then add or change the activity types |
+
+## 12. Dependencies  <things outside your control that you need>
+
+| ID | Dependency | Version / plan pinned | Failure mode | Fallback |
+|---|---|---|---|---|
+| DEP-01 | Gemini AI API | Gemini API - Gemini 3.6 Flash, free tier checked Week 5 |  The API is down and unavailable for an extended period of time when needed | An error message is shown saying it failed and will instead use the fallback of a word based search over the journal entries to provide a prewritten response based on the key words found and provide a random activity suggestion |
+| DEP-02 | Expo Go | Expo Go - SDK 57, checked in Week 5 | The app fails randomly, cannot be started, or can not reach Gemini AI  | Test and use an iOS simulator beforehand |
+| DEP-03 | Supabase Edge Function | Supabase free plan, checked in Week 5 | The key can not be retrieved or it can not call for the Gemini AI API key | It falls back to the fallback for the general AI Anaylsis were an error message is shown saying it failed and will instead use a word based search to provide prewritten suggestion based explanations and activity suggestions |
+
+## 13. Obligations  <license, third-party terms, data rights>
+
+| Obligation | Primary source (URL) | Date checked | What it requires of me |
+|---|---|---|---|
+| Gemini API terms for use and data | https://ai.google.dev/gemini-api/terms | 2026-09-18 | It requires that I follow the Prohibited Use Policy, don't use the AI API to provide any medical. I must follow the laws when using generated content. The unpaid AI API responses generated can be used to improve Google's technology, though this isn't true for the paid AI API. At the end it states I am responsible for the actions and tasks performed. |
+| Supabase Terms of Service | https://supabase.com/terms | 2026-09-18 | It requires that I understand how Supabase stores, protects, deletes, and backs up project data, and that I also must protect user data. |
+| Expo Terms of Service | https://expo.dev/terms | 2026-09-18 | It requires that I must properly keep user content secure, follow its usage rules, accept responsibility for my app and data, and follow Apple's app store rules when publishing my app. |
+
+---
+
+**Document control.** Do not start a second version block. Bump the **Version** and
+**Date** in the header the Week-3 template already gave the document, then add one row
+to the existing **§9 Document Change Log** — date, version 1.1, the change
+("non-functional requirements, constraints, assumptions, dependencies, and obligations
+added"), and the reason ("Milestone 4").
