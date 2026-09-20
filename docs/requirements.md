@@ -1,6 +1,6 @@
 # Software Requirements Specification — Stress Manager
 
-**Author:** Katherine Spencer  **Version:** 1.0  **Date:** 2026-09-12
+**Author:** Katherine Spencer  **Version:** 1.1  **Date:** 2026-09-19
 **Status:** Baselined
 
 ---
@@ -96,13 +96,13 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 **Priority:** Must
 **Requirement:** An individual with stress shall be able to see how their stress is doing from the results of the check ins in weekly/monthly views when they open up the weekly/monthly views on the overview page.
-**Rationale:** This exists because without it individuals would not really get much from the questions they answered during the check in. Stella saw from the past with stress that when she was able to get over the stress on her own it made her proud. This page allows individuals to see a progression.
+**Rationale:** This exists because without it individuals would not really get much from the questions they answered during the check in. Stella saw from the past with stress that when she was able to get over the stress on her own it made her proud. This page allows individuals to see a progression. Then the next maintainer needs to understand that the overview shows how an individuals stress is doing through two views 
 **Acceptance criteria:**
 - Given a graph with the check in question results when the view is switched to a weekly or monthly view, then the stressed individuals should see either the week's check ins overview or the months within five seconds.
 - Given the graphs don't appear to have information in them yet when the stressed individual opens the page, then state within three seconds that check in question responses are needed before results can appear.
 - Given the graphs haven't loaded yet when the stressed individual opens the page, then state within five seconds that check in question responses are still loading and if loading fails that something went wrong.
 
-**Source:** Elicitation Interview with Stella, 2026-09-09 & my decision
+**Source:** Elicitation Interview with Stella, 2026-09-09 & my decision & The next maintainer
 
 ### FR-OVER-02 — Extra goals
 
@@ -140,7 +140,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 **Priority:** Should
 **Requirement:** An individual with stress shall be able to edit a journal entry they did that day when it is clicked to include more about what is stressing them or to add in things that are stressing them.
-**Rationale:** This exists because it is the second part to the second main component necessary for the AI Analysis and gives a space for individuals to edit their thoughts if they make a mistake. Again Stella has a lot of thoughts that go through her brain so when writing them down, having the option to edit them if it is mistakenly entered can be helpful because distress can cause errors.
+**Rationale:** This exists because it is the second part to the second main component necessary for the AI Analysis and gives a space for individuals to edit their thoughts if they make a mistake. Again Stella has a lot of thoughts that go through her brain so when writing them down, having the option to edit them if it is mistakenly entered can be helpful because distress can cause errors. 
 **Acceptance criteria:**
 - Given a journal entry box, when clicked in to edit, then the edit should be saved and visible for viewing again when done within ten seconds.
 - Given the app crashes, when a stressed individual is editing the journal entry, then the app should not erase the previous response but prompt that the edit might not have been saved within five seconds of the stressed individual opening the app.
@@ -154,6 +154,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 **Requirement:** An individual with stress shall be able to see the word count when writing a journal entry about their stress.
 **Rationale:** This exists to ensure that the database can handle not only processing how much the stressed individual writes but ensures the text box isn't taken advantage of. It is my decision to ensure app runs smoothly without lag and for security against those with bad intentions.
 **Acceptance criteria:**
+- Given a journal entry is entered into, when the stressed individual is typing, then the app should display the word count.
 - Given the text gets to 10,000 words, when the stressed individual is typing, then the app should, prevent them from writing more and either prompt them to make a new journal entry if they have more they need to get off their chest, or turn the text a different color within seven seconds.
 - Given the word count fails to count properly, when a stressed individual is typing, it then should fallback to counting each character instead within ten seconds of it failing.
 
@@ -194,7 +195,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 **Requirement:** An individual with stress shall be able to click on more than 5 destressing activity sections that have a greater range of destressing activity options that could better help their stress.
 **Rationale:** This exists because it will allow more individuals to have even more sections and options in those sections to choose from that will be even more aligned with how they ground themselves and manage their stress. This was my decision as having more than five sections in the future will provide even more aid to individuals. Though this is still recorded to show that it wasn't forgotten so if for a later release an idea is thought of to mimic this/in a way make it possible.
 
-**Source:** Elicitation Interview with Stella, 2026-09-09
+**Source:** My Decision
 
 ### FR-ACT-03 — Random Activity Chooser
 
@@ -205,18 +206,18 @@ Define every term your requirements use in a project-specific sense. If a reader
 - Given the destressing activity page is chosen, when an individual clicks on the option to get a random destressing activity, then they should see a pop up within ten seconds with the random activities and they should be able to select an option whether to go to activity directly.
 - Given the pop up fails to appear within fifteen seconds, when the stressed individual clicks on the option to get a random destressing activity, then a message should appear stating the action failed, try again within fifteen seconds.
 
-**Source:** Elicitation Interview with Stella, 2026-09-09
+**Source:** My Decision
 
-### FR-AIA-01 — Prompt AI Analysis
+### FR-AIA-01 — Prompt AI Analysis for Stress Explanation
 
 **Priority:** Must
-**Requirement:** An individual with stress shall be able to click from a predetermined prompt to ask AI for a suggestion based explanation of their stress and also suggestions for destressing aid when they open the AI Analysis page.
-**Rationale:** This exists because it allows an individual to get a more personalized understanding of their overview results and journal entries. Stella has times when it can take her hours to calm down so a quick aid suggestion or explanation when completely lost can help quicken the time it takes to recover from stress.
+**Requirement:** An individual with stress shall be able to click from a predetermined prompt to ask AI for a suggestion based explanation of their stress when they open the AI Analysis page.
+**Rationale:** This exists because it allows an individual to get a more personalized understanding of their overview results and journal entries. Stella has times when it can take her hours to calm down so a quick explanation when completely lost can help quicken the time it takes to recover from stress.
 **Acceptance criteria:**
-- Given when the AI Analysis page loads, when the stressed individual clicks on one of the predetermined prompts, then the AI should prompt back with a suggestion based explanation and/or suggestions for a stress aid within twenty five seconds.
+- Given when the AI Analysis page loads, when the stressed individual clicks on one of the predetermined prompts, then the AI should prompt back with a suggestion based explanation within twenty five seconds.
 - Given the AI model fails or is down, when the stressed individuals is prompting/wants to prompt it, then a toast must pop up within thirty seconds stating the AI model is currently failing or down but here is a altered experience that may not be as accurate, which is the fallback of searching the journal for frequent words written.
 - Given an individual tries to communicate with the AI model without using the provided predetermined prompts, when a stressed individual prompts it differently, then the AI model must reject the different prompt and state to use the predetermined prompts above.
-- Given the AI model doesn't have enough information yet from the check ins and journal entries, when the stressed individual prompts the AI model, then state within ten seconds that more check in question responses and journal entries are needed before the AI model can provide a useful response.
+- Given the AI model doesn't have enough information yet from the check ins and journal entries, when the stressed individual prompts the AI model, then state within ten seconds that more check in question responses and journal entries are needed before the AI model can provide a useful stress explanation.
 
 **Source:** Elicitation Interview with Stella, 2026-09-09
 
@@ -236,29 +237,20 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 **Source:** Elicitation Interview with Stella, 2026-09-09
 
-## 6. Non-Functional Requirements
+### FR-AIA-04 — Prompt AI Analysis for Destressing Aid
 
-# Non-Functional Requirements, Constraints & Obligations — Template
+**Priority:** Must
+**Requirement:** An individual with stress shall be able to click from a predetermined prompt to ask AI for a suggestion for destressing aid when they open the AI Analysis page.
+**Rationale:** This exists because it allows an individual to get a more personalized destressing aid based on their check ins and journal entries. Stella has times when it can take her hours to calm down so a quick aid suggestion when completely lost can help quicken the time it takes to recover from stress.
+**Acceptance criteria:**
+- Given when the AI Analysis page loads, when the stressed individual clicks on one of the predetermined prompts, then the AI should prompt back with a suggestion for a stress aid within twenty five seconds.
+- Given the AI model fails or is down, when the stressed individuals is prompting/wants to prompt it, then a toast must pop up within thirty seconds stating the AI model is currently failing or down but here is a altered experience that may not be as accurate, which is the fallback of searching the journal for frequent words written.
+- Given an individual tries to communicate with the AI model without using the provided predetermined prompts, when a stressed individual prompts it differently, then the AI model must reject the different prompt and state to use the predetermined prompts above.
+- Given the AI model doesn't have enough information yet from the check ins and journal entries, when the stressed individual prompts the AI model, then state within ten seconds that more check in question responses and journal entries are needed before the AI model can provide a useful destressing aid.
 
-the Week-3 template left for you; constraints,
-assumptions, dependencies, and obligations **append as new §10–13** after the change
-log. Do not renumber anything from Week 3: §5 stays your functional requirements,
-§7 your out-of-scope table, §8 your open questions, §9 your change log. If you end up
-with two sections numbered 5, you have pasted over the work Milestone 3 was graded on.
-
-Delete every instruction line in angle brackets before you commit.
-
-Rule for this whole document: **no adjective survives without a number.**
-Every quality below needs four fields — METRIC, THRESHOLD, CONDITION, METHOD.
-If you cannot say how you would measure it in one afternoon, it is not a requirement yet.
-
----
+**Source:** Elicitation Interview with Stella, 2026-09-09
 
 ## 6. Non-Functional Requirements
-
-<Replaces the Week-3 placeholder in this section. One table per category you are
-using. Use at least six of the eight. Delete the rest and write one sentence saying
-why that category does not apply to this project.>
 
 ### 6.1 Performance
 
@@ -277,7 +269,7 @@ why that category does not apply to this project.>
 
 | ID | Requirement | Priority | How it is measured |
 |---|---|---|---|
-| NFR-SEC-01 | Stressed individuals data shall be breached 0 times when the repository has 0 AI API key's in any commit. | Must | Measured by scanning over the full history, going over every commit made to GitHub, going over every commit made to GitHub, and checking that the .env is in the gitignore, and expecting that there are 0 secrets found when this is done. |
+| NFR-SEC-01 | Stressed individuals data shall be breached 0 times when the repository has 0 AI API key's in any commit. | Must | Measured by scanning over the full history, going over every commit made to GitHub, and checking that the .env is in the gitignore, and expecting that there are 0 secrets found when this is done. |
 | NFR-SEC-02 | The app shall expose 0 technical error details, API keys, database errors, or provider error details in 10 simulated failure cases, instead it will proved general error messages. | Must | Measured by simulating 10 save, API, and database failures, then expecting that 0 are recorded with contain technical error details, API keys, or database information. |
 
 ### 6.4 Privacy & Data Handling
@@ -291,7 +283,7 @@ why that category does not apply to this project.>
 
 | ID | Requirement | Priority | How it is measured |
 |---|---|---|---|
-| NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on, expecting 4 out the 5 individuals have 0 problems going through the app |
+| NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on expecting 4 out the 5 individuals have 0 problems going through the app |
 | NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode and checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone and that all 5 main feature pass the 5 tests |
 
 ### 6.6 Usability · 6.7 Maintainability · 6.8 Portability
@@ -313,10 +305,12 @@ with one line of reasoning. A short list here means you have not thought hard en
 | Not building | Why not | Revisit when |
 |---|---|---|
 | A Special Therapist View | A special view just for therapists that allows for selecting of journals and check ins to show a therapist if the stressed individual is not comfortable with their therapist yet; costs an estimated 15 hours the budget does not have | After a v1.0 release exists |
-| Personal To Do Lists | No evidence any one interviewed would want it because there is uncertainty in its helpfulness as it may actually make an individual more stressed | Various different stressed individuals ask for it |
+| Personal To Do Lists | No evidence any one interviewed would want it because there is uncertainty in its helpfulness as it may actually make an individual more stressed | I would revisit after the capstone completes where the first verison is out if I find after more research that individuals benefit from other systems using personal to do lists |
 | User Accounts | This would require a lot of extra work from ensuring privacy to security and this isn't currently imperative to this app; costs an estimated 15 hours the budget does not have | After a v1.0 release exists |
-| Notifications/Reminders | No evidence any one interviewed would want it because there is uncertainty in its helpfulness as it may actually make an individual more stressed | Various different stressed individuals ask for it |
-| Pulling sleep data from a watch | Various different stressed individuals ask as it isn't super necessary for this project unless individuals find it useful or want more data reviewed for the effects on stress | Various different stressed individuals ask for it |
+| Notifications/Reminders | No evidence any one interviewed would want it because there is uncertainty in its helpfulness as it may actually make an individual more stressed | I would revisit after the capstone completes where the first verison is out if I find after more research that individuals benefit from other systems using notifications/reminders |
+| Pulling sleep data from a watch | This isn't super necessary for this project unless individuals start find it useful or want more data reviewed for the effects on stress | I would revisit after the capstone completes where the first verison is out if I find after more research that individuals benefit from other systems pulling sleep data from their watches |
+
+I would need to revisit it after the capstone in the future when I have a lot of extra time, it would probably be one of the first things I'd revisit
 
 ## 8. Open Questions
 
@@ -330,8 +324,9 @@ with one line of reasoning. A short list here means you have not thought hard en
 |---|---|---|---|
 | 2026-09-10 | 1.0 | Initial specification | Milestone 3 |
 | 2026-09-12 | 1.0 | Edited 10 sentences that could be inferred that two different programs could satisfy it | Ambiguity pass after external read |
+| 2026-09-19 | 1.1 | non-functional requirements, constraints, assumptions, dependencies, and obligations added | Milestone 4 |
 
-## 10. Constraints  <things you did NOT choose and cannot change>
+## 10. Constraints
 
 | ID | Constraint | Where it comes from | What it rules out |
 |---|---|---|---|
@@ -340,7 +335,7 @@ with one line of reasoning. A short list here means you have not thought hard en
 | CON-03 | I can only generally work 30 hours per week on the project if time is managed perfectly | my schedule | Extra features that would exceed time able to work on the project  |
 | CON-04 | The project must follow the course rubric and criteria | course rubric | The completed app doesn't follow the rubric |
 
-## 11. Assumptions  <things you are treating as true but have NOT verified>
+## 11. Assumptions
 
 | ID | Assumption | Owner | Verify by | If it is false |
 |---|---|---|---|---|
@@ -349,7 +344,7 @@ with one line of reasoning. A short list here means you have not thought hard en
 | ASM-03 | The Supabase Edge Function will be able to safely store and call the Gemini AI API key | me | Week 6 | Use a server |
 | ASM-04 | Individuals will find the destressing activity suggestion range to pick from and use to be useful | me and stressed individuals testing it | Week 11 | Contuinally check with stressed individuals that the activities are helpful, in not then add or change the activity types |
 
-## 12. Dependencies  <things outside your control that you need>
+## 12. Dependencies 
 
 | ID | Dependency | Version / plan pinned | Failure mode | Fallback |
 |---|---|---|---|---|
@@ -361,14 +356,6 @@ with one line of reasoning. A short list here means you have not thought hard en
 
 | Obligation | Primary source (URL) | Date checked | What it requires of me |
 |---|---|---|---|
-| Gemini API terms for use and data | https://ai.google.dev/gemini-api/terms | 2026-09-18 | It requires that I follow the Prohibited Use Policy, don't use the AI API to provide any medical. I must follow the laws when using generated content. The unpaid AI API responses generated can be used to improve Google's technology, though this isn't true for the paid AI API. At the end it states I am responsible for the actions and tasks performed. |
-| Supabase Terms of Service | https://supabase.com/terms | 2026-09-18 | It requires that I understand how Supabase stores, protects, deletes, and backs up project data, and that I also must protect user data. |
-| Expo Terms of Service | https://expo.dev/terms | 2026-09-18 | It requires that I must properly keep user content secure, follow its usage rules, accept responsibility for my app and data, and follow Apple's app store rules when publishing my app. |
-
----
-
-**Document control.** Do not start a second version block. Bump the **Version** and
-**Date** in the header the Week-3 template already gave the document, then add one row
-to the existing **§9 Document Change Log** — date, version 1.1, the change
-("non-functional requirements, constraints, assumptions, dependencies, and obligations
-added"), and the reason ("Milestone 4").
+| Gemini API terms for use and data | https://ai.google.dev/gemini-api/terms | 2026-09-18 | It requires that I follow the Prohibited Use Policy and don't use the AI API to provide any medical. I must also follow the laws when using generated content. The unpaid AI API responses generated can be used to improve Google's technology, though this isn't true for the paid AI API. At the end it states I am responsible for the actions and tasks performed. |
+| Supabase Terms of Service | https://github.com/supabase/supabase/blob/master/LICENSE & https://supabase.com/terms | 2026-09-18 | It requires that I understand how Supabase stores, protects, deletes, and backs up project data, and that I also must protect user data. |
+| Expo Terms of Service | https://github.com/expo/expo/blob/main/LICENSE & https://expo.dev/terms | 2026-09-18 | It requires that I must properly keep user content secure, follow its usage rules, accept responsibility for my app and data, and follow Apple's app store rules when publishing my app. |

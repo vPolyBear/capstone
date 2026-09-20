@@ -188,3 +188,47 @@ Dependencies
     - Proposed: 21 Non Functional Requirements & 8 Obligations
     - Kept: 7 Non Functional Requirements & 2 Obligations
     - One specific thing it go wrong: That it thought that I wanted to have the journals or checks in to be deletable and wanted me to add in a non functional requirement for data deletion though I have never stated that deletation of the individual features data is possible. Only when the app is deleted would this data be deleted fully.
+
+
+## Rep 11 — Break it, then fix it
+
+ORPHAN REQUIREMENT (2)
+  - FR-005: no design element -- nothing in the system is responsible for it
+        - Demote FR-005 to Could and record the decision
+
+  - NFR-PRIV-02: no design element -- nothing in the system is responsible for it
+        - IdentifierOptService, Add the design element that will remove any names or user identifiers when the opting out is clicked on the opt pop up
+
+UNTESTED REQUIREMENT (3)
+  - FR-004: no test -- you cannot show it works, so it does not count
+        - Test by scanning in or typing in a barcode checking that each test returns the correct item each time
+
+  - FR-005: no test -- you cannot show it works, so it does not count
+        - Test by having each individual in the household can fully access and functionaltiy by changing, adding, or deleting items in the pantry
+
+  - NFR-PRIV-02: no test -- you cannot show it works, so it does not count
+        - Test that the opt in and out work when a user clicks either option checking that the item name or user identifier are only sent when the opt in is explicitly clicked by the user, otherwise, neither shall be sent to a third-party model
+
+UNMEASURABLE NFR (1)
+  - NFR-PERF-02: no measurement method -- this is a wish, not a requirement
+        - Measured by testing 10 times that a barcode lookup either returns or times out expecting that the recording times are within in p25 under 3 seconds
+
+UNREQUESTED WORK (1)
+  - ExportToCsvButton: built or planned with no requirement behind it -- cut it, or write the requirement and get it prioritized
+        - Cut the ExportToCsvButton, removing it, and then record the decision
+
+DUPLICATE ID (1)
+  - NFR-ACC-02: appears 2 times; identifiers must be unique and stable
+        - If the duplicate id is the same and the information in the row is also the same in both rows then delete the duplicate row. If it is not a duplicate row then increment the id and log as modified. Then record these decisions
+
+Example One Final Results:
+Clean. Every requirement is designed, tested, and measurable.
+
+My systems requirments arelisted in traceability-matrix.csv
+
+- There were 0 orphans on the first run and for all the requirements I listed I'm intending to build them.
+
+
+## Rep 12 — Write it, then cut it
+
+- No items were cut but just removed the (or, for a CLI, remain readable with color disabled) because my system wouldn't be for the terminal. Then I edited the "New user-facing screens..." checklist item to fit for mobile because keyboards aren't necessary for my system. The item that I kept but am least sure I will honor is the "At least one automated test..." checklist item as it will be harder to push myself to do them when I feel that I need to do a more important feature sooner than later. Though what I will change about my workflow to make sure it survives Week 12 is by getting in the habit of writing tests after each item to ensure I don't miss, procrastinate, or forget to do them.
