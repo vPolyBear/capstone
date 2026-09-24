@@ -1,0 +1,17 @@
+decision,criterion,weight,option,score,evidence
+# Long format: one row per (decision, option, criterion). Scores are 0-5.
+# Weights within a decision must sum to 1.00. Every row needs evidence.
+
+data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01, FR-OVER-01, FR-JOU-01, FR-AIA-01, FR-AIA-04),0.50, , ,
+data-store,should be affordable while still being able to store all the necessary data for my app,0.30 , , ,
+data-store,must be easy to use for just one person,0.20 , , ,
+hosting,cost should fit student scale through Week 16 (CON-01),0.25 , , ,
+hosting,must be able to deploy from a git push,0.15 , , ,
+hosting,works with both the data store and app environment (CON-02),0.30 , , ,
+hosting,must be easy to install set up run and maintain,0.30 , , ,
+AI-suggestions,hours to a first working version must be generally reasonable based on the 240 hour limit (CON-01, CON-03),0.15 , , ,
+AI-suggestions,must be able to provide proper suggestion based explanations and suggestions for an indviiduals stress (FR-AIA-01 & FR-AIA-04),0.20 , , ,
+AI-suggestions,meets FR-AIA-01 & FR-AIA-04 acceptance criteria,0.20 , , ,
+AI-suggestions,must not be expensive but reasonable at a student scale through Week 16 (CON-01),0.20 , , ,
+AI-suggestions,must reversible to a fallback if it is not available (NFR-AVA-01),0.15 , , ,
+AI-suggestions,works with both the data store app environment and hosting,0.10 , , ,

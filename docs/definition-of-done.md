@@ -45,4 +45,10 @@ enforces nothing. "If needed" is where documentation goes to die.
 
 ---
 
+## Cut list
+
+- No items were cut but just removed the (or, for a CLI, remain readable with color disabled) because my system wouldn't be for the terminal. Then I edited the "New user-facing screens..." checklist item to fit for mobile because keyboards aren't necessary for my system. The item that I kept but am least sure I will honor is the "At least one automated test..." checklist item as it will be harder to push myself to do them when I feel that I need to do a more important feature sooner than later. Though what I will change about my workflow to make sure it survives Week 12 is by getting in the habit of writing tests after each item to ensure I don't miss, procrastinate, or forget to do them.
+
+---
+
 **Adopted:** 2026-09-19 · **Revised:** 2026-09-19, Edited Definition of Done

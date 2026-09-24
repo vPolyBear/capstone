@@ -79,9 +79,6 @@ NFR-6  The app should work on mobile.
 
 ## Rep 4 — The data inventory
 
-Build the table from section 4.4 for your project. 
-One row per data element you touch — including things you would not have called data: email addresses, uploaded files, session logs, error reports, anything you send to a third party.
-
 | Data element | Why you need it | Where it lives | How long you keep it | How a user gets rid of it |
 |---|---|---|---|---|
 | Check in responses | To help stressed individuals to take a minute to calm and think about their stress, to show the overview of an individual stress throughout time, and it is used in the AI's analysis to provide some insight of current condition | It lives locally on the stressed individuals phone | Until they delete the app | There is no way to delete a check in currently unless a delete function is implemented |

@@ -252,6 +252,15 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ## 6. Non-Functional Requirements
 
+| Data element | Why you need it | Where it lives | How long you keep it | How a user gets rid of it |
+|---|---|---|---|---|
+| Check in responses | To help stressed individuals to take a minute to calm and think about their stress, to show the overview of an individual stress throughout time, and it is used in the AI's analysis to provide some insight of current condition | It lives locally on the stressed individuals phone | Until they delete the app | There is no way to delete a check in currently unless a delete function is implemented |
+| Journal Entries | To help stressed individuals express and reflected on their stress and feelings and it is used in the AI's analysis to provide more context | It lives locally on the stressed individuals phone | Until they delete the app | If they clear out an entry through editted unless a delete function is implemented |
+| Check in response and Journal Entries sent to the AI, Gemini | Need the responses and entries to create a suggestion based explanation and to provide an destressing suggestion | It lives in Gemini as that is were the information is being sent, it stores it if you don't pay for a premium version | N/A | N/A |
+| Google Gemini AI API Key | This is necessary in order to connect the stress management app to Gemini | Supabase Edge Function | N/A | N/A |
+
+- The two rows that I do not know the answer to are the 'Check in response and Journal Entries sent to the AI, Gemini' & 'Gemini AI API Key' rows in the columns 'How long you key it' and 'How a user gets rid of it'. The primary source I would read to find out is on Google Gemini's terms page for the 'Check in response and Journal Entries sent to the AI, Gemini' row and the Supabase terms page for the 'Gemini AI API Key' row.
+
 ### 6.1 Performance
 
 | ID | Requirement (metric · threshold · condition) | Priority | How it is measured |
@@ -283,8 +292,8 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 | ID | Requirement | Priority | How it is measured |
 |---|---|---|---|
-| NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on expecting 4 out the 5 individuals have 0 problems going through the app |
-| NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode and checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone and that all 5 main feature pass the 5 tests |
+| NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on first before opening the stress management app, then each of the 5 individuals will go through the app, and expecting that 4 out the 5 individuals have 0 problems going through the app reading and looking through features will the mode on |
+| NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode first before opening the stress management app, then checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone when a success, failure, or loadinig state appears, and recording that all 5 main feature pass the 5 tests |
 
 ### 6.6 Usability · 6.7 Maintainability · 6.8 Portability
 
