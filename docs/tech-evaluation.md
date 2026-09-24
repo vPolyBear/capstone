@@ -20,6 +20,7 @@
 | Supabase Edge Function | I want to use this for my app as it is a driver since it can help me store my AI API key safely and I have done more research on it than others though again it is a novelty load of 1 so it will take me a bit of extra time understanding it. | Driver + Résumé |
 | Expo API Route | This serves me as it works with Expo though later on it may cost me 7 to 10 more hours as it seems to need a server and I haven't really worked with those | Résumé |
 
+
 ## Generate the option space, then prune it
 
 Data store
@@ -33,7 +34,7 @@ The eight it provided me:
 1. Supabase (PostgreSQL)
 2. SQLite
 3. Realm / Atlas Device SDK
-4. Firebase Firestore
+4. WatermelonDB
 5. AsyncStorage
 6. IndexedDB
 7. JSON files / file-system storage (unfashionable)
@@ -41,13 +42,40 @@ The eight it provided me:
 
 5 not keeping (One sentence per deletion)
 1. Supabase (PostgreSQL) - It implements cloud, authentication, security, and synchronization complexity that the app may not actually need and it isn't used primarliy for local storage.
-2. Firebase Firestore - It can be hard to manage when data relationships and queries become more relational or complex.
+2. Realm / Atlas Device SDK - It has started to be depracted so over time it may not hold up as well as others.
 3. IndexedDB - It can be inconvenient when the application is native mobile rather than web-based.
 4. JSON files / file-system storage (unfashionable) - It may make updating, querying, validating, and safely modifying many independent records harder.
 5. CSV files (unfashionable) - It doesn't work well with relationships, concurrent updates, record modification, and querying.
 
 Top 3
 1. SQLite - It is a small embedded relational database that is very good at storing structured app data locally on a device without requiring a server.
-2. Realm / Atlas Device SDK - It is an object-oriented local database that is designed for mobile apps and can make working with structured objects convenient.
-3. AsyncStorage - It is a simple on device key value store that is good for small amounts of app states and preferences.
+2. AsyncStorage - It is a simple on device key value store that is good for small amounts of app states and preferences.
+3. WatermelonDB - It was designed for React Native and is better for bigger datasets which may be helpful overtime
 
+
+## The sensitivity pass
+
+- The winner did not change even when the weights were changed
+
+
+## The seam inventory
+
+List every boundary in your chosen stack where two pieces have to talk. Aim for six to ten rows. For each: what has to work across it, whether you have crossed that exact seam before, a risk rating, and a spike id if the risk is High.
+
+| Seam | What has to work | Crossed before? | Risk | Spike |
+|---|---|---|---|---|
+| Expo/React Native ↔ Supabase Edge Function | Expo/React Native must be able to send the prompt to the Supabase Edge Function and receive the AI's response back  | no | High | SP-01 |
+| Supabase Edge Function ↔ Gemini API | Supabase Edge Function must be able to send the prompt it got to the Gemini API and recieve the response back | no | High | SP-02 |
+| Supabase Edge Function ↔ Gemini API Key | Supabase Edge Function must be able to safely access the Gemini API Key without it being exposed | no | High | SP-03 |
+| Expo/React Native ↔ SQLite | Expo/React Native must be able to send or retrieve data from SQLite | no | High | SP-04 |
+| EAS ↔ Expo/React Native | EAS must be able to deploy and build the Expo/React Native app | no | Medium | SP-05 |
+| EAS Submit ↔ App Store | EAS Submit must be able to submit the app to the Apple App Store | no | Medium | SP-06 |
+
+
+## Count your novelty load
+
+1. Expo - this is innvolation token as it is the base for the mobile apps environment, requirements: DEP-02, NFR-MNT-01, CON-02. It will be spiked in SP-04.
+2. Gemini API - this provides the suggestion based explanation for stress and the activity suggestion based on the check ins and journal entries. It will be spiked in SP-02.
+Novelty Load: 2
+
+The two do not touch the same seam. The Supabase Edge Function is the middle man between Expo and Gemini API. 

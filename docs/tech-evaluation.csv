@@ -2,16 +2,39 @@ decision,criterion,weight,option,score,evidence
 # Long format: one row per (decision, option, criterion). Scores are 0-5.
 # Weights within a decision must sum to 1.00. Every row needs evidence.
 
-data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01, FR-OVER-01, FR-JOU-01, FR-AIA-01, FR-AIA-04),0.50, , ,
-data-store,should be affordable while still being able to store all the necessary data for my app,0.30 , , ,
-data-store,must be easy to use for just one person,0.20 , , ,
-hosting,cost should fit student scale through Week 16 (CON-01),0.25 , , ,
-hosting,must be able to deploy from a git push,0.15 , , ,
-hosting,works with both the data store and app environment (CON-02),0.30 , , ,
-hosting,must be easy to install set up run and maintain,0.30 , , ,
-AI-suggestions,hours to a first working version must be generally reasonable based on the 240 hour limit (CON-01, CON-03),0.15 , , ,
-AI-suggestions,must be able to provide proper suggestion based explanations and suggestions for an indviiduals stress (FR-AIA-01 & FR-AIA-04),0.20 , , ,
-AI-suggestions,meets FR-AIA-01 & FR-AIA-04 acceptance criteria,0.20 , , ,
-AI-suggestions,must not be expensive but reasonable at a student scale through Week 16 (CON-01),0.20 , , ,
-AI-suggestions,must reversible to a fallback if it is not available (NFR-AVA-01),0.15 , , ,
-AI-suggestions,works with both the data store app environment and hosting,0.10 , , ,
+data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,SQLite,5,"relational database that store locally and since there will be one individual per phone on the app the single-writer limit doesn't seem like it will be a risk"
+data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,AsyncStorage,3,"stores locally but stores as key value so data must be serialized to a string before storing"
+data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,WatermelonDB,4,"designed for React Native and built on top of SQLite and stores locally but the library make it more complex"
+data-store,should be affordable while still being able to store all the necessary data for my app,0.30,SQLite,5,"data is stored on one file on the local system so no extra database server or hosting needed"
+data-store,should be affordable while still being able to store all the necessary data for my app,0.30,AsyncStorage,5,"data is stored on one file on the local system so no extra database server or hosting needed"
+data-store,should be affordable while still being able to store all the necessary data for my app,0.30,WatermelonDB,5,"data is stored on one file on the local system so no extra database server or hosting needed"
+data-store,must be easy to use for just one person,0.20,SQLite,5,"no separate service and is easier for me to use because it uses SQL"
+data-store,must be easy to use for just one person,0.20,AsyncStorage,5,"no separate service and queries with key values"
+data-store,must be easy to use for just one person,0.20,WatermelonDB,3,"no separate service but the setup seems complex if using Expo Go"
+hosting,cost should fit student scale through Week 16 (CON-01),0.25,EAS,4,"free limits advertised but terms change so re-verify before Week 14"
+hosting,cost should fit student scale through Week 16 (CON-01),0.25,Codemagic,3,"free build minutes advertised but terms change so re-verify before Week 14"
+hosting,cost should fit student scale through Week 16 (CON-01),0.25,Bitrise,4,"free tier for personal projects/testing advertised but terms change so re-verify before Week 14"
+hosting,must be able to deploy from a git push,0.15,EAS,5,"it is deployable from git and there is minimal setup"
+hosting,must be able to deploy from a git push,0.15,Codemagic,4,"it is deployable from git and there is a little more setup needed"
+hosting,must be able to deploy from a git push,0.15,Bitrise,4,"it is deployable from git and there is more setup needed"
+hosting,works with both the data store and app environment (CON-02),0.30,EAS,5,"is designed for Expo/React Native apps"
+hosting,works with both the data store and app environment (CON-02),0.30,Codemagic,4,"supports Expo/React Native apps but may require extra work"
+hosting,works with both the data store and app environment (CON-02),0.30,Bitrise,4,"supports Expo/React Native apps but may require extra work"
+hosting,must be easy to install set up run and maintain,0.30,EAS,5,"is built into Expo so very minimal work is required overall"
+hosting,must be easy to install set up run and maintain,0.30,Codemagic,4,"easy to install setup and run but maintain may take a bit more effort"
+hosting,must be easy to install set up run and maintain,0.30,Bitrise,3,"hard to install setup and maintain because it take a lot more effort since it's more for teams"
+AI-suggestions,hours to a first working version must be generally reasonable based on the 240 hour limit (CON-01 CON-03),0.20,Gemini API,5,"falls within the 240 limit and is called through an endpoint and for a basic prompt and response it doesn't take too much work"
+AI-suggestions,hours to a first working version must be generally reasonable based on the 240 hour limit (CON-01 CON-03),0.20,Open AI API,4,"falls within the 240 limit and is called through HTTPS request and for a basic prompt and response it doesn't take too much work"
+AI-suggestions,hours to a first working version must be generally reasonable based on the 240 hour limit (CON-01 CON-03),0.20,Anthropic API,4,"falls within the 240 limit and is called through HTTPS request and for a basic prompt and response it doesn't take too much work"
+AI-suggestions,meets FR-AIA-01 & FR-AIA-04 acceptance criteria,0.25,Gemini API,5,"can generate a response based on a predetermined prompted in the time frame and reject prompts"
+AI-suggestions,meets FR-AIA-01 & FR-AIA-04 acceptance criteria,0.25,Open AI API,5,"can generate a response based on a predetermined prompted in the time frame and reject prompts"
+AI-suggestions,meets FR-AIA-01 & FR-AIA-04 acceptance criteria,0.25,Anthropic API,5,"can generate a response based on a predetermined prompted in the time frame and reject prompts"
+AI-suggestions,must not be expensive but reasonable at a student scale through Week 16 (CON-01),0.30,Gemini API,5,"provides a free tier and rate limit page check 2026-09-24"
+AI-suggestions,must not be expensive but reasonable at a student scale through Week 16 (CON-01),0.30,Open AI API,4,"does not provde a free tier and pricing page checked 2026-09-24 and the pricing is very low"
+AI-suggestions,must not be expensive but reasonable at a student scale through Week 16 (CON-01),0.30,Anthropic API,3,"does not provde a free tier and pricing page checked 2026-09-24 and the pricing costs the most"
+AI-suggestions,must reversible to a fallback if it is not available (NFR-AVA-01),0.15,Gemini API,5,"can go to the fallback if the API fails through checking for errors from the API and can be easily reversed"
+AI-suggestions,must reversible to a fallback if it is not available (NFR-AVA-01),0.15,Open AI API,5,"can go to the fallback if the API fails through checking for errors from the API and can be easily reversed"
+AI-suggestions,must reversible to a fallback if it is not available (NFR-AVA-01),0.15,Anthropic API,5,"can go to the fallback if the API fails through checking for errors from the API and can be reversed"
+AI-suggestions,works with both the data store app environment and hosting,0.10,Gemini API,5,"can easily pull information from these and can be deployed"
+AI-suggestions,works with both the data store app environment and hosting,0.10,Open AI API,5,"can easily pull information from these and can be deployed"
+AI-suggestions,works with both the data store app environment and hosting,0.10,Anthropic API,5,"can easily pull information from these and can be deployed"
