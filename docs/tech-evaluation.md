@@ -64,18 +64,78 @@ List every boundary in your chosen stack where two pieces have to talk. Aim for 
 
 | Seam | What has to work | Crossed before? | Risk | Spike |
 |---|---|---|---|---|
-| Expo/React Native ↔ Supabase Edge Function | Expo/React Native must be able to send the prompt to the Supabase Edge Function and receive the AI's response back  | no | High | SP-01 |
-| Supabase Edge Function ↔ Gemini API | Supabase Edge Function must be able to send the prompt it got to the Gemini API and recieve the response back | no | High | SP-02 |
-| Supabase Edge Function ↔ Gemini API Key | Supabase Edge Function must be able to safely access the Gemini API Key without it being exposed | no | High | SP-03 |
-| Expo/React Native ↔ SQLite | Expo/React Native must be able to send or retrieve data from SQLite | no | High | SP-04 |
+| Expo/React Native ↔ SQLite | Expo/React Native must be able to store or retrieve data from SQLite | no | Closed/Low (was completed successfully) | SP-01 |
+| Expo/React Native ↔ Supabase Edge Function | Expo/React Native must be able to send an AI prompt to the Supabase Edge Function and receive a response that the Edge Function got the prompt | no | High | SP-02 |
+| Supabase Edge Function ↔ Gemini API | Supabase Edge Function must be able to send the prompt it got to the Gemini API and recieve the response back | no | High | SP-03 |
+| Supabase Edge Function ↔ Gemini API Key | Supabase Edge Function must be able to safely access the Gemini API Key without it being exposed | no | High | SP-04 |
 | EAS ↔ Expo/React Native | EAS must be able to deploy and build the Expo/React Native app | no | Medium | SP-05 |
 | EAS Submit ↔ App Store | EAS Submit must be able to submit the app to the Apple App Store | no | Medium | SP-06 |
 
 
 ## Count your novelty load
 
-1. Expo - this is innvolation token as it is the base for the mobile apps environment, requirements: DEP-02, NFR-MNT-01, CON-02. It will be spiked in SP-04.
+1. Expo - this is innvolation token as it is the base for the mobile apps environment, requirements: DEP-02, NFR-MNT-01, CON-02. It will be spiked in SP-01.
 2. Gemini API - this provides the suggestion based explanation for stress and the activity suggestion based on the check ins and journal entries. It will be spiked in SP-02.
 Novelty Load: 2
 
 The two do not touch the same seam. The Supabase Edge Function is the middle man between Expo and Gemini API. 
+
+
+## The cost sheet and the free-tier watch list
+
+### Cost Sheet:
+| Service | Total |
+|---|---|
+| Expo | Free for solo developers - 0 dollars |
+| React Native | Free and open source - 0 dollars |
+| Expo SQLite | Free and open source - 0 dollars |
+| EAS (Expo Application Services) | Free tier 15 iOS and Android builds - 0 dollars |
+| Supabase Edge Function | Free tier with 500,000 invocations - 0 dollars |
+| Gemini API | Free tier rate limits - 0 dollars |
+
+### Watch List:
+| Service | What is free | Where I read it | Date I read it | The risk | What I'll do if it ends |
+|---|---|---|---|---|---|
+| Expo | 15 Android and 15 iOS builds, Low-priority queue, 60 min. on CI/CD Workflows, Submit to app stores, Send updates to 1K MAUs, Access to Launch, Access to Observe | Expo Pricing Page (https://expo.dev/pricing) | 2026-09-25 | Free tier is removed or free tier access is shrunken | I'll check if the tiers that cost money are reasonable and if not try to find another development setup like React Native CLI |
+| React Native | Everything is free because it is open source under MIT License | React Native's License | 2026-09-25 | It is no longer open source and costs too much or the development environment changes too much and doesn't work with core features | Stay on an earlier version that is open source or update only when necessary |
+| Expo SQLite | Everything is free as it is open source because it is built from SQLite which is open source | Expo Pricing Page (https://expo.dev/pricing) | 2026-09-25 | It is no longer open source and costs too much | I would switch to AsyncStorage |
+| EAS | 15 iOS and Android builds, low-priority builds on EAS Build, and free updates with EAS Update | Expo Pricing Page (https://expo.dev/pricing & https://docs.expo.dev/billing/plans/) | 2026-09-25 | I need more builds, or free tiers abilities lessen or change | Pay for a tier or switch to Codemagic or Bitrise |
+| Supabase Edge Function | 500,000 invocations per month (function calls to Edge Function that calls AI API) | Supabase Edge Functions Pricing Page (https://supabase.com/docs/guides/functions/pricing) | 2026-09-25 | Going over the 500,000 quota charges you for usage exceeding your subscription plan's quota | I go over 500,000 or it can no longer keep the AI API key safe because of changes | Pay 2 dollars or switch to Vercel Serverless Functions |
+| Gemini API | 5 Request per minute, 250K tokens per minute, 20 requests per day (Gemini 3.6 Flash) | Google's limits page (https://ai.google.dev/gemini-api/docs/rate-limits) | 2026-09-25 | Free tier limits change and are too low causing me to need to pay for a tier | Pay for a tier or try switching to OpenAI or Anthropic if too costly |
+
+- Monthly Total: 0 dollars
+- The single line most likely to surprise you: the Gemini AI API provides a lot even with being free, 
+- If this service ended in Week 12, how many hours would it cost me to move? If the answer is more than eight, that dependency needs a Plan B written now, not discovered then.
+
+| Service | Hours it would cost to move if service ended in Week 12 | Plan B |
+|---|---|---|
+| Expo | 8 hours | Move to React Native CLI |
+| React Native | 13 hours | Switch to Flutter |
+| Expo SQLite | 7 hours | Switch to AsyncStorage |
+| EAS | 5 hours | Switch to Codemagic or Bitrise |
+| Supabase Edge Function | 6 hours | Switch to Vercel Serverless Functions |
+| Gemini API | 7 hours | Switch to OpenAI or Anthropic |
+
+
+## The license inventory
+
+| Dependency | SPDX id | Type | Obligation on me | Ship? |
+|---|---|---|---|---|
+| Expo	| MIT | Permissive | Keep the copyright and license notices | Yes | 
+| React Native | MIT | Permissive | Keep the copyright and license notices | Yes |
+| Expo SQLite | MIT | Permissive | Keep the copyright and license notices | Yes | 
+| EAS (Expo Application Services) | BSL-1.1 | Source-Available | May make use of the Licensed Work, provided that I follow the Additional Use Grant and the terms it provided | No | 
+| Supabase Edge Function | MIT | Permissive | Keep the copyright and license notices | No | 
+| Gemini API | none | API Service | Follow Gemini API terms for use and data | No | 
+| Expo UI Components | MIT | Permissive | Keep the copyright and license notices | Decide deliberately | 
+| Expo Vector-Icons | MIT | Permissive | Keep the copyright and license notices. | Decide deliberately |
+| Unsplash Images | None | Free to use images license | Free to download, copy, modify, distribute, perform, and use images from Unsplash for free, including for commercial purposes, without permission from or attributing the photographer or Unsplash. The license also does not include the right to compile images from Unsplash to replicate a similar or competing service. | Decide deliberately |
+
+- I would have been wrong about EAS because though it is part of Expo it still holds a different license because it is for deployment. Then also Supabase Edge Function because I thought it would have been like Supabase which is under Apache 2.0 but the Edge Functions are MIT because it's not apart of the main evironment that needs more to be protected as much. 
+
+
+## Verify five claims, and record your hit rate
+
+| Claim as stated | Verdict | Source (vendor URL) | Checked |
+|---|---|---|---|
+| Note to remind Dr. Litman: I decided not to use AI on anything this week so the table did not need to be filled out | 

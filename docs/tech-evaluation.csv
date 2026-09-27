@@ -3,7 +3,7 @@ decision,criterion,weight,option,score,evidence
 # Weights within a decision must sum to 1.00. Every row needs evidence.
 
 data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,SQLite,5,"relational database that store locally and since there will be one individual per phone on the app the single-writer limit doesn't seem like it will be a risk"
-data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,AsyncStorage,3,"stores locally but stores as key value so data must be serialized to a string before storing"
+data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,AsyncStorage,4,"stores locally but stores as key value so data must be serialized to a string before storing"
 data-store,can store and retrieve check ins and journal entries inputs on an individuals phone (FR-QUES-01 FR-OVER-01 FR-JOU-01 FR-AIA-01 FR-AIA-04),0.50,WatermelonDB,4,"designed for React Native and built on top of SQLite and stores locally but the library make it more complex"
 data-store,should be affordable while still being able to store all the necessary data for my app,0.30,SQLite,5,"data is stored on one file on the local system so no extra database server or hosting needed"
 data-store,should be affordable while still being able to store all the necessary data for my app,0.30,AsyncStorage,5,"data is stored on one file on the local system so no extra database server or hosting needed"
