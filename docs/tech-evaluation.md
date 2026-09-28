@@ -74,7 +74,7 @@ List every boundary in your chosen stack where two pieces have to talk. Aim for 
 
 ## Count your novelty load
 
-1. Expo - this is innvolation token as it is the base for the mobile apps environment, requirements: DEP-02, NFR-MNT-01, CON-02. It will be spiked in SP-01.
+1. Expo/React Native - this is innvolation token as it is the base for the mobile apps environment, requirements: DEP-02, NFR-MNT-01, CON-02, FR-QUES-01, FR-OVER-01, FR-JOU-01, FR-ACT-01, FR-AIA-01, FR-AIA-04, NFR-PORT-01. It will be spiked in SP-01.
 2. Gemini API - this provides the suggestion based explanation for stress and the activity suggestion based on the check ins and journal entries. It will be spiked in SP-02.
 Novelty Load: 2
 
@@ -86,7 +86,7 @@ The two do not touch the same seam. The Supabase Edge Function is the middle man
 ### Cost Sheet:
 | Service | Total |
 |---|---|
-| Expo | Free for solo developers - 0 dollars |
+| Expo | Free tier for solo developers - 0 dollars |
 | React Native | Free and open source - 0 dollars |
 | Expo SQLite | Free and open source - 0 dollars |
 | EAS (Expo Application Services) | Free tier 15 iOS and Android builds - 0 dollars |
