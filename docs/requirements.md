@@ -293,7 +293,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 | ID | Requirement | Priority | How it is measured |
 |---|---|---|---|
 | NFR-ACC-01 | Stressed individuals shall be able to go through each 5 main features in the app with 0 problems as each will have easy readable fonts and text size, and contrasts in colors | Must | Measured with 5 individuals that go through the app with the grayscale setting on first before opening the stress management app, then each of the 5 individuals will go through the app, and expecting that 4 out the 5 individuals have 0 problems going through the app reading and looking through features will the mode on |
-| NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode first before opening the stress management app, then checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone when a success, failure, or loadinig state appears, and recording that all 5 main feature pass the 5 tests |
+| NFR-ACC-02 | The app shall show success, failure, and loading states and message without relying on color alone in 5 out of the 5 tests. | Must | Measured by turning on the grayscale mode first before opening the stress management app, then checking the 5 main features, expecting the recording shows that 0 main feature rely on color alone when a success, failure, or loading state appears, and recording that all 5 main feature pass the 5 tests |
 
 ### 6.6 Usability · 6.7 Maintainability · 6.8 Portability
 
