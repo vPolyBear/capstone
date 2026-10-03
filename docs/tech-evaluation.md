@@ -26,7 +26,7 @@
 Data store
 
 Ask an assistant to widen the field:
-For a solo developer building a stress management app with check ins, journal entries, weekly and monthly overviews, and ai analysis, there are over about 200 remaining hours, list eight options for data store. Include at least two that are unfashionable. For each: one sentence on what it is best at, and one sentence on its most common failure mode. Do not recommend one. 
+For a solo developer building a stress manager app with check ins, journal entries, weekly and monthly overviews, and ai analysis, there are over about 200 remaining hours, list eight options for data store. Include at least two that are unfashionable. For each: one sentence on what it is best at, and one sentence on its most common failure mode. Do not recommend one. 
 
 Now prune to three, on paper, by hand. Keep at least one option you did not previously want. Delete anything with a novelty load you cannot afford.
 

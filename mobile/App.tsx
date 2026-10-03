@@ -59,7 +59,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Stress Management App</Text>
+      <Text>Stress Manager</Text>
       <Button title="Press to Test Inserting 5 Check-Ins and Journal Entries" onPress={testData} />
       <Text>{result}</Text>
     </View>

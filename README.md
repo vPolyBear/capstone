@@ -3,7 +3,7 @@
 Senior capstone by Katherine Spencer, Fall 2026. **Status: Week 4 — Non-Functional Requirements, Constraints & Definition of Done** 
 
 ## Project idea
-The project idea is a stress management that aims to help individuals deal with their stress through check ins, overviews, journaling, destressing activities, and AI analysis.
+The project idea is a stress management app that aims to help individuals deal with their stress through check ins, overviews, journaling, destressing activities, and AI analysis.
 
 ## What is here
 - `docs/charter.md` — scope, constraints, non-goals, risks, working agreement
