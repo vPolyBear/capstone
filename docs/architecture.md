@@ -95,15 +95,15 @@ Error Number | What a user is shown for each | What gets logged |
 ### Entity: check-in            (serves FR-QUES-01)
 Purpose        A set of check-in questions that are completed by a stressed individual is record
   id                        integer         PK          the univeral unique identifier for the specifc check-in
-  date                      timestamptz     NOT NULL    date and time the check-in was completed
-  stress_level              integer         NOT NULL    level ranges from 1-10~ 1: very low stress; 10: very high stress
+  date                      datetime     NOT NULL    date and time the check-in was completed
+  stress_level              integer         NOT NULL    CHECK level ranges from 1-10~ 1: very low stress; 10: very high stress
   mood                      text            NOT NULL    enum: 'happy' | 'angry' | 'sad' | 'frustrated' | 'tense' | 'bored' | 'nervous' | 'worried' | 'calm' | 'scared' | 'lonely' | 'excited' |
   physical_stress_location  text            NULL        (null = unknown stress area present in body) enum: 'jaw' | 'teeth' | 'neck' | 'shoulders/traps' | 'head' | 'stomach' | 'chest' | 'back' | 'hips' | 'arms' | 'legs' | 'hands' | 'feet' | 
   physical_symptoms         text            NULL        (null = no physical symptoms present/known) enum: 'headache' | 'migraine' |  'dizzy' | 'fatigue' | 'upset stomach' | 'racing heart' | 'tense muscles' | 'twitches' | 'shortness of breath' | 'illness' | 'heart palpitations'
   hours_slept               decimal         NULL        (null = unknown/sleep was not tracked)
   water_consumed            decimal         NULL        (null = unknown amount of water consumed)
-  eaten_recently            boolean         NOT NULL    true/yes = eaten recently; false/no = has not eaten recently
-  concentration_level       integer         NOT NULL    level ranges from 1-10~ 1: very to concentrate; very hard to concentrate
+  eaten_recently            boolean         NOT NULL    true = eaten recently; false = has not eaten recently
+  concentration_level       integer         NOT NULL    CHECK level ranges from 1-10~ 1: very to concentrate; very hard to concentrate
   stress_cause              text            NULL        (null = unknown stress cause) enum: 'school' | 'work' | 'time' | 'deadline' | 'finances' | 'relationship' | 'family' | 'argument' | 'loss' | 'health' | 'big change' | 'surroundings' | 'lack of control' | 'overthinking' | 'uncertainty' | 'lonely' | 'procrastination' | 
   stress_duration           integer         NULL        (null = unknown length of time that stress has been happening)
 Invariants     I1: a stress level can not be lower than 1 and higher than 10 
@@ -117,7 +117,7 @@ Lifecycle      Created when a check-in set is submitted successfully. Possible u
 ### Entity: journal-entry                (serves FR-JOU-01)
 Purpose        A journal entry that is written by a stressed individual is record
   id                        integer         PK          the univeral unique identifier for the specifc journal entry
-  date                      timestamptz     NOT NULL    date and time the journal entry was completed
+  date                      datetime     NOT NULL    date and time the journal entry was completed
   entry                     text            NOT NULL    the text that was written into the journal entry
 Invariants     I1: every entry can not be blank/empty
                I2: each journal entry must have a unique identifier
@@ -129,7 +129,7 @@ Lifecycle      Created when a journal entry is submitted successfully. Hard dele
 Mechanism      numbered SQL files applied in order and tracked in a schema_migrations table
 Direction      forward-only
 Path + runner  migrations/0001-initial.sql, applied by the setup script your Week 14 clean-machine test will execute
-Conventions    timestamps UTC; enums constrained;
+Conventions    enums constrained;
 
 ## 7. Sequence Flows
 ### Flow 1 — Add a check in response   (serves FR-QUES-01; money path: used in most areas of the app)
@@ -158,17 +158,36 @@ Conventions    timestamps UTC; enums constrained;
 | 5: The Supabase Edge Function sends that Gemini AI API failed to produce an AI Analysis response to the mobile app | The mobile app takes longer to produce a keyword fallback response | The mobile app contuines to load the keyword fallback | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
 
 ## 8. Error Handling and Edge Cases
-| Category | Policy |
-|---|---|
-| Invalid input / Not authorized / Not found / Conflict / Dependency failure / Exhaustion | |
+| Category | Example | Policy |
+|---|---|---|
+| Invalid input | Missing required check in response | Reject the input and provide a message stating that a required check in is missing |
+| Not authorized | A stress individual tries to send a message to the AI API instead of one of the predetermined prompts | Rejects the request and states that they are not allow send something other than one of the predetermined prompts |
+| Not found | The selected check in or journal entry is not found | Provide a message stating that the check in or journal entry was not found and to try selecting a different check in or journal entry |
+| Conflict | A stressed individual tries to send another AI Analysis prompt request before the first is done | Finish the first request and provide a message stating to send the other one after the first is done if they still want to send it |
+| Dependency failure | Gemini AI API is unavailable or fails | Shows the keyword fallback and provides a message stating that this is an alter experience and to try again later for the full experience |
+| Exhaustion | Gemini AI API free tier is fully used up | Shows the keyword fallback and provides a message stating that this is an alter experience and to try again later for the full experience |
 
 For every call that leaves this process:
 | Call | Timeout (s) | Retries + backoff | Fallback | User is told? |
 |---|---|---|---|---|
+| The Mobile app calls the Supabase Edge Function | 25 seconds | 0 retries | the keyword fallback | Yes |
+| The Supabase Edge Function calls the Gemini API | 20 seconds | 0 retries | the keyword fallback | Yes |
 
 Edge-case register (12+ entries; these become tests in Week 11):
-| # | Edge case | Expected behavior |
-|---|---|---|
+| # | Edge case | Expected behavior | Becomes test |
+|---|---|---|---|
+| 1 | Empty state: there are no check ins done, first run | The Overview page states that check in responses are needed before results can appear. | Week 11 |
+| 2 | Empty state: there are no journal entries done, first run | The AI Analysis page states that more journal entries are needed before the AI Analysis can provide a useful response. | Week 11 |
+| 3 | There is exactly one check in done | The Overview page displays the check in in the weekly and monthly graphs | Week 11 |
+| 4 | There is exactly one journal done | The AI Analysis can provide a suggestion, an explanation or aid | Week 11 |
+| 5 | There are one thousand AI Analysis requests within 5 seconds | The system rejects all the requests and states to request one at a time | Week 11 |
+| 6 | Blank journal entry is made | The entry isn't displayed or saved | Week 11 |
+| 7 | A journal entry is made with only spaces | The entry isn't displayed or saved | Week 11 |
+| 8 | A stress individual tries to submit a check in with none of the required check ins filled in | The system rejects it and states that the required fields must be filled in | Week 11 |
+| 9 | The Gemini AI API is unavailable | The keyword fallback is displayed | Week 11 |
+| 10 | The Gemini AI API takes to long to process the request | The keyword fallback is displayed  | Week 11 |
+| 11 | Various symbols are entered into the journal entry | They should be displayed as they were entered in like | Week 11 |
+| 12 | The mobile app is closed before the AI Analysis request is done | The request doesn't continue | Week 11 |
 
 ## 9. External and Nondeterministic Dependencies
 For an AI component, the prompt contract: purpose, inputs, privacy rule, prompt
@@ -305,14 +324,14 @@ Reflect: Where were you about to use two different error shapes in the same syst
 Purpose        A set of check-in questions that are completed by a stressed individual is record
   id                        integer         PK          the univeral unique identifier for the specifc check-in
   date                      datetime        NOT NULL    date and time the check-in was completed
-  stress_level              integer         NOT NULL    level ranges from 1-10~ 1: very low stress; 10: very high stress
+  stress_level              integer         NOT NULL    CHECK level ranges from 1-10~ 1: very low stress; 10: very high stress
   mood                      text            NOT NULL    enum: 'happy' | 'angry' | 'sad' | 'frustrated' | 'tense' | 'bored' | 'nervous' | 'worried' | 'calm' | 'scared' | 'lonely' | 'excited' |
   physical_stress_location  text            NULL        (null = unknown stress area present in body) enum: 'jaw' | 'teeth' | 'neck' | 'shoulders/traps' | 'head' | 'stomach' | 'chest' | 'back' | 'hips' | 'arms' | 'legs' | 'hands' | 'feet' | 
   physical_symptoms         text            NULL        (null = no physical symptoms present/known) enum: 'headache' | 'migraine' |  'dizzy' | 'fatigue' | 'upset stomach' | 'racing heart' | 'tense muscles' | 'twitches' | 'shortness of breath' | 'illness' | 'heart palpitations'
   hours_slept               decimal         NULL        (null = unknown/sleep was not tracked)
   water_consumed            decimal         NULL        (null = unknown amount of water consumed)
   eaten_recently            boolean         NOT NULL    true = eaten recently; false = has not eaten recently
-  concentration_level       integer         NOT NULL    level ranges from 1-10~ 1: very to concentrate; very hard to concentrate
+  concentration_level       integer         NOT NULL    CHECK level ranges from 1-10~ 1: very to concentrate; very hard to concentrate
   stress_cause              text            NULL        (null = unknown stress cause) enum: 'school' | 'work' | 'time' | 'deadline' | 'finances' | 'relationship' | 'family' | 'argument' | 'loss' | 'health' | 'big change' | 'surroundings' | 'lack of control' | 'overthinking' | 'uncertainty' | 'lonely' | 'procrastination' | 
   stress_duration           integer         NULL        (null = unknown length of time that stress has been happening)
 Invariants     I1: a stress level can not be lower than 1 and higher than 10 
@@ -374,6 +393,77 @@ Reflect: What did the failure branch change about your interface contract from R
 1. Migration mechanism: numbered SQL files applied in order and tracked in a schema_migrations table  (tool, or numbered SQL files applied in order and tracked in a schema_migrations table)
 2. Forward-only or reversible: forward-only  (forward-only is fine —
    what is not fine is not knowing)
-3. Path and runner: migrations/0001-initial.sql , applied by the setup script
+3. Path and runner: migrations/0001-initial.sql , applied by the setup script in the src/lib/database.ts
    (the same script the Week 14 clean-machine test will run)
-4. Conventions: timestamps UTC; enums constrained;
+4. Conventions: enums constrained;
+
+Reflect: What is your plan for the first schema change after you have data you care about? Write the two sentences now, while it is hypothetical and therefore easy to be honest about.
+- What my plan is for the first schema change after I have data that I care about, is that I will create another new numbered migration file instead of going back and changing the other older migration file. Then I will also test the newer migration file with a test copy of database before making it permanent.
+
+
+## Rep 10 — Error policy and the edge-case register
+
+| Category | Example | Policy |
+|---|---|---|
+| Invalid input | Missing required check in response | Reject the input and provide a message stating that a required check in is missing |
+| Not authorized | A stress individual tries to send a message to the AI API instead of one of the predetermined prompts | Rejects the request and states that they are not allow send something other than one of the predetermined prompts |
+| Not found | The selected check in or journal entry is not found | Provide a message stating that the check in or journal entry was not found and to try selecting a different check in or journal entry |
+| Conflict | A stressed individual tries to send another AI Analysis prompt request before the first is done | Finish the first request and provide a message stating to send the other one after the first is done if they still want to send it |
+| Dependency failure | Gemini AI API is unavailable or fails | Shows the keyword fallback and provides a message stating that this is an alter experience and to try again later for the full experience |
+| Exhaustion | Gemini AI API free tier is fully used up | Shows the keyword fallback and provides a message stating that this is an alter experience and to try again later for the full experience |
+
+For every call that leaves this process:
+| Call | Timeout (s) | Retries + backoff | Fallback | User is told? |
+|---|---|---|---|---|
+| The Mobile app calls the Supabase Edge Function | 25 seconds | 0 retries | the keyword fallback | Yes |
+| The Supabase Edge Function calls the Gemini API | 20 seconds | 0 retries | the keyword fallback | Yes |
+
+Edge-case register (12+ entries; these become tests in Week 11):
+| # | Edge case | Expected behavior | Becomes test |
+|---|---|---|---|
+| 1 | Empty state: there are no check ins done, first run | The Overview page states that check in responses are needed before results can appear. | Week 11 |
+| 2 | Empty state: there are no journal entries done, first run | The AI Analysis page states that more journal entries are needed before the AI Analysis can provide a useful response. | Week 11 |
+| 3 | There is exactly one check in done | The Overview page displays the check in in the weekly and monthly graphs | Week 11 |
+| 4 | There is exactly one journal done | The AI Analysis can provide a suggestion, an explanation or aid | Week 11 |
+| 5 | There are one thousand AI Analysis requests within 5 seconds | The system rejects all the requests and states to request one at a time | Week 11 |
+| 6 | Blank journal entry is made | The entry isn't displayed or saved | Week 11 |
+| 7 | A journal entry is made with only spaces | The entry isn't displayed or saved | Week 11 |
+| 8 | A stress individual tries to submit a check in with none of the required check ins filled in | The system rejects it and states that the required fields must be filled in | Week 11 |
+| 9 | The Gemini AI API is unavailable | The keyword fallback is displayed | Week 11 |
+| 10 | The Gemini AI API takes to long to process the request | The keyword fallback is displayed  | Week 11 |
+| 11 | Various symbols are entered into the journal entry | They should be displayed as they were entered in like | Week 11 |
+| 12 | The mobile app is closed before the AI Analysis request is done | The request doesn't continue | Week 11 |
+
+Reflect: Which external call did you discover had no timeout at all in your plan? Look up what your client library’s default actually is and write the number down — some defaults are “forever.”
+- The external call I discovered had no timeout at all in my plan was techinally the Supabase Edge Function to Gemini AI API. The Supabase Edge Function's default has to set my me, which will be set to 25 seconds.
+
+
+## Rep 11 — Rewrite the vague specification
+
+FR-12 — Search                           Priority: Must
+Owner: search   ·   Depends on: database
+
+Definition  The search feature will use the databases search feature to search through their data, searching for keywords. Results similar to what was search will be returned and displayed as paginated if it goes past 25 rows returned. The search must be able to find results than match no matter the case and state no results found when the search doesn't match anything in the database.
+Trigger  The individual submits the search to search for a specific data piece
+Behavior
+  1. Search through the database for the data entered in
+  2. Find the results in the database that match what was searched for
+  3. If results are found return the results from the database that match what was searched for and paginate the results
+  4. If no results are found state nothing matched
+Data  reads database · writes nothing. Search is done by GET /search?word={word}.
+Errors  search fails -> retry twice (30s, 300s); on final failure
+  show no results and state that something went wrong when searching. Search was invaild. -> state that it was invalid and to retry searching something else.
+Edge  searched only spaces -> ignore the spaces -> if a word is added to the spaces search for the word ignoring the spaces
+UI  Each page as up to 25 rows. When there is no results found state no matches were found.
+Acceptance (Week 11 turns these into tests, verbatim)
+  AC-12.1 searching for a keyword -> displays results that has the keyword
+  AC-12.2 searching for a keyword where no data has the keyword        -> state that no matches were found
+  AC-12.3 searching with different cases    -> search normally that match the keyword ignoring the case
+  AC-12.4 search result exceed 25 rows                -> paginate the other rows to another page
+OPEN QUESTION (blocks build of `notify`; needed by Week 9)
+  Will the search just be keyword or will it be another different type of search? 
+  Blocked on what the actual type of search will be used.
+  Owner: Katherine Spencer.  Decide by: end of Week 7.
+
+Reflect: Count the decisions you added.
+- I added in ~8 decisions.
