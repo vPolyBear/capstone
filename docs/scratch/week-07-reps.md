@@ -140,13 +140,13 @@ Reflect: What is your verdict line, verbatim? If you are over budget, by how man
 
 | Week | Chapter, quiz, reps, milestone write-up | Known losses | Available for this plan |
 |---|---:|---:|
-| 8 | 12 | none | 8 |
+| 8 | 12 | broken week | 8 |
 | 9 | 7 | none | 13 |
 | 10 | 5 | none | 15 |
 | 11 | 7 | none | 13 |
 | 12 | 7 | none | 13 |
 | 13 | 7 | none | 13 |
-| 14 | 7 | none | 13 |
+| 14 | 7 | broken week | 13 |
 | 15 | 7 | none | 13 |
 | 16 | 7 | none | 13 |
 | **Total** | **66** | **114** |
@@ -161,3 +161,26 @@ Calibrated WBS total __96.14__ h   ·   Gap __10.64__ h
 
 Reflect: Was your first instinct to lower the buffer or to cut scope? Both close the gap on paper. Only one of them still closes it in Week 13.
 - My first instinct was to cut the scope to close the gap because I already knew that I would likely need to cut some of the shoulds or coulds and this proves it to me that this is necessary so it lowers the work load time without removing the buffer because it is important to have the buffer in place just in case something goes wrong or if I am even slower than I predicted.
+
+## Rep 10 — Twelve risks, culled to eight, with triggers that can fire
+Reflect: Which of your responses is not yet a task in your WBS with hours attached? Add it now and note what it did to your total — a response with no hours is a hope. And which risk could not be given an observable trigger? That is either a badly written risk or a genuinely unobservable one; say which, and either rewrite it until it can be seen or accept it and write the contingency.
+- Mainly responses in risks (R-04, R-05, R-07, R-08) state to check the Gemini API documentation and the Supabase Edge Function so I updated WP-5 to include more explanation for what deteremines the task is done, so this did not change any of the hours. Then R-03 was a badly written risk so I updated it so that the trigger can be better understood, clarified, and followed.
+
+## Rep 11 — The breadth pass, and its price
+
+Tasks proposed: __22__   kept: __4__   genuinely new to me: __2__
+Risks proposed: __15__   kept: __2__   genuinely new to me: __2__
+Of the durations it produced: how many were identical? __7__  spread given? __3.1__
+
+Reflect: Where was it worth the fifteen minutes, and where was it confidently wrong? Name one task it proposed that you would not have thought of, and one duration that would have hurt you if you had believed it.
+- Where it was worth the fifteen minutes was that it showed to me new ideas for a new task that I could implement into one task for WP-5 that would help to ensure that the AI Analysis and Supabase Edge Function had proper documentation, testing, and error handling. Though where it was confidently wrong was by implementing tasks and risks that did not apply to my app at all. Then I would not have thought of ensuring that the Gemini's AI API response had all of the correct fields filled in because reminded me that can also happen on that side, not just on my side. It provided a 2.2 hour estimate for T-5.7 though it actually needed 3.2 hours and so it would have hurt to believe that it didn't take as long as it does especially because it is a more of a final task.
+
+## Rep 12 — Budget what AI costs you
+
+Then estimate one upcoming task twice: once assuming you write it yourself, once assuming you generate and review it.
+
+T-5.6  by hand:   O _2_  M _3_  P _5_   ->  E __3.2__
+T-5.6  generated: generation __.5__ + review __1__ + debugging __.75__  =  __2.25__
+
+Reflect: Which is smaller, and by how much? Say plainly how confident you are in the second number, and what evidence would change your mind.
+- The generated task is smaller by .95. I am relatively confident in the second number because I know that generating things don't take that long at all and it can do it relatively accurate so reviewing and debugging probably wouldn't take that long either, but what would change my mind is if the generated result is really inaccurate and produces a lot of errors. 

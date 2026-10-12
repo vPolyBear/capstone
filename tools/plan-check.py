@@ -7,7 +7,7 @@ your remaining weekly capacity, and reports the first week the plan goes over.
 
 Usage:
   python tools/plan-check.py docs/my-wbs.csv
-  python tools/plan-check.py docs/my-wbs.csv --buffer 0.25 --exclude WP-5,WP-3
+  python tools/plan-check.py docs/my-wbs.csv --capacity 8,13,15,13,13,13,13,13,13 --buffer 0.25 --exclude T-3.6,T-1.6,T-2.5,T-4.6,T-7.2,T-1.5
   python tools/plan-check.py docs/my-wbs.csv --capacity 8,13,15,13,13,13,13,13,13 --buffer 0.25 --start-week 8
 
 Nothing here is magic. Read it, change the numbers, argue with the verdict.
