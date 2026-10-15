@@ -21,10 +21,10 @@ Diagram: docs/diagrams/Level1-Context.png
 Diagram: docs/diagrams/Level2-Containers.png
 | Container | Responsibility (one sentence) | Technology | Runs where | Holds secrets? |
 |---|---|---|---|---|
-| Mobile app | Takes in the stressed individuals checks ins to create an overview then also takens in their journal entries using both for the AI Analysis, then has activity options, all present on the UI in Expo Go. | Expo + React Native | on the stressed individuals mobile device | no |
+| Mobile app | Takes in the stressed individuals checks ins to create an overview then also takes in their journal entries using both for the AI Analysis, then has activity options, all present on the UI in Expo Go. | Expo + React Native | on the stressed individuals mobile device | no |
 | Local Relational Database | Stores the check ins and journal entries locally on the stressed individuals device | Expo SQLite | on the stressed individuals mobile device | no |
 | Edge Function | Provides a place to securely store the Gemini API key and receives the AI Analysis requests, calls the Gemini API, and returns the AI analysis response back | Supabase Edge Function | Supabase Edge Runtime (server-side function) | yes, the Gemini API key |
-| API service | Provides a suggestion based explanantion for the stressed individuals stress or a suggestion for a destresssing aid when prompted with a predetermined prompt | Gemini AI API | Google's servers | no |
+| API service | Provides a suggestion based explanation for the stressed individuals stress or a suggestion for a destressing aid when prompted with a predetermined prompt | Gemini AI API | Google's servers | no |
 
 Trust boundary: The trust boundary is between the mobile app and the edge function as the mobile app and local relational database run on the user's machine and the edge function holds the secrets on a server and API service runs on Google's servers (NFR-SEC-01).
 
@@ -32,18 +32,18 @@ Trust boundary: The trust boundary is between the mobile app and the edge functi
 Diagram: docs/diagrams/Level3-Components.png
 | Component | Responsibility (verb first) | Owns (state) | Depends on | Serves (req IDs) |
 |---|---|---|---|---|
-| `check-ins` | Displays check in questions and records responses | `responses` | database | FR-QUES-01 | 
-| `journals` | Provides a journaling spot and records entries | `entries` | database | FR-JOU-01 | 
-| `overview` | Displays check in results in weekly and monthly graphs | `graphs` | database, `check-in` | FR-OVER-01 | 
-| `activities` | Provides destressing activities to go through | `activities` | none | FR-ACT-01 | 
-| `analysis` | Provides predetermined prompts for suggestions on stress analysis and aids, with a keyword fallback | `analysis` | gemini API, edge function, database, `check-ins`, `journals` | FR-AIA-01, FR-AIA-04, NFR-AVA-01, NFR-PERF-01 | 
+| `check-ins` | Displays check in questions and records responses | `responses` | database | FR-QUES-01, NFR-ACC-01, NFR-ACC-02, NFR-MNT-01, NFR-REL-01, NFR-PORT-02, NFR-USE-01, NFR-USE-02 | 
+| `journals` | Provides a journaling spot and records entries | `entries` | database | FR-JOU-01, NFR-ACC-01, NFR-ACC-02, NFR-MNT-01, NFR-REL-01, NFR-PORT-02, NFR-USE-01, NFR-USE-02 | 
+| `overview` | Displays check in results in weekly and monthly graphs | `graphs` | database, `check-in` | FR-OVER-01, NFR-ACC-01, NFR-ACC-02, NFR-MNT-01, NFR-REL-01, NFR-PORT-02 | 
+| `activities` | Provides destressing activities to go through | `activities` | none | FR-ACT-01, NFR-ACC-01, NFR-ACC-02, NFR-MNT-01, NFR-REL-01, NFR-PORT-02 | 
+| `analysis` | Provides predetermined prompts for suggestions on stress analysis and aids, with a keyword fallback | `analysis` | gemini API, edge function, database, `check-ins`, `journals` | FR-AIA-01, FR-AIA-04, NFR-AVA-01, NFR-PERF-01, NFR-ACC-01, NFR-ACC-02, NFR-MNT-01, NFR-REL-01, NFR-SEC-01, NFR-SEC-02, NFR-PRIV-01, NFR-PRIV-02, NFR-PORT-02, NFR-USE-01 | 
 
 Dependency graph is acyclic: yes
 Every piece of state has exactly one owner: yes
 
 ## 5. Interface Contracts
 
-### POST /sendAnalysis                        (serves FR-AIA-01, FR-AIA-04, NFR-AVA-01, NFR-PERF-01)
+### POST /sendAnalysis                        (serves FR-AIA-01, FR-AIA-04, NFR-AVA-01, NFR-PERF-01, NFR-SEC-02, NFR-PRIV-01, NFR-PRIV-02)
 Purpose      To request an AI Analysis suggestion explanation or aid based on the selected check ins, journal entries, and the predetermined prompt
 Auth         There are no user accounts
 Request      prompt string req · check_ins array req · journal_entries array req
@@ -83,7 +83,7 @@ Error Number | What a user is shown for each | What gets logged |
 ## 6. Data Model
 ### Entity: check-in            (serves FR-QUES-01)
 Purpose        A set of check-in questions that are completed by a stressed individual is record
-  id                        integer         PK          the univeral unique identifier for the specifc check-in
+  id                        integer         PK          the universal unique identifier for the specific check-in
   date                      datetime     NOT NULL    date and time the check-in was completed
   stress_level              integer         NOT NULL    CHECK level ranges from 1-10~ 1: very low stress; 10: very high stress
   mood                      text            NOT NULL    enum: 'happy' | 'angry' | 'sad' | 'frustrated' | 'tense' | 'bored' | 'nervous' | 'worried' | 'calm' | 'scared' | 'lonely' | 'excited' |
@@ -101,18 +101,18 @@ Invariants     I1: a stress level can not be lower than 1 and higher than 10
                I4: every check-in question that is not null must have a response
 Relationships  None, nothing relies on another entity
 Volume         ~1 row/check-in, ~7 rows/week
-Lifecycle      Created when a check-in set is submitted successfully. Possible update when editting though no deletion currently added.
+Lifecycle      Created when a check-in set is submitted successfully. Possible update when editing though no deletion currently added.
 
-### Entity: journal-entry                (serves FR-JOU-01)
+### Entity: journal-entry                (serves FR-JOU-01, FR-JOU-02)
 Purpose        A journal entry that is written by a stressed individual is record
-  id                        integer         PK          the univeral unique identifier for the specifc journal entry
+  id                        integer         PK          the univeral unique identifier for the specific journal entry
   date                      datetime     NOT NULL    date and time the journal entry was completed
   entry                     text            NOT NULL    the text that was written into the journal entry
 Invariants     I1: every entry can not be blank/empty
                I2: each journal entry must have a unique identifier
 Relationships  None, nothing relies on another entity
 Volume         ~1 row/journal entry, ~7 rows/week
-Lifecycle      Created when a journal entry is submitted successfully. Hard deleted if when editting the entry is updated to being blank/empty.
+Lifecycle      Created when a journal entry is submitted successfully. Hard deleted if when editing the entry is updated to being blank/empty.
 
 ### Migrations
 Mechanism      numbered SQL files applied in order and tracked in a schema_migrations table
@@ -128,23 +128,23 @@ Conventions    enums constrained;
 | 2: The mobile app sends the submitted check-in response to Expo SQLite | The database doesn't save the response | The app makes the stressed individual resubmit the response | A message stating that submitting failed and to retry submitting in a 5 seconds |
 | 3: The mobile app UI updates the Overview page week/month to show the added check-in response | The Overview page does not update with the check-in response right away | The app updates the Overview page with the added check-in response | The graphs on the Overview page with the added check-in response |
 
-### Flow 2 — Prompt AI Analysis for suggestions (serves FR-AIA-01, FR-AIA-04; risky path: the Gemini AI API)
+### Flow 2 — Prompt AI Analysis for suggestions (serves FR-AIA-01, FR-AIA-04, NFR-PRIV-01, NFR-PRIV-02, NFR-SEC-01, NFR-PERF-01; risky path: the Gemini AI API)
 | Step | What can go wrong | System behavior | User sees |
 |---|---|---|---|
-| 1: Stressed individual selects the specific check-ins and journal entries the want for the Analysis, and then also selects either the suggestion based, explanation or destresting aid prompt | The stressed individual doesn't select at least one 1 both of the check-ins or journal entries | The system rejects it, and logs the error | A message stating that they need to select more check ins or journal entries |
+| 1: Stressed individual selects the specific check-ins and journal entries the want for the Analysis, and then also selects either the suggestion based, explanation or destressing aid prompt | The stressed individual doesn't select at least one 1 both of the check-ins or journal entries | The system rejects it, and logs the error | A message stating that they need to select more check ins or journal entries |
 | 2: The mobile app sends the selected check ins, journal entries, and prompt request to the Supabase Edge Function | The request fails to send to the Supabase Edge Function | The keyword fallback happens, and the error is logged | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
 | 3: The Supabase Edge Function sends the request to the Gemini AI API | The Supabase Edge Function takes extra time processing the request before it sends it to Gemini | The Supabase Edge Function finishs processing the request and send it to the Gemini AI API | The user has to wait a bit longer for the AI Analysis |
 | 4: The Gemini AI API sends the AI Analysis response to the Supabase Edge Function | The Gemini AI API lags and takes a bit of extra time to return a response | The Edge Function waits until Gemini AI API returns its AI Analysis response | The user sees the AI Analysis response after a bit of time |
 | 5: The Supabase Edge Function sends the AI Analysis response to the mobile app | The mobile app takes a bit longer display the AI Analysis response on the UI | The mobile app continues to load until it can display the AI Analysis response | The user sees the AI Analysis response after a bit of time |
 
-### Flow 3 —  AI Analysis Failing (serves NFR-AVA-01; failure path: Gemini AI API is not available)
+### Flow 3 —  AI Analysis Failing (serves NFR-AVA-01, NFR-SEC-02; failure path: Gemini AI API is not available)
 | Step | What can go wrong | System behavior | User sees |
 |---|---|---|---|
-| 1: Stressed individual selects the specific check-ins and journal entries the want for the Analysis, and then also selects either the suggestion based, explanation or destresting aid prompt | The stressed individual doesn't select at least one 1 both of the check-ins or journal entries | The system rejects it, and logs the error | A message stating that they need to select more check ins or journal entries |
+| 1: Stressed individual selects the specific check-ins and journal entries the want for the Analysis, and then also selects either the suggestion based, explanation or destressing aid prompt | The stressed individual doesn't select at least one 1 both of the check-ins or journal entries | The system rejects it, and logs the error | A message stating that they need to select more check ins or journal entries |
 | 2: The mobile app sends the selected check ins, journal entries, and prompt request to the Supabase Edge Function | The request fails to send to the Supabase Edge Function | The keyword fallback happens, and the error is logged | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
 | 3: The Supabase Edge Function sends the request to the Gemini AI API | The Gemini AI API is not available | The keyword fallback happens, and the error is logged | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
 | 4: The Supabase Edge Function waits for the AI Analysis response | The Gemini AI API does not send a AI Analysis response at all to the Edge Function | The Supabase Edge checks for the AI Analysis, when none is received, an error is logged the error, and the keyword fallback happens | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
-| 5: The Supabase Edge Function sends that Gemini AI API failed to produce an AI Analysis response to the mobile app | The mobile app takes longer to produce a keyword fallback response | The mobile app contuines to load the keyword fallback | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
+| 5: The Supabase Edge Function sends that Gemini AI API failed to produce an AI Analysis response to the mobile app | The mobile app takes longer to produce a keyword fallback response | The mobile app continues to load the keyword fallback | A message stating that the AI Analysis can not happen at this time, if you want the full experience please try again later but in the meantime here is the altered experience |
 
 ## 8. Error Handling and Edge Cases
 | Category | Example | Policy |
@@ -190,7 +190,7 @@ hard cap, the non-AI fallback, and the logging + retention rule.
 | privacy rule | The AI Analysis request will only take in what the user selected to be sent no other unrelated data will be analysis by the Gemini AI API (NFR-PRIV-01, NFR-PRIV-02) | requirements.md | 2026-10-04 |
 | prompt template path in this repo | mobile/prompts/suggest-analysis-v1.txt | n/a | 2026-10-04 |
 | model identifier + date verified | gemini-3.6-flash | https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-6-flash | 2026-10-04 |
-| parameters | "Custom values for temperature, top-k, or top-p parameters are no longer supported. Setting custom values will be ignored in the API surface. Use thinking_level or structured JSON schemas to control output determinism instead" maximum output length: 65,536 (I would set my maxium to 1,000), stop condition: when the model completes the analysis or when the maximum tokens are hit |  https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-6-flash | 2026-10-04 |
+| parameters | "Custom values for temperature, top-k, or top-p parameters are no longer supported. Setting custom values will be ignored in the API surface. Use thinking_level or structured JSON schemas to control output determinism instead" maximum output length: 65,536 (I would set my maximum to 1,000), stop condition: when the model completes the analysis or when the maximum tokens are hit |  https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-6-flash | 2026-10-04 |
 | output schema + validator | the analysis response is what I require back from the Gemini AI API the schema which would have in the analysis_explanation and the activity_suggestion, the validator would check that the response is a proper structured JSON with both of the results in it, if the validator fails then retry once with a repair instruction, then use the fallback if it still isn't right. | requirements.md | 2026-10-04 |
 | behavior on invalid output | Use the keyword fallback | requirements.md | 2026-10-04 |
 | token/latency/cost budget with a hard cap | tokens per call: 1,000 max; latency: target p50/p95 under 25 seconds; $0.00375 (cost per call) × 20 max (calls per day) = $0.075 day; hard cap: $0.075 day | requirements.md & https://ai.google.dev/gemini-api/docs/pricing?authuser=1| 2026-10-04 |
@@ -202,19 +202,34 @@ Note: The token counting can greatly vary depending on the call but since my cal
 ## 10. Traceability
 | Requirement | Priority | Component(s) | Interface(s) | Flow |
 |---|---|---|---|---|
-| FR-QUES-01 | Must | `check-ins` | Stores and retrieves the data from the SQLite database | Flow 1 - Add a check in response |
-| FR-OVER-01 | Must | `overview` | Retrieves the data from the SQLite database | Flow 1 - Add a check in response (the overview page is updated and the added check ins can be viewed) |
-| FR-JOU-01| Must | `journals` | Stores and retrieves the data from the SQLite database | Add in a journal entry |
+| FR-QUES-01 | Must | `check-ins` | Stores (INSERT(s)) and retrieves (SELECT(s)) the data from the SQLite database | Flow 1 - Add a check in response |
+| FR-OVER-01 | Must | `overview` | Retrieves (SELECT(s)) the data from the SQLite database | Flow 1 - Add a check in response (the overview page is updated and the added check ins can be viewed) |
+| FR-JOU-01 | Must | `journals` | Stores (INSERT(s)) and retrieves (SELECT(s)) the data from the SQLite database | Add in a journal entry |
 | FR-ACT-01 | Must | `activities` | The activities are stores in the mobile apps interface | Uses an activity |
-| FR-AIA-01 | Must | `analysis` | POST /sendAnalysis, POST /produceResponse  | Flow 2 - Prompt AI Analysis for suggestions |
-| FR-AIA-04 | Must | `analysis` | POST /sendAnalysis, POST /produceResponse | Flow 2 - Prompt AI Analysis for suggestions |
+| FR-AIA-01 | Must | `analysis` | POST /sendAnalysis | Flow 2 - Prompt AI Analysis for suggestions |
+| FR-AIA-04 | Must | `analysis` | POST /sendAnalysis | Flow 2 - Prompt AI Analysis for suggestions |
+| NFR-ACC-01 | Must | `check-ins`,`journals`,`overview`,`activities`,`analysis` | Shown on the mobile app UI | Going through the app testing the UI appearance |
+| NFR-ACC-02 | Must | `check-ins`,`journals`,`overview`,`activities`,`analysis` | Shown on the mobile app UI | Shown on the mobile app UI | Going through the app testing the states and messages appearance |
+| NFR-MNT-01 | Must | `check-ins`,`journals`,`overview`,`activities`,`analysis` | REAME/clean clone | The README is used to create a clean clone of the repository |
+| NFR-REL-01 | Must | `check-ins`,`journals`,`overview`,`activities`,`analysis` | Start of the app | Starting the app the exceptions and errors are handled  |
+| NFR-AVA-01 | Must | `analysis` | POST /sendAnalysis | Flow 3 —  AI Analysis Failing |
+| NFR-PERF-01 | Must | `analysis` | POST /sendAnalysis | Flow 2 - Prompt AI Analysis for suggestions |
+| NFR-SEC-01 | Must | `analysis` | Github commits/secrets | Flow 2 - Prompt AI Analysis for suggestions |
+| NFR-SEC-02 | Must | `analysis` | POST /sendAnalysis | Flow 3 —  AI Analysis Failing |
+| NFR-PRIV-01 | Must | `analysis` | POST /sendAnalysis | Flow 2 - Prompt AI Analysis for suggestions |
+| NFR-PRIV-02 | Must | `analysis` | POST /sendAnalysis | Flow 2 - Prompt AI Analysis for suggestions |
+
+Deferred: FR-ACT-02, FR-ACT-03, FR-AIA-02, FR-AIA-03, FR-JOU-03, FR-JOU-04, FR-JOU-05, FR-OVER-02, FR-OVER-03, FR-QUES-02, FR-QUES-03, FR-QUES-04, NFR-PORT-01, NFR-PORT-03
 
 ## 11. Open Questions and Design Risks
 | # | Open question | What it blocks | Owner | Decide by |
 |---|---|---|---|---|
-| 1 | There were no open questions found so far | n/a | Katherine Spencer | 2026-10-04 |
+| 1 | Will Expo/React Native be able to sent a prompt and receive a response from Supabase Edge Function? | n/a | Katherine Spencer | 2026-10-28 |
+| 2 | Will the Supabase Edge Function be able to send a prompt and receive back from Gemini API? | n/a | Katherine Spencer | 2026-10-28 |
+| 3 | Will the Supabase Edge Function be able to safely access the Gemini API key? | n/a | Katherine Spencer | 2026-10-28 |
 
 ## 12. Change Log for This Document
 | Version | Date | Change | Why |
 |---|---|---|---|
 | v0.1 | 2026-10-04 | technical specification | created the architecture document |
+| v0.2 | 2026-10-13 | comment edits | small missing edits and findings needed to be deferred or added to this document |

@@ -16,6 +16,11 @@ I already know how to work with some of the Expo components after testing and re
 
 I did not weigh other options, I've been pretty set on Expo/React Native and done a lot of other research on other frameworks and it would keep the novely load at its minimum. Though for a fallback I have considered Flutter because when researching it worked with both iOS and Android and seemed to provide the most similar output Expo/React Native would.
 
+| Option | Weighted score | The detail that decided it |
+|---|---:|---|
+| Expo/React Native | 5.00 | Requires less work to learn in general and it also has built in features that allows me to easily implement the data store and iOS and Android compatibility |
+| Flutter  | 3.55 | Requires more work to learn in general and to also implement the data store and iOS and Android compatibility |
+
 ## Decision
 
 I will use Expo SDK 57 with React Native 0.86.3 as the primary framework. I chose this because it works with Expo Go which is for development, works with both iOS and Android operating systems, and Typescript. Even though Expo is adds a novelty load I have done the most research on it than others and I already know how to use many React Native components.

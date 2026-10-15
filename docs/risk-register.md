@@ -48,7 +48,7 @@ impact) · **transfer** (make it somebody else's problem — a managed service, 
 **R-03** — Because I keep getting sick already my immune system is lower than it should be so I may get sick again and if it gets worse than what I can normally manage then I may lose 4 hours in the week I get sick pushing the weeks work package past its gate.
 · schedule/personal · L 4 · I 3 · **E 12**
 · **Trigger:** the week the sickness appeared shows 4 fewer hour logged.
-· **Owner:** Katherine Spencer. · **Response:** mitigate — move 4 hours of WP-2 forward into Week 10, where the plan has a bit of slack, and book the  spacer weeks hours on the calendar now.
+· **Owner:** Katherine Spencer. · **Response:** mitigate — move 4 hours of WP-2 forward into Week 10, where the plan has a bit of slack, and book the spacer weeks hours on the calendar now.
 · **Contingency:** spend project buffer, and record the draw in `docs/plan.md`.
 · **Status:** open.
 
@@ -62,7 +62,7 @@ impact) · **transfer** (make it somebody else's problem — a managed service, 
 **R-05** — Because there is limited time to complete this app and a lot of testing needed there may be important privacy, error-handling, or performance tests missed which may cause the app to fail in some areas.
 · schedule/personal · L 3 · I 3 · **E 9**
 · **Trigger:** I observe that requirements on the rubrics are missing or only partially done. 
-· **Owner:** Katherine Spencer. · **Response:** mitigate —  finish the Analysis fallback (T-5.6) first the work on the AI Analysis (FR-AIA-01, FR-AIA-04) right away afterwards.
+· **Owner:** Katherine Spencer. · **Response:** mitigate — focus on the most important tests to the functionality first and leave the ones that would affect the app the least last 
 · **Contingency:** implement the most necessary tests to the functionality first cutting more should and could tasks if necessary to maintain time
 · **Status:** open. 
 

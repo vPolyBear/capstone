@@ -63,7 +63,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ### FR-QUES-02 — Edit check in response
 
-**Priority:** Should
+**Priority:** Won't
 **Requirement:** An individual with stress shall be able to edit a check in question they did that day when selecting edit to change a response about their stressors.
 **Rationale:** This exists because it is the second part to one of the main features and allows individuals to change a response if they make a mistake. Again since Stella struggled with centering herself, going through check ins can ground her when nothing anyone can do for her helps and mistakes can happen so having the ability to edit them is helpful when trying to ground yourself.
 **Acceptance criteria:**
@@ -75,7 +75,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ### FR-QUES-03 — Count of completed check ins
 
-**Priority:** Should
+**Priority:** Won't
 **Requirement:** An individual with stress shall be able to see how many check ins they completed through a toast when they submit a check in.
 **Rationale:** This exists because it allows individuals to get a quick grasp on how many check ins they have completed through the time they have had the app. This is my decision, I believe that it's nice to be proud of the fact that you are able to check in on yourself and seeing the amount of check ins done can help an individual see the progress they've made.
 **Acceptance criteria:**
@@ -106,7 +106,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ### FR-OVER-02 — Extra goals
 
-**Priority:** Should
+**Priority:** Won't
 **Requirement:** An individual with stress shall be able to choose stress relieving based goals either a predetermined one or custom written one, for the week and month when they enter in the overview page.
 **Rationale:** This exists because it is a should feature that will be made only if there is room available for the time it takes to create it. Stella uses various methods that were given to her to deal with stress, having goals is another method that an individual can use to have something to aim for that they can be proud of completing.
 **Acceptance criteria:**
@@ -150,7 +150,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ### FR-JOU-03 — Text Length Counting & Warning
 
-**Priority:** Could
+**Priority:** Won't
 **Requirement:** An individual with stress shall be able to see the word count when writing a journal entry about their stress.
 **Rationale:** This exists to ensure that the database can handle not only processing how much the stressed individual writes but ensures the text box isn't taken advantage of. It is my decision to ensure app runs smoothly without lag and for security against those with bad intentions.
 **Acceptance criteria:**
@@ -199,7 +199,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 
 ### FR-ACT-03 — Random Activity Chooser
 
-**Priority:** Should
+**Priority:** Won't
 **Requirement:** An individual with stress shall be able to click an option to get a random automatic destressing activity option when the pop up appears and that directs the individual to the activity that was randomly chosen when clicked on.
 **Rationale:** This exists because it will allow the individual to choose to get a quick fully random option if they don't want to get a suggestion based on their journal entries and check ins from the AI Analysis page. This was my decision as it gives quicker options, making individuals' experience on the app nicer.
 **Acceptance criteria:**
@@ -302,9 +302,9 @@ Define every term your requirements use in a project-specific sense. If a reader
 | NFR-USE-01 | Stressed individuals first time on the app 4 out of 5 of them shall be able to complete 1 check in, journal entry, and AI Anylsis prompt request when they go through the app, without help. | Should | Measured with 5 first time stressed individuals app usage completion expecting 4 passing out of 5 |
 | NFR-USE-02 | Stressed individuals first time on the app 4 out of 5 of them shall be able to correctly identify whether a journal entry or check-in was saved after both a successful and failed save attempt. | Should | Measured with 5 users in both scenarios with 0 assistance and recording their answers.|
 | NFR-MNT-01 | New stressed individuals shall be able to use only the README when creating a clean clone of the repository to reach a running app in under 10 minutes with 0 errors. | Must | Measured through testing this on a clean computer and that the app works on an iPhone in Expo Go, recording how long it took which expects under 10 mintues and expecting 0 errors. |
-| NFR-PORT-01 | Stressed individuals shall be able to run the app and complete the a least 1 check in, journal entry, and AI Anaylsis when on 2 different operting systems, both iOS and Android | Should | Measured through testing and recording that each feature works on an iPhone and Android expecting that all 5 main features have 0 errors. |
+| NFR-PORT-01 | Stressed individuals shall be able to run the app and complete the a least 1 check in, journal entry, and AI Anaylsis when on 2 different operting systems, both iOS and Android | Won't | Measured through testing and recording that each feature works on an iPhone and Android expecting that all 5 main features have 0 errors. |
 | NFR-PORT-02 | The app shall work when in portrait mode and cut of 0 main buttons or controls. | Should | Measured by testing every main screen in portrait mode, expecting that all 5 main feautre work, recording any controls that are cut off or cannot be reached, though expecting 0 fail to work. |
-| NFR-PORT-03 | The app shall work when in landscape mode and cut of 0 main buttons or controls. | Could | Measured by testing every main screen in landscape mode, expecting that all 5 main feautre work, recording any controls that are cut off or cannot be reached, though expecting 0 fail to appear or work properly. |
+| NFR-PORT-03 | The app shall work when in landscape mode and cut of 0 main buttons or controls. | Won't | Measured by testing every main screen in landscape mode, expecting that all 5 main feautre work, recording any controls that are cut off or cannot be reached, though expecting 0 fail to appear or work properly. |
 
 ## 7. Out of Scope (the Won't-Have List)
 
@@ -334,13 +334,15 @@ I would need to revisit it after the capstone in the future when I have a lot of
 | 2026-09-10 | 1.0 | Initial specification | Milestone 3 |
 | 2026-09-12 | 1.0 | Edited 10 sentences that could be inferred that two different programs could satisfy it | Ambiguity pass after external read |
 | 2026-09-19 | 1.1 | non-functional requirements, constraints, assumptions, dependencies, and obligations added | Milestone 4 |
+satisfy it | Ambiguity pass after external read |
+| 2026-10-14 | 1.2 | Deffering/Priority changes to won'ts | Plan could not fit them into the budget |
 
 ## 10. Constraints
 
 | ID | Constraint | Where it comes from | What it rules out |
 |---|---|---|---|
 | CON-01 | The system must be completed in 16 weeks and be demostratable by Week 16 | course deadlines | Extra features that cause the main features to not be completed in time |
-| CON-02 | The app must be able run on Expo Go on an iOS phone | app requirements | The main features can not run in Expo Go on iOS such as the AI Anaylsis |
+| CON-02 (deffered) | The app must be able run on Expo Go on an iOS phone | app requirements | The main features can not run in Expo Go on iOS such as the AI Anaylsis |
 | CON-03 | I can only generally work 30 hours per week on the project if time is managed perfectly | my schedule | Extra features that would exceed time able to work on the project  |
 | CON-04 | The project must follow the course rubric and criteria | course rubric | The completed app doesn't follow the rubric |
 

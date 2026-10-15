@@ -121,7 +121,7 @@ The two do not touch the same seam. The Supabase Edge Function is the middle man
 
 | Dependency | SPDX id | Type | Obligation on me | Ship? |
 |---|---|---|---|---|
-| Expo	| MIT | Permissive | Keep the copyright and license notices | Yes | 
+| Expo | MIT | Permissive | Keep the copyright and license notices | Yes | 
 | React Native | MIT | Permissive | Keep the copyright and license notices | Yes |
 | Expo SQLite | MIT | Permissive | Keep the copyright and license notices | Yes | 
 | EAS (Expo Application Services) | BSL-1.1 | Source-Available | May make use of the Licensed Work, provided that I follow the Additional Use Grant and the terms it provided | No | 
@@ -138,4 +138,11 @@ The two do not touch the same seam. The Supabase Edge Function is the middle man
 
 | Claim as stated | Verdict | Source (vendor URL) | Checked |
 |---|---|---|---|
-| Note to remind Dr. Litman: I decided not to use AI on anything this week so the table did not need to be filled out | 
+| SQLite is very good at storing structured data locally | Correct | https://docs.expo.dev/versions/latest/sdk/sqlite/ | 2026-10-14 |
+| Supabase (PostreSQL) is good at cloud storage, authentication, and querying data | Correct | https://supabase.com/storage | 2026-10-14 |
+| AsyncStorage stores data through a key value system | Correct | https://archive.reactnative.dev/docs/asyncstorage | 2026-10-14 |
+| Realm / Atlas Device SDK is good for mobile apps and can make it easier to deal with structured objects | Incorrect | https://www.mongodb.com/docs/atlas/device-sdks/deprecation/#std-label-device-sdks-deprecation | 2026-10-14 |
+| WatermelonDB made for React Native and good for larger datasets | Correct | https://watermelondb.dev/docs | 2026-10-14 |
+
+4/5 hit rate
+- It got Realm / Atlas Device SDK wrong as it technically can do anything as it is being deprecated so it can't be an option

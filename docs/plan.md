@@ -14,13 +14,13 @@
 
 | Week | What it is | Course overhead: Chapter, quiz, reps, milestone write-up | Available for this plan | Known losses |
 |---|---:|---:|
-| 8 | Design review + midterm checkpoint | 12 | 8 | broken week |
+| 8 | Design review + midterm checkpoint | 12 | 8 | none |
 | 9 | Walking skeleton + CI | 7 | 13 | none |
 | 10 | Iteration one: the core | 5 | 15 | none |
 | 11 | Testing, quality, defect log | 7 | 13 | none |
 | 12 | Iteration two: integration | 7 | 13 | none |
 | 13 | Documentation | 7 | 13 | none |
-| 14 | Deployment and handoff | 7 | 13 | broken week |
+| 14 | Deployment and handoff | 7 | 13 | non |
 | 15 | Presentation preparation | 7 | 13 | none |
 | 16 | Delivery day | 7 | 13 | none |
 | **Total** | **66** | **114** |
@@ -72,7 +72,7 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-4.3 | Create the creative and sounds activities | FR-ACT-01 | 2 | 3 | 4 | 3.0 | There are at least two of each the creative and sounds activities displayed that can be run and played | T-4.1 |
 | T-4.4 | Create the physical and self care activities | FR-ACT-01 | 1 | 2 | 3 | 2.0 | There are at least two of each the physical and self care activities displayed that can be run and played | T-4.1 |
 | T-4.5 | Handle failure and resume state | FR-ACT-01 | 1 | 3 | 4 | 2.8 | When an individual clicks on a destressing activity and it does not start then a toast should pop up or if an activity is started but the app is left then is should resume when reentered | T-4.1, T-4.2, T-4.3, T-4.4 |
-| T-4.6 (deffered) | Random Activity Chooser | FR-ACT-01 | 1 | 2 | 3 | 2.0 | A random destressing activity pops up and can be chosen when the random activity button is clicked. If the pop up activity chosen is clicked on then it goes directly to that activity. | T-4.2, T-4.3, T-4.4 |
+| T-4.6 (deffered) | Random Activity Chooser | FR-ACT-03 | 1 | 2 | 3 | 2.0 | A random destressing activity pops up and can be chosen when the random activity button is clicked. If the pop up activity chosen is clicked on then it goes directly to that activity. | T-4.2, T-4.3, T-4.4 |
 
 ### WP-5 — AI Analysis  ·  requirements FR-AIA-01, FR-AIA-04,  NFR-PRIV-01, NFR-PRIV-02, NFR-PERF-01, NFR-AVA-01, NFR-SEC-01  ·  owner: Katherine Spencer
 
@@ -102,9 +102,13 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-7.3 | Accessibility pass through | NFR-ACC-01, NFR-ACC-02, NFR-USE-02 | 1 | 2 | 3 | 2.0 | Individuals can go through the app without any problems reading, looking, and completing each of the features and seeing and identifing there success and failure message without any problems | WP-01, WP-02, WP-03, WP-04, WP-05 |
 
 ## WP-8 — Documentation, deployment, and release  ·  requirements NFR-MNT-01, NFR-SEC-01  ·  owner: Katherine Spencer
+
+| Task | Name | Reqs | O | M | P | E | Done when | Depends on |
+|---|---|---|---:|---:|---:|---:|---|---|
 | T-8.1 | README | NFR-MNT-01 | 2 | 4 | 5 | 3.8 | The README describes how to create a clean clone of the repository to reach a running app in under 10 minutes with 0 errors | — |
 | T-8.2 | Runbook and handoff guide | — | 2 | 3 | 5 | 3.2 | The runbook/handoff guids explains to the next maintainer how to run, configure, understand, and maintain the app | T-8.1 |
-| T-8.3 | Deploy with configured secrets and a smoke check | NFR-SEC-01 | 2 | 3 | 5 | 3.2 | The app is deployed and runs on a clean machine with the secrets configured without any in any commit and a smoke test goes successfully | T-8.1, T-8.2 |
+| T-8.3 | Deploy with configured secrets and a smoke check | NFR-SEC-01 | 1 | 2 | 3 | 2.0 | The app is deployed and runs on a clean machine with the secrets configured without any in any commit and a smoke test goes successfully | T-8.1, T-8.2 |
+| T-8.4 | Test deploying the Expo app on Week 12 | — | 1 | 2 | 3 | 2.0 | The app is deployed and runs successfully | T-8.1, T-8.2 |
 
 ## 4. Roll-up
 
@@ -115,21 +119,21 @@ Plannable effort (available − buffer) = **85.5 h**
 | WP-3-Journal | 5 | 10.8 | 11.88 |
 | WP-4-Destressing activities | 5 | 13 | 14.3 |
 | WP-5-AI Analysis | 7 | 18.2 | 20.02 |
-| WP-6-Setup | 1 left | 2.0 | 4.4 |
+| WP-6-Setup | 1 left | 2.0 | 2.2 |
 | WP-7-Pass through tests | 2 | 4.0 | 4.4 |
-| WP-8-Deployment and release | 3 | 10.2 | 11.22 |
-| **Total** | 31 | **76.2** | **83.82** |
+| WP-8-Deployment and release | 3 | 11 | 12.1 |
+| **Total** | 31 | **77** | **84.7** |
 
 Calibration factor from `docs/hours-log.csv`: **1.10×**
-- completed tasks: 1
-- factor: 1.00x
+-  1.10x factor comes from docs/hours-log.csv (42 rows, Rep 6)
 
 ## 5. Schedule
 
 | Week | Work packages in flight | Planned hours | Gate / dependency |
 |---|---|---:|---|
-| 9 | WP-6 enabling, WP-1 + WP-3 first slice, WP-5 fallback slice | 13 | Expo/React Native and SQLite are able to take in check ins and journal entries, and the analysis fallback can provide a response |
-| 10 | WP-5 analysis | 15 | The result from the Gemini AI API based on the selected check ins and journal entries present on screen an analysis response and errors are handled |
+| 8 | Review fixes, re-baseline the plan | 8 | Specification is frozen; the plan fits the capacity | 
+| 9 | WP-6 enabling, WP-1 + WP-3 first slice, WP-5 first analysis slice | 13 | Expo/React Native and SQLite are able to take in check ins and journal entries, and the analysis has all of it's connections working when linked together and the predetermined prompts can be inputted |
+| 10 | WP-5 analysis, WP-5 fallback | 15 | The result from the Gemini AI API based on the selected check ins and journal entries present on screen an analysis response and errors are handled, and the analysis fallback can provide a response |
 | 11 | WP-2 overview,  WP-4 first slice | 13 | The overview page has weekly + monthly graphs that show either the results of check ins, or the empty or loading views, and the sections for the activites are created and the breathing activities are started  |
 | 12 | WP-1 check-in tests, WP-3 journal tests, WP-4 activites | 13 | The missing/blank response and saving tests succeed, editing a journal entry works, and the rest of the activites are created and tests succeed |
 | 13 | WP-7 first slice, WP-8 documentation slice | 13 | One pass through test must pass, and an individual can clone and run the app from the README alone |
@@ -143,30 +147,32 @@ Rules: risky work first, integration before Week 12, nothing new starts after We
 
 | Week | Capacity | Ideal remaining | Projected remaining |
 |---|---:|---:|---:|
-| 8 | 8.0 | 85.5 | 76.2 |
-| 9 | 13.0 | 79.5 | 68.2 |
-| 10 | 15.0 | 69.8 | 55.2 |
-| 11 | 13.0 | 58.5 | 40.2 |
-| 12 | 13.0 | 48.8 | 27.2 |
-| 13 | 13.0 | 39.0 | 14.2 |
-| 14 | 13.0 | 29.2 | 1.2 |
-| 15 | 13.0 | 19.5 | -11.8 |
-| 16 | 13.0 | 9.8 | -24.8 |
-| end | - | 0.0 | -37.8 |
+| 8 | 8.0 | 85.5 | 84.7 |
+| 9 | 13.0 | 79.5 | 76.7 |
+| 10 | 15.0 | 69.8 | 63.7 |
+| 11 | 13.0 | 58.5 | 48.7 |
+| 12 | 13.0 | 48.8 | 35.7 |
+| 13 | 13.0 | 39.0 | 22.7 |
+| 14 | 13.0 | 29.2 | 9.7 |
+| 15 | 13.0 | 19.5 | -3.3 |
+| 16 | 13.0 | 9.8 | -16.3 |
+| end | - | 0.0 | -29.3 |
 
 First week the plan exceeds remaining capacity: **never**
-Hours over plannable: **-9.3**
-- VERDICT: fits, with 9.3 h to spare
+Hours over plannable: **-0.8**
+- VERDICT: fits, with 0.8 h to spare
 
 ## 7. The scope decision
 
 | Cut / deferred / re-estimated | Item | Reqs | Hours recovered | MoSCoW before → after | Why |
 |---|---|---|---:|---|---|
-| deffered | T-3.6 | FR-JOU-03 | 2.0 | Could → Could | I think that the text length counting can be useful in the future but it not pertinent to the shipment currently  |
-| deffered | T-1.6 | FR-QUES-03 | 2.0 | Should → Should | Counting check ins is a good task but not necessary to do right away, better to be done in the future after the main features are done |
-| deffered | T-2.5 | FR-OVER-02 | 2.0 | Should → Should | This could definitely help an individual stay more encourged to manage their stress if they have a goal to look forword too but its not super important right now |
-| deffered | T-4.6 | FR-ACT-01 | 2.0 | Should → Should | This will already in a way be done in the Analysis page so it does not need to be shipped until the future |
-| deffered | T-7.2 | NFR-PORT-01, NFR-PORT-03 | 2.0 | Should → Should | It can be genuinely helpful to be able to run the app on both iOS and Android in portrait and landscape mode without running into any errors or problems but iOS and portait mode is the focus and Android and landscape mode would a bonus for the future |
-| deffered | T-1.5 | FR-QUES-02 | 2.0 | Should → Should | Editing a check in would be nice to have however I believe that check ins won't really need to be edited to frequently by anyone as they are more for checking in at that current moment so changing it later doesn't make to much sense to me so I believe it's better done in the future after shipping with more evidence if it would be truly useful or not |
+| deffered | T-3.6 | FR-JOU-03 | 2.0 | Could → Won't | I think that the text length counting can be useful in the future but it not pertinent to the shipment currently  |
+| deffered | T-1.6 | FR-QUES-03 | 2.0 | Should → Won't | Counting check ins is a good task but not necessary to do right away, better to be done in the future after the main features are done |
+| deffered | T-2.5 | FR-OVER-02 | 2.0 | Should → Won't | This could definitely help an individual stay more encourged to manage their stress if they have a goal to look forword too but its not super important right now |
+| deffered | T-4.6 | FR-ACT-03 | 2.0 | Should → Won't | This will already in a way be done in the Analysis page so it does not need to be shipped until the future |
+| deffered | T-7.2 | NFR-PORT-01, NFR-PORT-03 | 2.0 | Should → Won't; Could → Won't | It can be genuinely helpful to be able to run the app on both iOS and Android in portrait and landscape mode without running into any errors or problems but iOS and portait mode is the focus and Android and landscape mode would a bonus for the future |
+| deffered | T-1.5 | FR-QUES-02 | 2.0 | Should → Won't | Editing a check in would be nice to have however I believe that check ins won't really need to be edited to frequently by anyone as they are more for checking in at that current moment so changing it later doesn't make to much sense to me so I believe it's better done in the future after shipping with more evidence if it would be truly useful or not |
+| re-estimate | T-8.3 | NFR-SEC-01 | 3.2 → 2.0 | Must → Must | I added a working package to test deploying the Expo app on Week 12 ahead of time so since I'll know how to work around deploying the main app it will lessen the hours |
+
 
 Signed: Katherine Spencer, 2026-10-10. Re-baselined after any change of more than 5 hours.

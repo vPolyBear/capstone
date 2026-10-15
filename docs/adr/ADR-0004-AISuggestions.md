@@ -22,7 +22,7 @@ I already know how to call APIs, however, what is new to me is calling the Gemin
 
 ## Decision
 
-I will write a superseding ADR if Gemini API (Gemini 3.6 Flash) can't provide suggestions based on data inputted 4 out of 5 times or if the free tier ends and its monthly price exceeds over 50 dollars a month.
+I will use Gemini API (Gemini 3.6 Flash) for the AI suggestions. I chose this because it provided the biggest range of free abilities and tokens, and it is compatible with Expo/React Native and Supabase. Even though Gemini API adds a novelty load it will not only challenge me and allow me to learn a important emerging skill with more leeway, but it will give my app a wider range of tools that can quickly provide responses to individuals to help with their stress.
 
 ## Consequences
 
@@ -38,7 +38,7 @@ I will write a superseding ADR if Gemini API (Gemini 3.6 Flash) can't provide su
 
 ## Revisit trigger
 
-I will write a superseding ADR if Gemini AI can no longer provide me with suggestions 4 out of the 5 times it is requested for in less than 25 seconds or if it no longer is provides a free tier and the other tiers monthly price exceeds over 50 dollars a month.
+I will write a superseding ADR if Gemini AI (Gemini 3.6 Flash) can no longer provide me with suggestions 4 out of the 5 times it requested for in less than 25 seconds or if it no longer provides a free tier and then if the other tiers monthly price exceeds over 50 dollars a month.
 
 ## Verification
 

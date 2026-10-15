@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """spec-check.py - a lint pass for a technical specification.
 
-    python3 spec-check.py docs/architecture.md [--requirements docs/requirements.md]
+    python tools/spec-check.py docs/architecture.md --requirements docs/requirements.md
 
 Checks four things a human reviewer should never have to check by hand:
   1. every load-bearing section exists,
