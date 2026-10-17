@@ -52,7 +52,7 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-2.4 | Graphs loading view | FR-OVER-01 | 1 | 3 | 4 | 2.8 | When a graph is loading it should have a loading symbol and if it doesn't load in 5 seconds then a load fail message should pop up | T-2.1, T-2.2 |
 | T-2.5 (deffered) | Extra goals at the top | FR-OVER-02 | 1 | 2 | 3 | 2.0 | At the top of the Overview page there are stress relieving based goals, both predetermined ones and custom written ones to choose from. | T-2.1, T-2.2 |
 
-### WP-3 — Journal  ·  requirements FR-JOU-01,  FR-JOU-02  ·  owner: Katherine Spencer
+### WP-3 — Journal  ·  requirements FR-JOU-01, FR-JOU-02  ·  owner: Katherine Spencer
 
 | Task | Name | Reqs | O | M | P | E | Done when | Depends on |
 |---|---|---|---:|---:|---:|---:|---|---|

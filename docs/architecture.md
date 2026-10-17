@@ -45,7 +45,7 @@ Every piece of state has exactly one owner: yes
 
 ### POST /sendAnalysis                        (serves FR-AIA-01, FR-AIA-04, NFR-AVA-01, NFR-PERF-01, NFR-SEC-02, NFR-PRIV-01, NFR-PRIV-02)
 Purpose      To request an AI Analysis suggestion explanation or aid based on the selected check ins, journal entries, and the predetermined prompt
-Auth         There are no user accounts
+Auth         There are no user accounts. Though the Gemini AI API key is kept in Supabase and used to request the Gemini API.
 Request      prompt string req · check_ins array req · journal_entries array req
 Success      200 { "analysis_explanation": string, required, 1–999 chars,
                    "activity_suggestion": string, required, 1–999 chars }
@@ -62,6 +62,7 @@ Limits       check-ins <= 30 per request; journal entries <= 30 per request;
 
 Error envelope used system-wide: { "error": { "code": ..., "field": ..., "message": ... } }
 Status-code policy- Codes I will use and what each means in THIS system:
+  200 __the request for the AI Analysis succeeded and it has the response of the analysis_explanation and activity_suggestion__ 
   400 __invalid request or input, or missing field in the check-ins, journal entry, or prompt__   
   401 __this won't be used in my system as it isn't needed because I don't have user account__
   403 __this won't be used in my system as it isn't needed because I don't have user account__   
@@ -84,7 +85,7 @@ Error Number | What a user is shown for each | What gets logged |
 ### Entity: check-in            (serves FR-QUES-01)
 Purpose        A set of check-in questions that are completed by a stressed individual is record
   id                        integer         PK          the universal unique identifier for the specific check-in
-  date                      datetime     NOT NULL    date and time the check-in was completed
+  date                      text     NOT NULL    date and time the check_in was completed; UTC using ISO 8601 format
   stress_level              integer         NOT NULL    CHECK level ranges from 1-10~ 1: very low stress; 10: very high stress
   mood                      text            NOT NULL    enum: 'happy' | 'angry' | 'sad' | 'frustrated' | 'tense' | 'bored' | 'nervous' | 'worried' | 'calm' | 'scared' | 'lonely' | 'excited' |
   physical_stress_location  text            NULL        (null = unknown stress area present in body) enum: 'jaw' | 'teeth' | 'neck' | 'shoulders/traps' | 'head' | 'stomach' | 'chest' | 'back' | 'hips' | 'arms' | 'legs' | 'hands' | 'feet' | 
@@ -92,7 +93,7 @@ Purpose        A set of check-in questions that are completed by a stressed indi
   hours_slept               decimal         NULL        (null = unknown/sleep was not tracked)
   water_consumed            decimal         NULL        (null = unknown amount of water consumed)
   eaten_recently            boolean         NOT NULL    true = eaten recently; false = has not eaten recently
-  concentration_level       integer         NOT NULL    CHECK level ranges from 1-10~ 1: very to concentrate; very hard to concentrate
+  concentration_level       integer         NOT NULL    CHECK level ranges from 1-10~ 1: very easy to concentrate; very hard to concentrate
   stress_cause              text            NULL        (null = unknown stress cause) enum: 'school' | 'work' | 'time' | 'deadline' | 'finances' | 'relationship' | 'family' | 'argument' | 'loss' | 'health' | 'big change' | 'surroundings' | 'lack of control' | 'overthinking' | 'uncertainty' | 'lonely' | 'procrastination' | 
   stress_duration           integer         NULL        (null = unknown length of time that stress has been happening)
 Invariants     I1: a stress level can not be lower than 1 and higher than 10 
@@ -106,7 +107,7 @@ Lifecycle      Created when a check-in set is submitted successfully. Possible u
 ### Entity: journal-entry                (serves FR-JOU-01, FR-JOU-02)
 Purpose        A journal entry that is written by a stressed individual is record
   id                        integer         PK          the univeral unique identifier for the specific journal entry
-  date                      datetime     NOT NULL    date and time the journal entry was completed
+  date                      text     NOT NULL    date and time the journal entry was completed;  UTC using ISO 8601 format
   entry                     text            NOT NULL    the text that was written into the journal entry
 Invariants     I1: every entry can not be blank/empty
                I2: each journal entry must have a unique identifier
@@ -119,6 +120,10 @@ Mechanism      numbered SQL files applied in order and tracked in a schema_migra
 Direction      forward-only
 Path + runner  migrations/0001-initial.sql, applied by the setup script your Week 14 clean-machine test will execute
 Conventions    enums constrained;
+
+Personal Data:
+ -  stress_level, date, mood, physical_stress_location, physical_symptoms, hours_slept, water_consumed, eaten_recently, concentration_level, stress_cause, stress_duration, entry
+ - Retained for as long as the stressed individual has the app on their phone and deleted when the stressed individual deletes the app
 
 ## 7. Sequence Flows
 ### Flow 1 — Add a check in response   (serves FR-QUES-01, FR-OVER-01; money path: used in most areas of the app)

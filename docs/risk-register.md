@@ -34,7 +34,7 @@ impact) · **transfer** (make it somebody else's problem — a managed service, 
 **R-01** — Because there are many connecting parts and components needed to create the AI Analysis (FR-AIA-01, FR-AIA-04) the individual components may work independently but still fail when combined which would then cause the AI Analysis to also fail.
 · dependency · L 4 · I 5 · **E 20**
 · **Trigger:** I observe that Gemini API or Supabase returning a `500` error response in the logs (T-5.2) *or* I observe that there are no results with responses returned on the AI Analysis page. 
-· **Owner:** Katherine Spencer. · **Response:** mitigate — finish the Analysis fallback (T-5.6) first the work on the AI Analysis (FR-AIA-01, FR-AIA-04) right away afterwards.
+· **Owner:** Katherine Spencer. · **Response:** mitigate — finish the Analysis fallback (T-5.6) first then work on the AI Analysis (FR-AIA-01, FR-AIA-04) right away afterwards.
 · **Contingency:** use the Analysis fallback if it can not be connected fully.
 · **Status:** open. 
 
@@ -79,6 +79,7 @@ impact) · **transfer** (make it somebody else's problem — a managed service, 
 · **Owner:** Katherine Spencer. · **Response:** mitigate — spend 10 minutes a week checking that Gemini AI API data policies on where data is sent and implement the Analysis fallback (T-5.6) right away if unhappy with the policy and pay for the paid tier.
 · **Contingency:** update the UI notes for stressed individuals with details on how the stressed individual data is being used or just pay and use the paid tier which is shown on the Gemini API pricing documentation.
 · **Status:** open. Reviewed weekly.
+- 2026-10-16 Gemini AI API free tier data usage terms still only state that they use the data to improve their products
 
 **R-08** — Because I am new to deploying an app with Expo and using Expo with React (T-6.2), I may run into technical problems when building the app or deploying it because of this novelty may increase the hours required for completing the app by 3 hours which would push a work package past its gate.
 · technical/novelty · L 3 · I 3 · **E 9**
@@ -91,7 +92,7 @@ ___________________________________________________________________
 
 ## Risks that did not survive
 
-**R-09** — Because Gemini AI API has a free tier API it can change the free tier's pricing, avaliability, and models included with little notice which may cause the AI part of my AI Analysis (FR-AIA-01, FR-AIA-04) to fail.
+**R-09** — Because Gemini AI API has a free tier API it can change the free tier's pricing, tokens, avaliability, and models included with little notice which may cause the AI part of my AI Analysis (FR-AIA-01, FR-AIA-04) to fail.
 · dependency · L 3 · I 3 · **E 9**
 · **Trigger:** The Gemini API returns a `500` error response in the logs *or* I observe that Google Gemini's AI API documents state the change in pricing, availability, or model.
 · **Owner:** Katherine Spencer. · **Response:** mitigate — spend 10 minutes a week checking the Gemini AI API documents on pricing and realse notes, always looking for new changes and also implement the Analysis fallback (T-5.6) right away so the Analysis is functional no matter what.
@@ -132,5 +133,12 @@ ___________________________________________________________________
 · **Owner:** Katherine Spencer. · **Response:** mitigate — choose just 2 main destressing activitiies per section and only adding more at the end after reviewing all the other must features.
 · **Contingency:** cut from the least important destressing activity sections first (T-4.3, T-4.4) and return focus on the most important destressing activity section (4.2) add one to each section after if time allows if not just deal with less in some sections as any destressing activity is generally helpful
 · **Status:** open.
+
+**R-015** — Because Expo has a free tier it Expo can change the free tiers pricing, avaliability, and the amount of builds included with little notice which may cause me to need to pay for the tier.
+· scope · L 2 · I 2 · **E 4**
+· **Trigger:**  I observe that Expo documents state the change in pricing, availability, or amount of builds included.
+· **Owner:** Katherine Spencer. · **Response:** mitigate — spend 10 minutes a week checking the Expo documents on pricing and builds, always looking for new changes.
+· **Contingency:** pay for the paid tier if the free tier is gone or more than 15 iOS builds are needed.
+· **Status:** open. Reviewed weekly.
 
 ---
