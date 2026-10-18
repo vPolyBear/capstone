@@ -24,12 +24,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Check Expo dependencies
         run: npx expo install --check
 
       - name: Type-check
         run: npx tsc --noEmit
 
-      - name: Build web app
-        run: npx expo export --platform web
+      - name: Build iOS app bundle
+        run: npx expo export --platform ios
