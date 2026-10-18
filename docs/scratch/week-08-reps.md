@@ -87,7 +87,7 @@ Write: the finding that stung, and the honest reason it stung.
 4. confirmed
 5. confirmed
 6. confirmed
-7. confirmed - UPDATE MSG TO STATE THAT I ADDED IT TO THE SQL THROUGH A CHANGE REQUEST I THINK (DR-022)
+7. confirmed
 8. confirmed
 9. fabricated & rejected
 10. rejected
