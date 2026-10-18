@@ -38,7 +38,7 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-1.1 | Add in the check in questions (10 main) | FR-QUES-01 | 1 | 2 | 3 | 2.0 | The check in questions are displayed and can be answered | — |
 | T-1.2 | Submiting the check in questions | FR-QUES-01 | 1 | 2 | 3 | 2.0 | The check in questions can be submitted when the submit button is clicked and the responses are saved to SQLite, they should also be visible on the Overview pages graphs | T-1.1 |
 | T-1.3 | Check for missing check in questions | FR-QUES-01 | 1 | 2 | 3 | 2.0 | When a required check in question is missing it must prevent the individual from submitting and state that the check in question must be completed before proceeding | T-1.1, T-1.2 |
-| T-1.4 | Save failure | FR-QUES-01 | 1 | 2 | 3 | 2.0 | The app provides a response that the check ins were not properly saved if it fails to save | T-1.1, T-1.2 |
+| T-1.4 | Save failure | FR-QUES-01 | 1 | 2 | 3 | 2.0 | The app provides a response that the check ins were not properly saved if it fails to save or they disappear | T-1.1, T-1.2 |
 | T-1.5 (deffered) | Edit a check in response | FR-QUES-02 | 1 | 2 | 3 | 2.0 | Individual can edit a check in question they did that day when selecting edit to change a response | T-1.1, T-1.2 |
 | T-1.6 (deffered) | Count of completed check ins | FR-QUES-03 | 1 | 2 | 3 | 2.0 | Individual can see how many checks they have completed through a toast when they submit | T-1.1, T-1.2 |
 
@@ -71,7 +71,7 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-4.2 | Create the breathing activities | FR-ACT-01 | 2 | 3 | 5 | 3.2 | There are at least two breathing activities displayed that can be run and played | T-4.1 |
 | T-4.3 | Create the creative and sounds activities | FR-ACT-01 | 2 | 3 | 4 | 3.0 | There are at least two of each the creative and sounds activities displayed that can be run and played | T-4.1 |
 | T-4.4 | Create the physical and self care activities | FR-ACT-01 | 1 | 2 | 3 | 2.0 | There are at least two of each the physical and self care activities displayed that can be run and played | T-4.1 |
-| T-4.5 | Handle failure and resume state | FR-ACT-01 | 1 | 3 | 4 | 2.8 | When an individual clicks on a destressing activity and it does not start then a toast should pop up or if an activity is started but the app is left then is should resume when reentered | T-4.1, T-4.2, T-4.3, T-4.4 |
+| T-4.5 | Handle failure and resume state | FR-ACT-01 | 1 | 3 | 4 | 2.8 | When an individual clicks on a destressing activity and it does not start then a toast should pop up or if an activity is started but the app is left for 5 seconds then the activity should resume from the state it was in when reentered within 5 seconds | T-4.1, T-4.2, T-4.3, T-4.4 |
 | T-4.6 (deffered) | Random Activity Chooser | FR-ACT-03 | 1 | 2 | 3 | 2.0 | A random destressing activity pops up and can be chosen when the random activity button is clicked. If the pop up activity chosen is clicked on then it goes directly to that activity. | T-4.2, T-4.3, T-4.4 |
 
 ### WP-5 — AI Analysis  ·  requirements FR-AIA-01, FR-AIA-04,  NFR-PRIV-01, NFR-PRIV-02, NFR-PERF-01, NFR-AVA-01, NFR-SEC-01  ·  owner: Katherine Spencer
@@ -83,7 +83,7 @@ Plannable effort (available − buffer) = **85.5 h**
 | T-5.3 | Provide predetermined prompts for suggestion based explanations and destressing activities | FR-AIA-01, FR-AIA-04 | 1 | 2 | 3 | 2.0 | Prompts are selectable for analysis and provide the proper response back based on the selected on | T-5.1, T-5.2 |
 | T-5.4 | Select the check ins and journal entries wanted for the analysis | FR-AIA-01, FR-AIA-04, NFR-PRIV-01, NFR-PRIV-02 | 2 | 3 | 4 | 3.0 | The check ins and journal entries can be selected and are the only ones sent through for the analysis, no other unrelated, unchecked information is sent | T-5.1, T-5.2 |
 | T-5.5 | Display and check the received response | FR-AIA-01, FR-AIA-04, NFR-PERF-01 | 1 | 3 | 4 | 2.8 | The suggestion based explanation or destressing aid is displayed on the UI within a p95 under 25 seconds | T-5.1, T-5.2, T-5.3, T-5.4 |
-| T-5.6 | Keyword Fallback analysis and testing | FR-AIA-01, FR-AIA-04, NFR-AVA-01 | 2 | 3 | 5 | 3.2 | The keyword fallback provides an analysis when Gemini is unavailable, times out, error, or provides an invalid response within 30 seconds | T-5.1, T-5.2, T-5.3, T-5.4 |
+| T-5.6 | Keyword Fallback analysis and testing | FR-AIA-01, FR-AIA-04, NFR-AVA-01 | 2 | 3 | 5 | 3.2 | The keyword fallback provides an analysis when Gemini or Supabase is unavailable, times out, error, or provides an invalid response within 30 seconds | T-5.1, T-5.2, T-5.3, T-5.4 |
 | T-5.7 | AI Analysis and Supabase Edge Function documentation, testing, and error handling | FR-AIA-01, FR-AIA-04, NFR-AVA-01 | 1 | 3 | 4 | 2.8 | Checks have been done for changes in each dependencies documentation weekly, and tests succeed that hande malformed responses, missing fields, API errors, and other invalid results, the specific errors are then returned when a request can not be processed on both iOS and Android. | T-5.1, T-5.2, T-5.3, T-5.4, T-5.5 |
 
 ### WP-6 — Setup  ·  requirements FR-QUES-01, FR-JOU-01  ·  owner: Katherine Spencer

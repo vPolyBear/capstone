@@ -113,28 +113,28 @@ ___________________________________________________________________
 · **Contingency:** spend project buffer, and record the draw in `docs/plan.md`.
 · **Status:** open.
 
-**R-012** — Because I have never done a task quite like the AI Analysis (FR-AIA-01, FR-AIA-04) there may be tasks that I may not have discovered through my research which may cause the feature to continue to grow and increase the hours required for completing the app by 3 hours.
+**R-12** — Because I have never done a task quite like the AI Analysis (FR-AIA-01, FR-AIA-04) there may be tasks that I may not have discovered through my research which may cause the feature to continue to grow and increase the hours required for completing the app by 3 hours.
 · scope · L 2 · I 2 · **E 4**
 · **Trigger:** I observe the WP-5 requires more new tasks that were not yet logged *or* I observe hours required to complete the previous week push over to the next week increasing it by 3 hours
 · **Owner:** Katherine Spencer. · **Response:** mitigate — continually research and keep track of the tasks and hours it takes to complete them, cutting the could then should tasks if new must tasks appear and move 3 hours of WP-5 forward into Week 11.
 · **Contingency:** focus on the must and the new musts and get them done before reevaluating the shoulds and coulds that may have also newly appeared. 
 · **Status:** open. Reviewed weekly.
 
-**R-013** — Because everyone is different when adding in the check-in questions (T-1.1) the amount and the types of question take ins may contuine to grow if which may cause me to loss track of what is the most important check-ins
+**R-13** — Because everyone is different when adding in the check-in questions (T-1.1) the amount and the types of question take ins may contuine to grow if which may cause me to loss track of what is the most important check-ins
 · scope · L 2 · I 2 · **E 4**
 · **Trigger:** I observe the check in questions growing past 20 questions
 · **Owner:** Katherine Spencer. · **Response:** mitigate — choose 10 main check-in questions and only adding more at the end after reviewing all the must features.
 · **Contingency:** combine similar questions and cut it down to 10 unless more is deemed neccessary to fulfill the check in questions purpose of helping individuals do a good check in scope of themselves after doing a full review of the features and time available.
 · **Status:** open.
 
-**R-014** — Because everyone is different when adding in the destressing activities into the 5 destressing activity section (FR-ACT-01) the amount in each destressing activity section may contuine to grow which may cause me to have way to many destressing activities in one section than the other or not enough in the others
+**R-14** — Because everyone is different when adding in the destressing activities into the 5 destressing activity section (FR-ACT-01) the amount in each destressing activity section may contuine to grow which may cause me to have way to many destressing activities in one section than the other or not enough in the others
 · scope · L 2 · I 2 · **E 4**
 · **Trigger:** I observe the that one destressing activity section of activities amount grows past 2 before the other destressing activities have 2 in them
 · **Owner:** Katherine Spencer. · **Response:** mitigate — choose just 2 main destressing activitiies per section and only adding more at the end after reviewing all the other must features.
 · **Contingency:** cut from the least important destressing activity sections first (T-4.3, T-4.4) and return focus on the most important destressing activity section (4.2) add one to each section after if time allows if not just deal with less in some sections as any destressing activity is generally helpful
 · **Status:** open.
 
-**R-015** — Because Expo has a free tier it Expo can change the free tiers pricing, avaliability, and the amount of builds included with little notice which may cause me to need to pay for the tier.
+**R-15** — Because Expo has a free tier it Expo can change the free tiers pricing, avaliability, and the amount of builds included with little notice which may cause me to need to pay for the tier.
 · scope · L 2 · I 2 · **E 4**
 · **Trigger:**  I observe that Expo documents state the change in pricing, availability, or amount of builds included.
 · **Owner:** Katherine Spencer. · **Response:** mitigate — spend 10 minutes a week checking the Expo documents on pricing and builds, always looking for new changes.

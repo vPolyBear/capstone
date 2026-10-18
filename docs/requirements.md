@@ -57,7 +57,7 @@ Define every term your requirements use in a project-specific sense. If a reader
 **Acceptance criteria:**
 - Given check in question on the screen, when the individual with stress answers a question, after they submit, then they should see the saved check in response as when they open the Overview of stress page the graphs will update within seven seconds with the added response answers.
 - Given a missing response to a check in question, when the stressed individual submits the check in response, then the system must instantly reject the submission and state the missing field(s) within five seconds.
-- Given a check in question response fails to save, when the stressed individual submits the check in response, then the system should provide a response within five seconds that the check in responses were not properly saved and to try submitting again in five seconds.
+- Given a check in question response fails to save, when the stressed individual submits the check in response, then the system should provide a response within five seconds that the check in responses were not properly saved and to try submitting again if they are still there or try redoing them again in five seconds.
 
 **Source:** Elicitation Interview with Stella, 2026-09-09
 
