@@ -1,6 +1,6 @@
 # Software Requirements Specification — Stress Manager
 
-**Author:** Katherine Spencer  **Version:** 1.1  **Date:** 2026-09-19
+**Author:** Katherine Spencer  **Version:** 1.3  **Date:** 2026-10-14
 **Status:** Baselined
 
 ---
@@ -332,10 +332,10 @@ I would need to revisit it after the capstone in the future when I have a lot of
 | Date | Version | Change | Reason |
 |---|---|---|---|
 | 2026-09-10 | 1.0 | Initial specification | Milestone 3 |
-| 2026-09-12 | 1.0 | Edited 10 sentences that could be inferred that two different programs could satisfy it | Ambiguity pass after external read |
-| 2026-09-19 | 1.1 | non-functional requirements, constraints, assumptions, dependencies, and obligations added | Milestone 4 |
+| 2026-09-12 | 1.1 | Edited 10 sentences that could be inferred that two different programs could satisfy it | Ambiguity pass after external read |
+| 2026-09-19 | 1.2 | non-functional requirements, constraints, assumptions, dependencies, and obligations added | Milestone 4 |
 satisfy it | Ambiguity pass after external read |
-| 2026-10-14 | 1.2 | Deffering/Priority changes to won'ts | Plan could not fit them into the budget |
+| 2026-10-14 | 1.3 | Deffering/Priority changes to won'ts | Plan could not fit them into the budget |
 
 ## 10. Constraints
 

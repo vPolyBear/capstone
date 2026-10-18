@@ -1,7 +1,7 @@
 # Technical Specification — Stress Manager
 
-Version: v0.1   Date: 2026-10-01   Author: Katherine Spencer   Status: Draft
-Requirements baseline this design satisfies: docs/requirements.md v0.1
+Version: v0.3   Date: 2026-10-16   Author: Katherine Spencer   Status: Baselined
+Requirements baseline this design satisfies: docs/requirements.md v1.3
 
 ## 1. Purpose and Scope
 
@@ -248,4 +248,4 @@ Deferred: FR-ACT-02, FR-ACT-03, FR-AIA-02, FR-AIA-03, FR-JOU-03, FR-JOU-04, FR-J
 |---|---|---|---|
 | v0.1 | 2026-10-04 | technical specification | created the architecture document |
 | v0.2 | 2026-10-13 | comment edits | small missing edits and findings needed to be deferred or added to this document |
-| v0.3 | 2026-10-16 | Refining edits | After going through the walkthrough and checklist I found some minor defects that needed to be updated |
+| v0.3 | 2026-10-16 | Refining edits and defects fixed | After going through the walkthrough, checklist, and the assistant go through I found some defects that needed to be updated |

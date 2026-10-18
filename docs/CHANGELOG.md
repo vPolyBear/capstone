@@ -2,7 +2,7 @@
 
 | CR | Date | Change | Requirements | Hours | Decision |
 |---|---|---|---|---:|---|
-
+| There are no change logs at the moment because nothing was deffered and no cuts were need to be made so there are no changes that need to be created yet that I know is already coming for a change log |
 
 
 examples:

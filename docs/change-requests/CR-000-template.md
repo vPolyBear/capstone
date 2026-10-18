@@ -1,5 +1,7 @@
 # CR-<nnn> — <one-line title>
 
+- Note - This is a template for a Change Request for the future Change Request's formatting, there are no change logs right now because nothing was deffered and no cuts were needed to be made so there are no changes that need to be created yet that I know is already coming for a change log
+
 | Field | Value |
 |---|---|
 | Raised by | |
