@@ -15,7 +15,7 @@ One row per hop. "Real" means the production component, not a stub, a mock, a ha
 | 1 | Client / entry point | Expo/ React Native Analysis page prompting for analysis | no | A screen shows a place where a prompt can be chosen |
 | 2 | Route / dispatch | The Analysis request handler sends the analysis request to the Supabase Edge Function | no | The Supabase Edge Function receives the request |
 | 3 | Service / domain logic | The Supabase Edge Function ensures the request is formatted properly and ensures it has all the correct fields then calls the Gemini API and takes in its response | no | The Supabase Edge Funcion is able to proceed with the request and Gemini provides a response back that it is expecting |
-| 4 | Data store | Expo SQLite check_ins & journal_entries | yes | The check_ins & journal_entries are able to be used and are based on for the analysis' response |
+| 4 | Data store | Expo SQLite check_ins & journal_entries | no | The check_ins & journal_entries data is able to be retrieved and store; the AI Analysis' response takes in this data too |
 | 5 | Response | 200 {"analysis_explanation", "activity_suggestion"} | no | The API returns a response with a proper analysis_explanation and activity_suggestion |
 | 6 | Rendered result | Analysis page that displays the analysis explanation and activity suggestion | no | The analysis_explanation and activity_suggestion are displayed on screen |
 | 7 | External integration | Gemini AI Analysis API is called by the Supabase Edge Functino | no | The Supabase Edge Function sent the request to Gemini and request a response back for the AI Analysis |

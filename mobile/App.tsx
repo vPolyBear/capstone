@@ -7,11 +7,12 @@ import { Link } from 'expo-router';
 export default function App() {
   useEffect(() => {
     async function initDatabase() {
-      const db = await openDatabase();
-      
+      await openDatabase();
     }
 
-    initDatabase();
+    void initDatabase().catch((error: unknown) => {
+      console.error('Failed to initialize the local database.', error);
+    });
   }, []);
 
   return (

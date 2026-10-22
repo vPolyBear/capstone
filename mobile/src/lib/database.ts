@@ -1,4 +1,5 @@
 import * as SQLite from 'expo-sqlite';
+import { DEVELOPMENT_SEED_SQL } from './developmentSeed.js';
 
 export async function openDatabase() {
   const db = await SQLite.openDatabaseAsync('StressManagement.db');
@@ -68,5 +69,10 @@ export async function openDatabase() {
     `);
     });
   }
+
+  if (__DEV__) {
+    await db.execAsync(DEVELOPMENT_SEED_SQL);
+  }
+
   return db;
 }

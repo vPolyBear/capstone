@@ -18,9 +18,13 @@
   "devDependencies": {
     "@expo/ngrok": "^4.1.0",
     "@types/react": "~19.2.2",
+    "eas-cli": "^25.3.0",
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "lint": "tsc --noEmit",
+    "test": "node --test",
+    "build": "eas build --platform ios --profile preview",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

@@ -10,6 +10,7 @@
       "migrations/*.sql"
     ],
     "ios": {
+      "bundleIdentifier": "com.kspencer.stressmanager",
       "supportsTablet": true
     },
     "android": {

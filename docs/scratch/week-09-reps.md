@@ -63,3 +63,6 @@ Produce: ten rewritten messages in your notes; then use the good form for the re
 
 - Before they read like the diary of tired person because they didn't have much information in them. Now they read like the changelog of a project. What gave it away was the lack in information and clarified detail.
 
+## Rep 4 — Build the script contract
+Which script was hardest to write, and what does that tell you about which part of your setup is not actually reproducible yet?
+- The setup script was the hardest one to write since I needed to make sure that the url and key was accounted for and I realized I needed to add a seeded data insertion section to the database.ts so that it can insert it when the app launches. Though because I am using SQLite the setup can't complete the entire database setup itself this is  Supabase’s server-side API key still depend on extra steps outside the script. Therefore, it is only really installing the dependencies. Then the part of my setup that is not actually reproducible 
