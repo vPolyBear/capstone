@@ -36,7 +36,7 @@ cd mobile
 ```
 
 - `setup` installs the locked dependencies and checks TypeScript.
-- `start` launches the Expo development server; then scan the QR code with Expo Go on your iPhone. On the app's first launch, it creates the local SQLite database and applies migrations. In Expo Go/development, it adds one sample check-in if the database has no check-ins; later launches do not add another sample. The installable preview build does not include development sample data.
+- `start` launches the Expo development server in tunnel mode; scan the QR code with Expo Go on your iPhone. Tunnel mode can help when the phone cannot connect over the local network. On the app's first launch, it creates the local SQLite database and applies migrations. In Expo Go/development, it adds one sample check-in if the database has no check-ins; later launches do not add another sample. The installable preview build does not include development sample data.
 
 To create an installable iOS preview build, run this from `mobile/`:
 
