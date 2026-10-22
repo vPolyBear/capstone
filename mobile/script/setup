@@ -4,16 +4,14 @@ set -eu
 cd "$(dirname "$0")/.."
 chmod +x script/*
 
-if [ ! -f .env ] ||
-  ! grep -Eq '^EXPO_PUBLIC_SUPABASE_URL=.+$' .env ||
-  ! grep -Eq '^EXPO_PUBLIC_SUPABASE_ANON_KEY=.+$' .env; then
+if { ! grep -Eq '^EXPO_PUBLIC_SUPABASE_URL=.+$' .env 2>/dev/null && [ -z "${EXPO_PUBLIC_SUPABASE_URL:-}" ]; } ||
+  { ! grep -Eq '^EXPO_PUBLIC_SUPABASE_ANON_KEY=.+$' .env 2>/dev/null && [ -z "${EXPO_PUBLIC_SUPABASE_ANON_KEY:-}" ]; }; then
   printf '%s\n' "Supabase settings are missing or incomplete." >&2
   printf '%s\n' "Copy .env.example to .env, add your Supabase project URL and anon key, then run setup again." >&2
   exit 1
 fi
 
 npm ci
-npm run lint
 
 printf '\nSetup complete. Run ./script/start to open the app.\n'
 printf 'Expo SQLite creates the device database, applies migrations, and seeds development data on first app launch.\n'

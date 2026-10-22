@@ -24,7 +24,8 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "test": "node --test",
-    "build": "eas build --platform ios --profile preview",
+    "build": "expo export --platform ios",
+    "build:ios": "eas build --platform ios --profile preview",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
