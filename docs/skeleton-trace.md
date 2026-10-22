@@ -36,8 +36,8 @@ with no issue is a promise nobody is keeping.
 
 ## 3. Skeleton acceptance record
 
-- **Date the skeleton first walked end to end:** `<YYYY-MM-DD>`
-- **Commit that made it walk:** `<sha>`
-- **CI run that proved it (URL):** `<link to the green run>`
-- **One red build I caused on purpose, and the fix:** `<red run URL>` -> `<fix sha>`
+- **Date the skeleton first walked end to end:** `2026-10-22`
+- **Commit that made it walk:** `bb3b60a`
+- **CI run that proved it (URL):** https://github.com/vPolyBear/capstone/commit/bb3b60a31276a7b5d507e883af4cb53614905cc3 
+- **One red build I caused on purpose, and the fix:** `https://github.com/vPolyBear/capstone/commit/1842332e6af3c2c98b32a1b5d8bd01626989d311` -> `1842332`
 - **Hops still stubbed, and when they get real:** `<list, with issue numbers>`

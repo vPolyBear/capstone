@@ -83,3 +83,10 @@ How many times did you restart?
 Reflect: if a dependency of yours published a breaking release tonight, would your build still pass tomorrow? Answer with evidence, not optimism.
 - The .nvmrc has the pinned version of 22.16.0 now and the npm ci is used for the installs in the lock file, package-lock.json, so my build will still pass tomorrow because a dependency published with a breaking realse would not affect my project as my project will still be using the pinned version. 
 
+## Rep 7 — Ship the pipeline
+
+Reflect: list every failure it took to get green. For each one, say whether it was a real portability problem or a workflow-syntax problem. The first kind is the valuable one — name what your laptop had that a clean machine does not.
+- The only failure was that the script files needed to be executables.
+- It was a real portability problem as GitHub couldn't identify them as executables 
+- My laptop had them marked as executables but GitHub didn't yet
+
