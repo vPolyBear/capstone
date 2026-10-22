@@ -20,7 +20,7 @@ test('development seed inserts a check-in into SQLite', () => {
 
   const checkIn = db.prepare('SELECT * FROM check_ins').get();
   assert.equal(checkIn.stress_level, 1);
-  assert.equal(checkIn.mood, 'calmmmmm');
+  assert.equal(checkIn.mood, 'calm');
   assert.equal(checkIn.eaten_recently, 1);
   assert.equal(checkIn.concentration_level, 3);
   db.close();
