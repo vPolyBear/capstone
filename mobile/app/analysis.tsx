@@ -42,7 +42,7 @@ const Analysis = () => {
                         accessibilityRole="radio"
                         accessibilityState={{ checked: selectedPrompt === 'explanation1' }}
                         style={styles.radio}
-                        onPress={() => setSelectedPrompt('explanation1')}
+                        onPress={() => setSelectedPrompt(12345)}
                     >
                         <View style={styles.radioCircle}>
                             {selectedPrompt === 'explanation1' && (
