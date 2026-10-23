@@ -111,7 +111,7 @@ if [ "${SMOKE_START_APP:-0}" = "1" ]; then
   METRO_PID=$!
 
   deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
-  until curl -fsS http://127.0.0.1:8081/status >/dev/null 2>&1; do
+  until curl -fsS http://localhost:8081/status >/dev/null 2>&1; do
     if ! kill -0 "$METRO_PID" 2>/dev/null; then
       fail "Expo Metro stopped before it became ready"
     fi
