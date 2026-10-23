@@ -90,3 +90,22 @@ Reflect: list every failure it took to get green. For each one, say whether it w
 - It was a real portability problem as GitHub couldn't identify them as executables 
 - My laptop had them marked as executables but GitHub didn't yet
 
+## Rep 8 — Break it on purpose, twice
+
+- I updated calm assert to calmmmmm in the developmentSeed.test.js and it failed properly. The error is in the test file and returned "Error: Process completed with exit code 1." on line 48.
+    - red (broke): https://github.com/vPolyBear/capstone/commit/c06f96cd2a4efc1f5216e9a3d062c8ab48b3328c
+    - green (fixed): https://github.com/vPolyBear/capstone/commit/f899b8320f2e46b5fdecac3979ab472ea7f8ec45
+- I updated a onPress={() => setSelectedPrompt(12345)} to take in a number instead of the string like it is supposed to so the TypeScript lint checks fail. The error is in the lint file line 11 and 12 and returned "Error: app/analysis.tsx(45,58): error TS2345: Argument of type '12345' is not assignable to parameter of type 'SetStateAction string | null'. Error: Process completed with exit code 2."
+    - red (broke): https://github.com/vPolyBear/capstone/commit/7ce0a7b62de8f580e2b0169cb6413761da307958
+    - green (fixed): https://github.com/vPolyBear/capstone/commit/d2067d6a87ab5a3e8da1a303ddfad9a6440b3548
+
+- It brought me to the error so it didn't really take a scroll if I needed to scroll since the error is at the bottom it would be one scroll
+
+## Rep 9 — Make the skeleton walk in CI
+
+- Passed: SMOKE OK: SQLite database returned the seeded check-in (calm).
+- Failed when date store was stopped: SMOKE FAIL: SQLite database file does not exist: Documents/SQLite/does-not-exist.db
+
+Reflect: in one sentence, what exactly does your smoke test prove that a unit test of the same code does not?
+- What my smoke test proves that a unit test of the same code does not is proof that the app can be launched and creates the SQLite database; it can also read back the seeded check-in that I had as a unit test won't be able to have the app launch itself and read the seeded data.
+

@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+#
+# Check that the running iOS app created its real SQLite database and returned
+# the seeded check-in. Set SMOKE_START_APP=1 to build and launch it in a simulator.
+#
+#   ./script/smoke
+#   SMOKE_START_APP=1 ./script/smoke
+#
+# Windows check (Git Bash, from mobile/; uses a temporary SQLite fixture):
+#   node -e 'const { DatabaseSync } = require("node:sqlite"); const db = new DatabaseSync("Documents/SQLite/smoke-fixture.db"); db.exec("CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY); INSERT INTO schema_migrations VALUES (1), (2); CREATE TABLE check_ins (stress_level INTEGER, mood TEXT, eaten_recently INTEGER, concentration_level INTEGER)"); db.prepare("INSERT INTO check_ins VALUES (?, ?, ?, ?)").run(1, "calm", 1, 3); db.close();'
+#   SMOKE_DATABASE_PATH=Documents/SQLite/smoke-fixture.db ./script/smoke  # MUST pass
+#   SMOKE_DATABASE_PATH=Documents/SQLite/does-not-exist.db ./script/smoke # MUST fail
+#   rm Documents/SQLite/smoke-fixture.db
+# These fixture checks verify the script's database assertions, not the iOS app.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+BUNDLE_ID="${IOS_BUNDLE_ID:-com.kspencer.stressmanager}"
+DATABASE_FILE="${SMOKE_DATABASE_FILE:-Documents/SQLite/StressManagement.db}"
+EXPECT="${SMOKE_EXPECT:-calm}"
+TIMEOUT_SECONDS="${SMOKE_TIMEOUT:-120}"
+SIMULATOR_ID="${IOS_SIMULATOR_ID:-}"
+TEMP_DIR="$(mktemp -d)"
+METRO_PID=""
+
+fail() {
+  printf 'SMOKE FAIL: %s\n' "$1" >&2
+  if [ -f "$TEMP_DIR/metro.log" ]; then
+    printf '%s\n' '--- Metro log ---' >&2
+    tail -n 80 "$TEMP_DIR/metro.log" >&2
+  fi
+  exit 1
+}
+
+cleanup() {
+  if [ -n "$METRO_PID" ]; then
+    kill "$METRO_PID" 2>/dev/null || true
+    wait "$METRO_PID" 2>/dev/null || true
+  fi
+  rm -rf "$TEMP_DIR"
+}
+trap cleanup EXIT
+
+verify_database() {
+  SMOKE_DATABASE_PATH="$1" SMOKE_EXPECT="$EXPECT" node - <<'NODE'
+const assert = require('node:assert/strict');
+const { DatabaseSync } = require('node:sqlite');
+
+const db = new DatabaseSync(process.env.SMOKE_DATABASE_PATH, { readOnly: true });
+try {
+  const versions = db
+    .prepare('SELECT version FROM schema_migrations ORDER BY version')
+    .all()
+    .map(({ version }) => version);
+  assert.deepEqual(versions, [1, 2], 'app migrations were not applied');
+
+  const checkIn = db
+    .prepare(
+      `SELECT stress_level, mood, eaten_recently, concentration_level
+       FROM check_ins
+       WHERE mood = ?`
+    )
+    .get(process.env.SMOKE_EXPECT);
+
+  assert.ok(checkIn, `database did not return the seeded check-in (${process.env.SMOKE_EXPECT})`);
+  assert.equal(checkIn.stress_level, 1);
+  assert.equal(checkIn.eaten_recently, 1);
+  assert.equal(checkIn.concentration_level, 3);
+
+  console.log(`SMOKE OK: SQLite database returned the seeded check-in (${checkIn.mood}).`);
+} finally {
+  db.close();
+}
+NODE
+}
+
+if [ -n "${SMOKE_DATABASE_PATH:-}" ] || ! command -v xcrun >/dev/null 2>&1; then
+  DATABASE_PATH="${SMOKE_DATABASE_PATH:-$DATABASE_FILE}"
+  if [ ! -f "$DATABASE_PATH" ]; then
+    fail "SQLite database file does not exist: $DATABASE_PATH"
+  fi
+  if command -v cygpath >/dev/null 2>&1; then
+    DATABASE_PATH="$(cygpath -w "$DATABASE_PATH")"
+  fi
+  if ! output="$(verify_database "$DATABASE_PATH" 2>&1)"; then
+    fail "$output"
+  fi
+  printf '%s\n' "$output"
+  exit 0
+fi
+
+command -v curl >/dev/null 2>&1 || fail "curl is required to wait for the app bundle"
+
+if [ "${SMOKE_START_APP:-0}" = "1" ]; then
+  if [ -z "$SIMULATOR_ID" ]; then
+    SIMULATOR_ID="$(xcrun simctl list devices booted | sed -n 's/.*(\([0-9A-F-]*\)) (Booted).*/\1/p' | head -n 1)"
+  fi
+
+  if [ -z "$SIMULATOR_ID" ]; then
+    SIMULATOR_ID="$(xcrun simctl list devices available | sed -n '/iPhone.*(Shutdown)/{s/.*(\([0-9A-F-]*\)) (Shutdown).*/\1/p;q;}')"
+    [ -n "$SIMULATOR_ID" ] || fail "no available iPhone simulator was found"
+    xcrun simctl boot "$SIMULATOR_ID" ||
+      fail "could not boot the iPhone simulator"
+    xcrun simctl bootstatus "$SIMULATOR_ID" -b ||
+      fail "the iPhone simulator did not finish booting"
+  fi
+
+  ./node_modules/.bin/expo start --localhost --port 8081 >"$TEMP_DIR/metro.log" 2>&1 &
+  METRO_PID=$!
+
+  deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
+  until curl -fsS http://127.0.0.1:8081/status >/dev/null 2>&1; do
+    if ! kill -0 "$METRO_PID" 2>/dev/null; then
+      fail "Expo Metro stopped before it became ready"
+    fi
+    if [ "$(date +%s)" -ge "$deadline" ]; then
+      fail "Expo Metro did not become ready within ${TIMEOUT_SECONDS}s"
+    fi
+    sleep 1
+  done
+
+  ./node_modules/.bin/expo run:ios \
+    --configuration Debug \
+    --device "$SIMULATOR_ID" \
+    --no-bundler ||
+    fail "could not build and install the iOS app"
+
+  xcrun simctl launch "$SIMULATOR_ID" "$BUNDLE_ID" ||
+    fail "could not launch the iOS app"
+else
+  SIMULATOR_ID="${SIMULATOR_ID:-booted}"
+fi
+
+APP_DATA="$(xcrun simctl get_app_container "$SIMULATOR_ID" "$BUNDLE_ID" data)" ||
+  fail "the iOS app is not installed in simulator ${SIMULATOR_ID}"
+DATABASE_PATH="$APP_DATA/$DATABASE_FILE"
+
+if ! xcrun simctl spawn "$SIMULATOR_ID" launchctl list | grep -Fq "$BUNDLE_ID"; then
+  fail "the iOS app is not running in simulator ${SIMULATOR_ID}"
+fi
+
+deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
+while true; do
+  if [ -f "$DATABASE_PATH" ] && output="$(verify_database 2>&1)"; then
+    printf '%s\n' "$output"
+    break
+  fi
+  if [ "$(date +%s)" -ge "$deadline" ]; then
+    if [ ! -f "$DATABASE_PATH" ]; then
+      fail "SQLite database file does not exist: $DATABASE_PATH"
+    fi
+    printf '%s\n' "${output:-Database verification failed.}" >&2
+    fail "the running iOS app did not apply migrations and return the seeded row within ${TIMEOUT_SECONDS}s"
+  fi
+  sleep 1
+done

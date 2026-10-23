@@ -46,3 +46,49 @@ jobs:
 
       - name: Build
         run: ./script/build
+
+  ios-smoke:
+    name: ios-simulator-smoke
+    runs-on: macos-15
+    needs: build
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: mobile
+    env:
+      EXPO_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ci-build-placeholder
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: mobile/.nvmrc
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install from the lock file
+        run: npm ci
+
+      - name: Smoke test on iOS simulator
+        run: SMOKE_START_APP=1 bash ./script/smoke
+
+      - name: Verify smoke test fails when the database is missing
+        shell: bash
+        run: |
+          set +e
+          output="$(SMOKE_DATABASE_FILE=Documents/SQLite/thisisthenothing.db SMOKE_TIMEOUT=2 bash ./script/smoke 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          if [ "$status" -eq 0 ]; then
+            echo "SMOKE FAIL: smoke test passed when the database file was missing"
+            exit 1
+          fi
+          if ! printf '%s' "$output" | grep -Fq "SQLite database file does not exist:"; then
+            echo "SMOKE FAIL: failed for an unexpected reason"
+            exit 1
+          fi
+          echo "SMOKE OK: missing database correctly caused the smoke test to fail"
