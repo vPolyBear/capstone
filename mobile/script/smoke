@@ -121,11 +121,28 @@ if [ "${SMOKE_START_APP:-0}" = "1" ]; then
     sleep 1
   done
 
-  ./node_modules/.bin/expo run:ios \
+  if ! ./node_modules/.bin/expo run:ios \
     --configuration Debug \
     --device "$SIMULATOR_ID" \
-    --no-bundler ||
+    --no-bundler; then
+    if [ -d ios/mobile.xcworkspace ]; then
+      printf '%s\n' '--- Xcode Swift package resolution diagnostics ---' >&2
+      set +e
+      xcodebuild \
+        -resolvePackageDependencies \
+        -workspace ios/mobile.xcworkspace \
+        -scheme mobile \
+        -verbose 2>&1 | tee "$TEMP_DIR/xcode-package-resolution.log"
+      resolve_status=${PIPESTATUS[0]}
+      set -e
+      if [ "$resolve_status" -ne 0 ]; then
+        printf 'Xcode package resolution exited with code %s.\n' "$resolve_status" >&2
+      fi
+    else
+      printf '%s\n' 'Xcode workspace was not generated; cannot run package-resolution diagnostics.' >&2
+    fi
     fail "could not build and install the iOS app"
+  fi
 
   xcrun simctl launch "$SIMULATOR_ID" "$BUNDLE_ID" ||
     fail "could not launch the iOS app"
