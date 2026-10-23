@@ -24,9 +24,15 @@ TIMEOUT_SECONDS="${SMOKE_TIMEOUT:-120}"
 SIMULATOR_ID="${IOS_SIMULATOR_ID:-}"
 TEMP_DIR="$(mktemp -d)"
 METRO_PID=""
+IOS_BUILD_PID=""
+IOS_BUILD_LOG_PID=""
 
 fail() {
   printf 'SMOKE FAIL: %s\n' "$1" >&2
+  if [ -f "$TEMP_DIR/expo-ios-build.log" ]; then
+    printf '%s\n' '--- iOS build log (last 80 lines) ---' >&2
+    tail -n 80 "$TEMP_DIR/expo-ios-build.log" >&2
+  fi
   if [ -f "$TEMP_DIR/metro.log" ]; then
     printf '%s\n' '--- Metro log ---' >&2
     tail -n 80 "$TEMP_DIR/metro.log" >&2
@@ -35,6 +41,14 @@ fail() {
 }
 
 cleanup() {
+  if [ -n "$IOS_BUILD_LOG_PID" ]; then
+    kill "$IOS_BUILD_LOG_PID" 2>/dev/null || true
+    wait "$IOS_BUILD_LOG_PID" 2>/dev/null || true
+  fi
+  if [ -n "$IOS_BUILD_PID" ]; then
+    kill "$IOS_BUILD_PID" 2>/dev/null || true
+    wait "$IOS_BUILD_PID" 2>/dev/null || true
+  fi
   if [ -n "$METRO_PID" ]; then
     kill "$METRO_PID" 2>/dev/null || true
     wait "$METRO_PID" 2>/dev/null || true
@@ -121,39 +135,66 @@ if [ "${SMOKE_START_APP:-0}" = "1" ]; then
     sleep 1
   done
 
-  set +e
+  BUILD_TIMEOUT_SECONDS="${SMOKE_BUILD_TIMEOUT:-1200}"
+  BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
+  : > "$TEMP_DIR/expo-ios-build.log"
   ./node_modules/.bin/expo run:ios \
     --configuration Debug \
     --device "$SIMULATOR_ID" \
-    --no-bundler 2>&1 | tee "$TEMP_DIR/expo-ios-build.log"
-  build_status=${PIPESTATUS[0]}
-  set -e
+    --no-bundler >"$TEMP_DIR/expo-ios-build.log" 2>&1 &
+  IOS_BUILD_PID=$!
+  tail -n +1 -f "$TEMP_DIR/expo-ios-build.log" &
+  IOS_BUILD_LOG_PID=$!
 
-  if [ "$build_status" -ne 0 ]; then
-    if [ -d ios/mobile.xcworkspace ]; then
-      printf '%s\n' '--- Retrying failed iOS build with verbose Xcode diagnostics ---' >&2
-      set +e
-      xcodebuild \
-        -workspace ios/mobile.xcworkspace \
-        -configuration Debug \
-        -scheme mobile \
-        -destination "id=$SIMULATOR_ID" \
-        -verbose \
-        COCOAPODS_PARALLEL_CODE_SIGN=true \
-        COMPILER_INDEX_STORE_ENABLE=NO \
-        2>&1 | tee "$TEMP_DIR/xcode-ios-build.log"
-      diagnostic_status=${PIPESTATUS[0]}
-      set -e
-      if [ "$diagnostic_status" -ne 0 ]; then
-        printf 'Verbose Xcode build exited with code %s.\n' "$diagnostic_status" >&2
-      else
-        printf '%s\n' 'Verbose Xcode build succeeded on retry; the original Expo build still failed.' >&2
-      fi
-    else
-      printf '%s\n' 'Xcode workspace was not generated; cannot rerun the build with verbose diagnostics.' >&2
+  APP_DATA=""
+  while [ -z "$APP_DATA" ]; do
+    if APP_DATA="$(xcrun simctl get_app_container "$SIMULATOR_ID" "$BUNDLE_ID" data 2>/dev/null)"; then
+      break
     fi
-    fail "could not build and install the iOS app"
-  fi
+
+    if ! kill -0 "$IOS_BUILD_PID" 2>/dev/null; then
+      set +e
+      wait "$IOS_BUILD_PID"
+      build_status=$?
+      set -e
+      IOS_BUILD_PID=""
+      if [ "$build_status" -ne 0 ]; then
+        if [ -d ios/mobile.xcworkspace ]; then
+          printf '%s\n' '--- Retrying failed iOS build with verbose Xcode diagnostics ---' >&2
+          set +e
+          xcodebuild \
+            -workspace ios/mobile.xcworkspace \
+            -configuration Debug \
+            -scheme mobile \
+            -destination "id=$SIMULATOR_ID" \
+            -verbose \
+            COCOAPODS_PARALLEL_CODE_SIGN=true \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            2>&1 | tee "$TEMP_DIR/xcode-ios-build.log"
+          diagnostic_status=${PIPESTATUS[0]}
+          set -e
+          if [ "$diagnostic_status" -ne 0 ]; then
+            printf 'Verbose Xcode build exited with code %s.\n' "$diagnostic_status" >&2
+          else
+            printf '%s\n' 'Verbose Xcode build succeeded on retry; the original Expo build still failed.' >&2
+          fi
+        else
+          printf '%s\n' 'Xcode workspace was not generated; cannot rerun the build with verbose diagnostics.' >&2
+        fi
+        fail "could not build and install the iOS app"
+      fi
+      fail "iOS build command exited successfully but the app was not installed"
+    fi
+
+    if [ "$(date +%s)" -ge "$BUILD_DEADLINE" ]; then
+      fail "iOS app was not installed within ${BUILD_TIMEOUT_SECONDS}s"
+    fi
+    sleep 2
+  done
+
+  kill "$IOS_BUILD_LOG_PID" 2>/dev/null || true
+  wait "$IOS_BUILD_LOG_PID" 2>/dev/null || true
+  IOS_BUILD_LOG_PID=""
 
   xcrun simctl launch "$SIMULATOR_ID" "$BUNDLE_ID" ||
     fail "could not launch the iOS app"
@@ -161,8 +202,10 @@ else
   SIMULATOR_ID="${SIMULATOR_ID:-booted}"
 fi
 
-APP_DATA="$(xcrun simctl get_app_container "$SIMULATOR_ID" "$BUNDLE_ID" data)" ||
-  fail "the iOS app is not installed in simulator ${SIMULATOR_ID}"
+if [ -z "${APP_DATA:-}" ]; then
+  APP_DATA="$(xcrun simctl get_app_container "$SIMULATOR_ID" "$BUNDLE_ID" data)" ||
+    fail "the iOS app is not installed in simulator ${SIMULATOR_ID}"
+fi
 DATABASE_PATH="$APP_DATA/$DATABASE_FILE"
 
 if ! xcrun simctl spawn "$SIMULATOR_ID" launchctl list | grep -Fq "$BUNDLE_ID"; then
