@@ -49,7 +49,7 @@ jobs:
 
   ios-smoke:
     name: ios-simulator-smoke
-    runs-on: macos-15
+    runs-on: macos-26
     needs: build
     timeout-minutes: 30
     defaults:
@@ -68,6 +68,11 @@ jobs:
           node-version-file: mobile/.nvmrc
           cache: npm
           cache-dependency-path: mobile/package-lock.json
+
+      - name: Show Apple toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
 
       - name: Install from the lock file
         run: npm ci
