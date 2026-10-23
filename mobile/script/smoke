@@ -121,25 +121,36 @@ if [ "${SMOKE_START_APP:-0}" = "1" ]; then
     sleep 1
   done
 
-  if ! ./node_modules/.bin/expo run:ios \
+  set +e
+  ./node_modules/.bin/expo run:ios \
     --configuration Debug \
     --device "$SIMULATOR_ID" \
-    --no-bundler; then
+    --no-bundler 2>&1 | tee "$TEMP_DIR/expo-ios-build.log"
+  build_status=${PIPESTATUS[0]}
+  set -e
+
+  if [ "$build_status" -ne 0 ]; then
     if [ -d ios/mobile.xcworkspace ]; then
-      printf '%s\n' '--- Xcode Swift package resolution diagnostics ---' >&2
+      printf '%s\n' '--- Retrying failed iOS build with verbose Xcode diagnostics ---' >&2
       set +e
       xcodebuild \
-        -resolvePackageDependencies \
         -workspace ios/mobile.xcworkspace \
+        -configuration Debug \
         -scheme mobile \
-        -verbose 2>&1 | tee "$TEMP_DIR/xcode-package-resolution.log"
-      resolve_status=${PIPESTATUS[0]}
+        -destination "id=$SIMULATOR_ID" \
+        -verbose \
+        COCOAPODS_PARALLEL_CODE_SIGN=true \
+        COMPILER_INDEX_STORE_ENABLE=NO \
+        2>&1 | tee "$TEMP_DIR/xcode-ios-build.log"
+      diagnostic_status=${PIPESTATUS[0]}
       set -e
-      if [ "$resolve_status" -ne 0 ]; then
-        printf 'Xcode package resolution exited with code %s.\n' "$resolve_status" >&2
+      if [ "$diagnostic_status" -ne 0 ]; then
+        printf 'Verbose Xcode build exited with code %s.\n' "$diagnostic_status" >&2
+      else
+        printf '%s\n' 'Verbose Xcode build succeeded on retry; the original Expo build still failed.' >&2
       fi
     else
-      printf '%s\n' 'Xcode workspace was not generated; cannot run package-resolution diagnostics.' >&2
+      printf '%s\n' 'Xcode workspace was not generated; cannot rerun the build with verbose diagnostics.' >&2
     fi
     fail "could not build and install the iOS app"
   fi
