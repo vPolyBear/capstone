@@ -214,7 +214,7 @@ fi
 
 deadline=$(( $(date +%s) + TIMEOUT_SECONDS ))
 while true; do
-  if [ -f "$DATABASE_PATH" ] && output="$(verify_database 2>&1)"; then
+  if [ -f "$DATABASE_PATH" ] && output="$(verify_database "$DATABASE_PATH" 2>&1)"; then
     printf '%s\n' "$output"
     break
   fi
