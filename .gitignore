@@ -1,13 +1,30 @@
-# Dependencies
-node_modules/
-
 # Expo
 .expo/
 .expo-shared/
 
-# Build output
+# secrets and local config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+service-account*.json
+
+# local data and build output
+*.sqlite
+*.sqlite3
+*.db
 dist/
 build/
+target/
+out/
+
+# dependencies (never commit these; the lock file is the record)
+node_modules/
+venv/
+.venv/
+__pycache__/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -18,15 +35,10 @@ build/
 # Testing and coverage
 coverage/
 
-# Local environment files
-.env
-.env.*
-!.env.example
-
-# VS Code
-.vscode/
-
-# Operating-system files
+# Editor and operating-system noise
+.idea/
+.vscode/*
+!.vscode/extensions.json
 .DS_Store
 Thumbs.db
 Desktop.ini

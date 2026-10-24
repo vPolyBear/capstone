@@ -24,15 +24,30 @@ One row per hop. "Real" means the production component, not a stub, a mock, a ha
 
 ## 2. Requirement traceability
 
-Every requirement identifier you baselined in Week 8 gets a row. A requirement
-with no issue is a promise nobody is keeping.
+Every requirement identifier you baselined in Week 8 gets a row. A requirement with no issue is a promise nobody is keeping.
 
 | Req ID | Requirement (short) | Issue | Branch | Verified by | Status |
 |---|---|---|---|---|---|
-| `<FR-1>` | `<one line>` | `#<n>` | `<branch>` | `<test name or "manual">` | not started / in progress / done |
-| FR-4 | List items expiring within 7 days | #12 | `fr-4-expiring-list` | `tests/unit/list-expiring` | done |
-| FR-7 | Add an item from the web form | #14 | `fr-7-add-item` | — | in progress |
-| NFR-2 | First page paint under 2 s on 3G | #21 | — | — | not started |
+| FR-QUES-01 | Add a check in and save the check in after it is submitted | #33 (I-1) | — | — | not started |
+| FR-JOU-01 | Write in a journal entry and then save | #34 (I-2) | — | — | not started |
+| FR-JOU-02 | Edit a journal entry and save its changes | #42 (I-10) | — | — | not started |
+| FR-OVER-01 | Weekly and monthly views based on the check-ins | #35 (I-3) | — | — | not started |
+| FR-ACT-01 | Play and continue a destressing activity | #36 (I-4) | — | — | not started |
+| FR-AIA-01 | Request for an AI stress explanation | #37 (I-5) | — | — | not started |
+| FR-AIA-04 | Request for an AI destressing activity | #38 (I-6) | — | — | not started |
+| NFR-AVA-01 | Display Analysis Fallback when Gemini isn't available | #39 (I-7) | — | — | not started |
+| NFR-PERF-01 | AI Analysis response provided in a p95 under 25 seconds | #37 (I-5); #38 (I-6) | — | — | not started |
+| NFR-PRIV-01 | Unless prompted for AI Analysis, 0 check ins and journal entries are sent to Gemini AI | #37 (I-5); #38 (I-6) | — | — | not started |
+| NFR-PRIV-02 | 0 unrelated personal information or device information sent in an AI request | #37 (I-5); #38 (I-6) | — | — | not started |
+| NFR-SEC-01 | 0 API key's in any commit | #37 (I-5); #38 (I-6); #41 (I-9) | — | — | not started |
+| NFR-REL-01 | 0 unhandled exceptions and error when running the app | #40 (I-8) | — | — | not started |
+| NFR-ACC-01 | Features have easy readable fonts and text sizes, and contrasts in colors | #40 (I-8) | — | — | not started |
+| NFR-ACC-02 | Success, failure, loading states, and messages don't rely on color alone | #40 (I-8) | — | — | not started |
+| NFR-SEC-02 | 0 exposed error and error details | #40 (I-8) | — | — | not started |
+| NFR-USE-01 | App traversal without help | #40 (I-8) | — | — | not started |
+| NFR-USE-02 | Easy identification of successful and failed save attempts | #40 (I-8) | — | — | not started |
+| NFR-PORT-02 | 0 main buttons or controls are cut off in portrait mode | #40 (I-8) | — | — | not started |
+| NFR-MNT-01 | Clean clone from just the README | #41 (I-9) | — | — | not started |
 
 ## 3. Skeleton acceptance record
 

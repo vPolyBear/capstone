@@ -13,7 +13,7 @@ The project idea is a stress management app that aims to help individuals deal w
 - `src/`, `tests/` — empty until Week 9
 - `docs/definition-of-done.md` - a list that must be followed to consider an item as done
 
-## How to run it
+## Run it
 
 Install Node.js 22.16.0, npm, and Expo Go on your iPhone. For Windows use Git Bash for the commands below.
 

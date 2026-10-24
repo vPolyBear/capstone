@@ -109,3 +109,17 @@ Reflect: list every failure it took to get green. For each one, say whether it w
 Reflect: in one sentence, what exactly does your smoke test prove that a unit test of the same code does not?
 - What my smoke test proves that a unit test of the same code does not is proof that the app can be launched and creates the SQLite database; it can also read back the seeded check-in that I had as a unit test won't be able to have the app launch itself and read the seeded data.
 
+## Rep 10 — Issues that point back at requirements
+
+Reflect: which requirements have no issue, and which have nothing verifying them? 
+- All the requirements do have an issue
+- All the requirements currently don't have anything verifying them as they are not done
+
+## Rep 11 — The secrets audit and the rotation plan
+
+- "clean: nothing tracked"
+- "clean: nothing in history"
+- there was nothing outputted
+
+Reflect: if a key of yours leaked at 2 a.m. tonight, what is the first thing you would do?
+- If a key was leaked at 2 a.m. tonight the first think I would do is check the runbook with the rotatation steps to fix it so that the key can be updated and the app tested to still run.
