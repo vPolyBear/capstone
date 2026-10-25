@@ -1,8 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import { DEVELOPMENT_SEED_SQL } from './developmentSeed.js';
 
-export async function openDatabase() {
-  const db = await SQLite.openDatabaseAsync('StressManagement.db');
+export async function openDatabase(db: SQLite.SQLiteDatabase) {
 
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -74,5 +73,4 @@ export async function openDatabase() {
     await db.execAsync(DEVELOPMENT_SEED_SQL);
   }
 
-  return db;
 }
