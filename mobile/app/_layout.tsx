@@ -1,6 +1,8 @@
 import { Stack } from 'expo-router';
 import { Platform, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { openDatabase } from '../src/lib/database'; 
+import { SQLiteProvider } from 'expo-sqlite';
 
 type HeaderProps = {
   navigation: { goBack: () => void };
@@ -28,22 +30,28 @@ function AppHeader({ navigation, title, backTitle }: HeaderProps) {
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{
-      headerStyle: { backgroundColor: '#112f2c' },
-      headerTintColor: '#ffffff',
-      headerTitleStyle: { fontWeight: 'bold' },
-      header: Platform.OS === 'ios'
-        ? ({ navigation, options, back, route }) => (
-            <AppHeader
-              navigation={navigation}
-              title={options.title ?? route.name}
-              backTitle={back?.title}
-            />
-          )
-        : undefined,
-    }}>
-      <Stack.Screen name="home" options={{ title: 'Home' }} />
-      <Stack.Screen name="analysis" options={{ title: 'Analysis', headerBackTitle: 'Home' }} />
-    </Stack>
+    <SQLiteProvider
+      databaseName='StressManagement.db'
+      onInit={openDatabase}
+      >
+      <Stack screenOptions={{
+        headerStyle: { backgroundColor: '#112f2c' },
+        headerTintColor: '#ffffff',
+        headerTitleStyle: { fontWeight: 'bold' },
+        header: Platform.OS === 'ios'
+          ? ({ navigation, options, back, route }) => (
+              <AppHeader
+                navigation={navigation}
+                title={options.title ?? route.name}
+                backTitle={back?.title}
+              />
+            )
+          : undefined,
+      }}>
+        <Stack.Screen name="home" options={{ title: 'Home' }} />
+        <Stack.Screen name="analysis" options={{ title: 'Analysis', headerBackTitle: 'Home' }} />
+        <Stack.Screen name="checkin" options={{ title: 'Check-in', headerBackTitle: 'Home' }} />
+      </Stack>
+    </SQLiteProvider>
   );
 }
