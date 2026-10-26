@@ -4,19 +4,17 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 DATABASE_PATH="${SMOKE_DATABASE_PATH:-Documents/SQLite/StressManagement.db}"
-EXPECTED_MOOD="${SMOKE_EXPECT:-calm}"
 
 if [ ! -f "$DATABASE_PATH" ]; then
   echo "SMOKE FAIL: Database not found: $DATABASE_PATH" >&2
   exit 1
 fi
 
-node - "$DATABASE_PATH" "$EXPECTED_MOOD" <<'NODE'
+node - "$DATABASE_PATH" <<'NODE'
 const assert = require('node:assert/strict');
 const { DatabaseSync } = require('node:sqlite');
 
-const [path, expectedMood] = process.argv.slice(2);
-const db = new DatabaseSync(path, { readOnly: true });
+const db = new DatabaseSync(process.argv[2], { readOnly: true });
 
 try {
   const migrations = db
@@ -24,21 +22,20 @@ try {
     .all()
     .map(row => row.version);
 
-  assert.deepEqual(migrations, [1, 2], 'Migrations are missing');
+  assert.deepEqual(migrations, [1, 2], 'Database migrations are missing');
 
-  const checkIn = db
-    .prepare(
-      `SELECT stress_level, mood, eaten_recently, concentration_level
-       FROM check_ins WHERE mood = ?`
-    )
-    .get(expectedMood);
+  const checkIn = db.prepare(
+    `SELECT stress_level, mood, eaten_recently, concentration_level
+     FROM check_ins
+     WHERE mood = 'calm'`
+  ).get();
 
-  assert.ok(checkIn, `Check-in with mood "${expectedMood}" not found`);
+  assert.ok(checkIn, 'Seeded check-in was not found');
   assert.equal(checkIn.stress_level, 1);
   assert.equal(checkIn.eaten_recently, 1);
   assert.equal(checkIn.concentration_level, 3);
 
-  console.log('SMOKE OK: Database and check-in verified.');
+  console.log('SMOKE PASS: SQLite database and check-in verified.');
 } finally {
   db.close();
 }
