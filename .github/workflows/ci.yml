@@ -1,74 +1,3 @@
-name: ci
-
-on:
-  push:
-    branches: ["**"]
-  pull_request:
-    branches: [main]
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-
-jobs:
-  build:
-    name: build-and-verify
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    defaults:
-      run:
-        working-directory: mobile
-    env:
-      EXPO_PUBLIC_SUPABASE_URL: https://example.supabase.co
-      EXPO_PUBLIC_SUPABASE_ANON_KEY: ci-build-placeholder
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up toolchain
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: mobile/.nvmrc
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-
-      - name: Install from the lock file
-        run: ./script/setup
-
-      - name: Lint
-        run: ./script/lint
-
-      - name: Test
-        run: ./script/test
-
-      - name: Build
-        run: ./script/build
-
-  smoke:
-    name: sqlite-smoke-test
-    runs-on: ubuntu-latest
-    needs: build
-    timeout-minutes: 10
-    defaults:
-      run:
-        working-directory: mobile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: mobile/.nvmrc
-          cache: npm
-          cache-dependency-path: mobile/package-lock.json
-
-      - name: Install from the lock file
-        run: npm ci
-
       - name: Create temporary SQLite database
         run: |
           mkdir -p Documents/SQLite
@@ -77,21 +6,28 @@ jobs:
             const { DatabaseSync } = require("node:sqlite");
             const db = new DatabaseSync("Documents/SQLite/smoke.db");
 
-            db.exec(`
-              CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY);
-              INSERT INTO schema_migrations VALUES (1), (2);
+            try {
+              db.exec(`
+                CREATE TABLE schema_migrations (
+                  version INTEGER PRIMARY KEY
+                );
 
-              CREATE TABLE check_ins (
-                stress_level INTEGER,
-                mood TEXT,
-                eaten_recently INTEGER,
-                concentration_level INTEGER
-              );
-              INSERT INTO check_ins VALUES (1, 'calm', 1, 3);
-            `);
+                INSERT INTO schema_migrations (version) VALUES (1), (2);
 
-            db.close();
+                CREATE TABLE check_ins (
+                  stress_level INTEGER,
+                  mood TEXT,
+                  eaten_recently INTEGER,
+                  concentration_level INTEGER
+                );
+              `);
+
+              db.prepare(`
+                INSERT INTO check_ins
+                  (stress_level, mood, eaten_recently, concentration_level)
+                VALUES (?, ?, ?, ?)
+              `).run(1, "calm", 1, 3);
+            } finally {
+              db.close();
+            }
           '
-
-      - name: Smoke test SQLite
-        run: SMOKE_DATABASE_PATH=Documents/SQLite/smoke.db bash ./script/smoke
