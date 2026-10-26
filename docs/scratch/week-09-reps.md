@@ -123,3 +123,10 @@ Reflect: which requirements have no issue, and which have nothing verifying them
 
 Reflect: if a key of yours leaked at 2 a.m. tonight, what is the first thing you would do?
 - If a key was leaked at 2 a.m. tonight the first think I would do is check the runbook with the rotatation steps to fix it so that the key can be updated and the app tested to still run.
+
+## Rep 12 — The walk, recorded
+
+Screenshots in: docs\working-app-screenshots-week9
+
+Reflect (a paragraph, in your notes — you will reuse it in the milestone): what did the skeleton teach you about your architecture that six weeks of specification did not? Name one specific thing you now know that you only believed on Friday of Week 8.
+- What the skeleton taught me about my architecture that six weeks of specification did not was that it made me think about how the pages and everything would more or less look but also I learned that I needed Docker in order to test the Edge Function, I didn't think testing would need something else because earlier I was more researching full app completion information. The one thing that I now know that I only believed on Friday of Week 8 was that the Gemini AI API would load faster but right now it is a lot slower than I thought it would be and there may be more error handling that I will need to account for.
