@@ -3,40 +3,141 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-DATABASE_PATH="${SMOKE_DATABASE_PATH:-Documents/SQLite/StressManagement.db}"
+BUNDLE_ID="${IOS_BUNDLE_ID:-com.kspencer.stressmanager}"
+DATABASE_FILE="${SMOKE_DATABASE_FILE:-Documents/SQLite/StressManagement.db}"
+EXPECTED_MOOD="${SMOKE_EXPECT:-calm}"
 
-if [ ! -f "$DATABASE_PATH" ]; then
-  echo "SMOKE FAIL: Database not found: $DATABASE_PATH" >&2
-  exit 1
-fi
+verify_database() {
+  local database_path="$1"
 
-node - "$DATABASE_PATH" <<'NODE'
+  if [ ! -f "$database_path" ]; then
+    echo "SMOKE FAIL: Database not found: $database_path" >&2
+    return 1
+  fi
+
+  node - "$database_path" "$EXPECTED_MOOD" <<'NODE'
 const assert = require('node:assert/strict');
 const { DatabaseSync } = require('node:sqlite');
 
 const db = new DatabaseSync(process.argv[2], { readOnly: true });
 
 try {
-  const migrations = db
+  const versions = db
     .prepare('SELECT version FROM schema_migrations ORDER BY version')
     .all()
     .map(row => row.version);
 
-  assert.deepEqual(migrations, [1, 2], 'Database migrations are missing');
+  assert.deepEqual(versions, [1, 2], 'Database migrations are missing');
 
-  const checkIn = db.prepare(
-    `SELECT stress_level, mood, eaten_recently, concentration_level
-     FROM check_ins
-     WHERE mood = 'calm'`
-  ).get();
+  const row = db.prepare(`
+    SELECT stress_level, mood, eaten_recently, concentration_level
+    FROM check_ins
+    WHERE mood = ?
+  `).get(process.argv[3]);
 
-  assert.ok(checkIn, 'Seeded check-in was not found');
-  assert.equal(checkIn.stress_level, 1);
-  assert.equal(checkIn.eaten_recently, 1);
-  assert.equal(checkIn.concentration_level, 3);
+  assert.ok(row, 'Expected check-in was not found');
+  assert.equal(row.stress_level, 1);
+  assert.equal(row.eaten_recently, 1);
+  assert.equal(row.concentration_level, 3);
 
-  console.log('SMOKE PASS: SQLite database and check-in verified.');
+  console.log(`SMOKE PASS: SQLite database verified (${row.mood}).`);
 } finally {
   db.close();
 }
 NODE
+}
+
+if [ -n "${SMOKE_DATABASE_PATH:-}" ]; then
+  verify_database "$SMOKE_DATABASE_PATH"
+  exit $?
+fi
+
+if [ "${SMOKE_START_APP:-0}" != "1" ]; then
+  echo "Usage: SMOKE_START_APP=1 ./script/smoke" >&2
+  echo "   or: SMOKE_DATABASE_PATH=path/to/database ./script/smoke" >&2
+  exit 1
+fi
+
+command -v xcrun >/dev/null 2>&1 || {
+  echo "SMOKE FAIL: iOS simulator testing requires macOS and Xcode." >&2
+  exit 1
+}
+
+SIMULATOR_ID="${IOS_SIMULATOR_ID:-}"
+
+if [ -z "$SIMULATOR_ID" ]; then
+  SIMULATOR_ID="$(xcrun simctl list devices booted |
+    sed -n 's/.*(\([0-9A-F-]*\)) (Booted).*/\1/p' |
+    head -n 1)"
+fi
+
+if [ -z "$SIMULATOR_ID" ]; then
+  SIMULATOR_ID="$(xcrun simctl list devices available |
+    sed -n '/iPhone.*(Shutdown)/{
+      s/.*(\([0-9A-F-]*\)) (Shutdown).*/\1/p
+      q
+    }')"
+
+  [ -n "$SIMULATOR_ID" ] || {
+    echo "SMOKE FAIL: No available iPhone simulator found." >&2
+    exit 1
+  }
+
+  xcrun simctl boot "$SIMULATOR_ID"
+  xcrun simctl bootstatus "$SIMULATOR_ID" -b
+fi
+
+TEMP_DIR="$(mktemp -d)"
+METRO_PID=""
+
+cleanup() {
+  if [ -n "$METRO_PID" ]; then
+    kill "$METRO_PID" 2>/dev/null || true
+  fi
+  rm -rf "$TEMP_DIR"
+}
+trap cleanup EXIT
+
+./node_modules/.bin/expo start --localhost --port 8081 \
+  >"$TEMP_DIR/metro.log" 2>&1 &
+METRO_PID=$!
+
+for ((i = 0; i < 120; i++)); do
+  if curl -fsS http://localhost:8081/status >/dev/null 2>&1; then
+    break
+  fi
+
+  if ! kill -0 "$METRO_PID" 2>/dev/null; then
+    cat "$TEMP_DIR/metro.log" >&2
+    echo "SMOKE FAIL: Expo failed to start." >&2
+    exit 1
+  fi
+
+  if [ "$i" -eq 119 ]; then
+    echo "SMOKE FAIL: Expo did not start within 120 seconds." >&2
+    exit 1
+  fi
+
+  sleep 1
+done
+
+./node_modules/.bin/expo run:ios \
+  --configuration Debug \
+  --device "$SIMULATOR_ID" \
+  --no-bundler
+
+xcrun simctl launch "$SIMULATOR_ID" "$BUNDLE_ID"
+
+APP_DATA="$(xcrun simctl get_app_container "$SIMULATOR_ID" "$BUNDLE_ID" data)"
+DATABASE_PATH="$APP_DATA/$DATABASE_FILE"
+
+for ((i = 0; i < 120; i++)); do
+  if [ -f "$DATABASE_PATH" ]; then
+    verify_database "$DATABASE_PATH"
+    exit $?
+  fi
+  sleep 1
+done
+
+echo "SMOKE FAIL: App database was not created within 120 seconds." >&2
+exit 1
