@@ -1,8 +1,6 @@
-# Walking Skeleton Trace — TEMPLATE
+# Walking Skeleton Trace
 
-Copy this to `docs/skeleton-trace.md` in your repository. Keep it current for the rest of the term; Week 13 grades it as part of the documentation set, and Week 16 uses it to check that every requirement you claimed is actually reachable.
-
-Replace everything in ANGLE BRACKETS. Delete the PantryPilot example rows once your own are in — they are here to show the shape, not to be kept.
+Keep this document current for the rest of the term; Week 13 grades it as part of the documentation set, and Week 16 uses it to check that every requirement you claimed is actually reachable.
 
 ---
 
@@ -52,7 +50,7 @@ Every requirement identifier you baselined in Week 8 gets a row. A requirement w
 ## 3. Skeleton acceptance record
 
 - **Date the skeleton first walked end to end:** `2026-10-25`
-- **Commit that made it walk:** `d2329ef`
+- **Commit that made it walk:** `4114896`
 - **CI run that proved it (URL):** https://github.com/vPolyBear/capstone/commit/bb3b60a31276a7b5d507e883af4cb53614905cc3 
 - **One red build I caused on purpose, and the fix:** `https://github.com/vPolyBear/capstone/commit/1842332e6af3c2c98b32a1b5d8bd01626989d311` -> `1842332`
 - **Hops still stubbed, and when they get real:** `No Hops still stubbed`

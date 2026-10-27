@@ -10,6 +10,7 @@ const corsHeaders = {
 const promptInstructions: Record<string, string> = {
   explanation1: "Explain what the reported stress and mood may suggest.",
   explanation2: "Explain how each check in response may relate to the reported stress.",
+  explanation3: "Explain how each journal response may relate to the reported stress.",
   activities1: "Suggest one simple activity.",
   activities2: "Suggest one simple physical activity.",
   activities3: "Suggest one short creative activity.",
