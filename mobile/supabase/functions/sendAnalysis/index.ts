@@ -8,21 +8,21 @@ const corsHeaders = {
 };
 
 const promptInstructions: Record<string, string> = {
-  explanation1: "Explain what the reported stress and mood may suggest.",
-  explanation2: "Explain how each check in response may relate to the reported stress.",
-  explanation3: "Explain how each journal response may relate to the reported stress.",
-  activities1: "Suggest one simple activity.",
-  activities2: "Suggest one simple physical activity.",
-  activities3: "Suggest one short creative activity.",
-  both1: "Pair a brief explanation with one simple activity.",
-  both2: "Pair a brief explanation with one simple physical activity.",
-  both3: "Pair a brief explanation with one short creative activity.",
+  explanation1: "Explain briefly and simply what the reported stress and mood may suggest.",
+  explanation2: "Explain how the physical feelings and daily patterns may suggest and relate to the reported stress and mood.",
+  explanation3: "Explain what the progression and patterns of stress and mood may suggest and how to help it.",
+  activities1: "Suggest one simple and quick activity based on the reported stress.",
+  activities2: "Suggest one activity based on the reported physical feelings.",
+  activities3: "Suggest a longer activity to do that will make the most impact on the reported stress.",
+  both1: "Pair a brief explanation on the reported stress with one simple activity.",
+  both2: "Pair a moderate length explanation on the reported stress with an average length activity.",
+  both3: "Pair a longer explanation on the reported stress with one longer activity.",
 };
 
 const analysisTypes: Record<string, string> = {
-  explanation: "Provide short suggestion based explanation of the stress check-in.",
+  explanation: "Provide a short suggestion based explanation of the stress.",
   activities: "Suggest one destressing activity.",
-  both: "Provide a short suggestion based explanation and one destressing activity.",
+  both: "Provide a short suggestion based explanation to explain the why and one activity to help destress.",
 };
 
 const jsonResponse = (body: Record<string, string | number>, status = 200) =>
@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
     const client = new GoogleGenAI({ apiKey });
     const interaction = await client.interactions.create({
       model: "gemini-3.8-flash",
-      input: `Use this prompt and follow the instruction to provide a response that is based on the data from the check-ins and journal entries. DO NOT DIAGNOSE!
+      input: `Use this prompt and follow the instruction to provide a response that is based on the data from the check-ins and journal entries to help their stress. DO NOT DIAGNOSE!
 
       ${analysisTypes[analysisType]}
       ${promptInstructions[promptId]}
