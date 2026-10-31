@@ -47,7 +47,7 @@ export default StyleSheet.create({
       color: '#000000',
       fontSize: 16,
       fontWeight: 'normal',
-      paddingRight: 15,
+      paddingRight: 20,
   },
   radioCircle: {
       height: 20,
@@ -149,6 +149,29 @@ export default StyleSheet.create({
       padding: 15
 
   },
+    selectDataContainer: {
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+  },
+    selectDataButtons: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: 10,
+  },
+    selectDataColumns: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: 10,
+      marginTop: 10,
+  },
+    dataSection: {
+      flex: 1,
+      gap: 10,
+  },
+    
 
 
 })

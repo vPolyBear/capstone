@@ -11,7 +11,6 @@ export default function App() {
     <ScrollView
         style={[style.container, {backgroundColor: '#96d1aa'}]}
         contentContainerStyle={style.contentContainer}
-        keyboardShouldPersistTaps="handled"
     >
       <Text>Stress Manager</Text>
       
