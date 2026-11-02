@@ -172,7 +172,9 @@ Then what is not started is FR-OVER-01: which displays the check-ins in overview
     5. Show it submits
 
 
-Recorded fallback saved at: ____________________________________
+Recorded fallback saved at: 
+- docs/demo-recordings/FiveMinDemoVideo.mp4
+- docs/demo-recordings/FallbackDemoVideo.mp4
 
 
 Reflect: Time the first run. Where did you go over? The overrun is almost always in Act 2, and almost always because you improvised instead of following the script. What are you cutting?
