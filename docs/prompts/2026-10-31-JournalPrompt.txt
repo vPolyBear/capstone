@@ -1,0 +1,180 @@
+Contract prompt:
+I have created a page where Journal entries are written, I want to keep the Journal page one page. 
+I want to be able to first see all the rest of the journal entries that were completed then have a 
+button to click on to bring up the writting journal entry component that I have right now that is 
+located in the journal.tsx. Keep it simple, display the journal entries, allowing them to be clicked into 
+and have a button that brings the already coded writing area up. Do not change anything else, 
+then list every assumption you made that I did not state.
+
+
+Wish prompt output:
+
+Left side (or top section): List of all journal entries
+Right side (or main section): Writing area/editor
+Button: "New Journal Entry" to create a new entry
+Optional: Search, edit, delete, and date sorting
+
+Example layout:
+
+Plain Text
++--------------------------------------------------+
+| My Journal |
++--------------------------------------------------+
+| Journal Entries | Writing Area |
+|----------------------|--------------------------|
+| • Oct 31, 2026 | Title: ____________ |
+| • Oct 30, 2026 | |
+| • Oct 29, 2026 | Write your journal here |
+| • Oct 28, 2026 | |
+| | |
+| [New Entry] | [Save Entry] |
++--------------------------------------------------+
+
+Here's a simple version:
+
+HTML
+<div class="journal-container">
+<div class="sidebar">
+<h2>Journal Entries</h2>
+<button id="newEntry">New Entry</button>
+<ul id="entriesList">
+<li>Oct 31, 2026</li>
+<li>Oct 30, 2026</li>
+</ul>
+</div>
+ 
+<div class="editor">
+<input type="text" placeholder="Entry Title" />
+<textarea placeholder="Start writing..."></textarea>
+<button id="saveEntry">Save Entry</button>
+</div>
+</div>
+
+With CSS:
+
+CSS
+.journal-container {
+display: flex;
+height: 100vh;
+}
+ 
+.sidebar {
+width: 300px;
+border-right: 1px solid #ddd;
+padding: 20px;
+}
+ 
+.editor {
+flex: 1;
+padding: 20px;
+}
+ 
+textarea {
+width: 100%;
+height: 70vh;
+}
+
+This gives you a dedicated place to view all journal entries and a separate writing area with buttons for creating and saving entries.
+
+
+Contract prompt output:
+
+1. Add state variables
+Update your React import:
+import React, {useState, useEffect} from 'react';
+
+After const db = useSQLiteContext();, add:
+const [entries, setEntries] = useState<any[]>([]);
+const [selectedEntry, setSelectedEntry] = useState<any>(null);
+const [view, setView] = useState('list');
+
+2. Load the journal entries
+Add this inside Journal(), before handleSubmit:
+const loadEntries = async () => {
+    const result = await db.getAllAsync(
+        'SELECT * FROM journal_entries ORDER BY date DESC'
+    );
+    setEntries(result);
+};
+
+useEffect(() => {
+    loadEntries();
+}, []);
+
+3. Update handleSubmit
+After successfully inserting the journal entry, replace your existing code that fetches and logs the entries with:
+await loadEntries();
+
+setForm({ entry: null });
+setView('list');
+
+Alert.alert('The Journal was submitted successfully!');
+
+4. Replace your existing JSX inside <ScrollView>
+Keep your existing <ScrollView> opening tag and closing tag. Replace the content inside them with:
+<SafeAreaView style={{flex: 1}}>
+
+    <Text style={style.header}>Journal Your Worries Away!</Text>
+
+    {view === 'list' && (
+        <View>
+            <Pressable style={style.button} onPress={() => setView('write')}>
+                <Text style={style.buttonText}>Write Journal Entry</Text>
+            </Pressable>
+
+            <Text style={style.header}>Previous Entries</Text>
+
+            {entries.map((item, index) => (
+                <Pressable key={index} style={style.body} onPress={() => { setSelectedEntry(item); setView('read'); }}>
+                    <Text>{new Date(item.date).toLocaleDateString()}</Text>
+                    <Text numberOfLines={2}>{item.entry}</Text>
+                </Pressable>
+            ))}
+        </View>
+    )}
+
+    {view === 'read' && selectedEntry && (
+        <View>
+            <Text style={style.body}>
+                {new Date(selectedEntry.date).toLocaleString()}
+            </Text>
+
+            <Text style={style.body}>{selectedEntry.entry}</Text>
+
+            <Pressable style={style.button} onPress={() => setView('list')}>
+                <Text style={style.buttonText}>Back</Text>
+            </Pressable>
+        </View>
+    )}
+
+    {view === 'write' && (
+        <View>
+            <TextInput multiline maxLength={10000} value={form.entry ?? ''} onChangeText={(text) => setForm({...form, entry: text})} placeholder="Here you can write a journal entry" style={style.body}/>
+
+            <Pressable style={style.button} onPress={handleSubmit}>
+                <Text style={style.buttonText}>Submit Entry</Text>
+            </Pressable>
+
+            <Pressable style={style.button} onPress={() => setView('list')}>
+                <Text style={style.buttonText}>Cancel</Text>
+            </Pressable>
+
+            <Link href="/analysis" asChild>
+                <Pressable style={style.button}>
+                    <Text style={style.buttonText}>Analysis Page</Text>
+                </Pressable>
+            </Link>
+        </View>
+    )}
+
+</SafeAreaView>
+
+Assumptions I made
+1. The newest journal entries should appear first.
+2. Clicking an entry should display its full text.
+3. Entries should be read-only.
+4. Submitting an entry should return the user to the list.
+5. The writing area and entry list should remain on the same page.
+6. Your existing SQLite table and styling should remain unchanged.
+7. The Analysis Page button should remain in the writing view.
+8. A Cancel button should return to the list without saving the draft.

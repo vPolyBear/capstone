@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {FunctionsFetchError, FunctionsHttpError, FunctionsRelayError} from "@supabase/supabase-js";
 import { supabase } from "../src/lib/supabase";
 import style from '../style';
@@ -48,44 +49,44 @@ export default function Analysis() {
             if(selectedCheckInDuration === 'dayCheckIns'){
                 checkInData = await db.getAllAsync(
                     "SELECT * FROM check_ins WHERE date(date,'localtime') = date('now','localtime')"
-                );        
+                );
             }
             if(selectedCheckInDuration === 'weekCheckIns'){
                 checkInData = await db.getAllAsync(
-                    "SELECT * FROM check_ins WHERE date(date,'localtime') >= date('now', '-6 days', 'localtime') AND date <= date('now', 'localtime')"
-                );            
+                    "SELECT * FROM check_ins WHERE date(date,'localtime') BETWEEN date('now', '-6 days', 'localtime') AND date('now','localtime')"
+                );
             }
             if(selectedCheckInDuration === 'monthCheckIns'){
                 checkInData = await db.getAllAsync(
-                    "SELECT * FROM check_ins WHERE date(date,'localtime') >= date('now','-1 month', 'localtime') AND date('now','localtime') <= date('now', 'localtime')"
+                    "SELECT * FROM check_ins WHERE date(date,'localtime') BETWEEN date('now','-1 month', 'localtime') AND date('now','localtime')"
                 );  
             }
             if(selectedCheckInDuration === 'allTimeCheckIns'){
                 checkInData = await db.getAllAsync(
                     "SELECT * FROM check_ins"
-                );        
+                );
             }     
         
 
             if(selectedJournalEntryDuration === 'dayJournalEntries'){
                 journalEntryData = await db.getAllAsync(
                     "SELECT * FROM journal_entries WHERE date(date,'localtime') = date('now','localtime')"
-                );        
+                );
             }
             if(selectedJournalEntryDuration === 'weekJournalEntries'){
                 journalEntryData = await db.getAllAsync(
-                    "SELECT * FROM journal_entries WHERE date(date,'localtime') >= date('now', '-6 days', 'localtime') AND date('now','localtime') <= date('now', 'localtime')"
-                );            
+                    "SELECT * FROM journal_entries WHERE date(date,'localtime') BETWEEN date('now', '-6 days', 'localtime') AND date('now','localtime')"
+                );
             }
             if(selectedJournalEntryDuration === 'monthJournalEntries'){
                 journalEntryData = await db.getAllAsync(
-                    "SELECT * FROM journal_entries WHERE date(date,'localtime') >= date('now','-1 month', 'localtime') AND date('now','localtime') <= date('now', 'localtime')"
-                );        
+                    "SELECT * FROM journal_entries WHERE date(date,'localtime') BETWEEN date('now','-1 month', 'localtime') AND date('now','localtime')"
+                );
             }
             if(selectedJournalEntryDuration === 'allTimeJournalEntries'){
                 journalEntryData = await db.getAllAsync(
                     'SELECT * FROM journal_entries'
-                );               
+                );
             }
 
         return {
@@ -369,6 +370,11 @@ export default function Analysis() {
     {/* AI Analysis Section */}
     const generateAnalysis = async () => {
 
+        if(isLoading){
+            Toast.show({type:'info', text1:"Analysis Still Processing", text2:"Please wait for the current Analysis to complete before sending another request."});
+            return;
+        }
+
         if (!selectedOption || !selectedPrompt) {
             setAnalysisError('Choose an analysis type and prompt first.');
             return;
@@ -392,14 +398,15 @@ export default function Analysis() {
 
             checkIns = selectedData.checkIns;
             journalEntries = selectedData.journalEntries;
+            const originalCheckIns = JSON.stringify(checkIns);
+            const originalJournalEntries = JSON.stringify(journalEntries);
 
-            if (checkIns.length === 0 && journalEntries.length === 0) {
-                setAnalysisError("There is no data available for the duration selected. Please either select a different duration or adding in a check-in or journal entry.");
+            if (checkIns.length === 0 || journalEntries.length === 0) {
+                setAnalysisError("More check-in question responses and journal entries are needed before the AI can provide a useful stress explanation.");
                 return;
             }
-            //throw new Error("Testing fallback");
 
-            const { data, error } = await supabase.functions.invoke<{ output: string }>(
+            const { data, error } = await supabase.functions.invoke<{ analysis_explanation: string; activity_suggestion: string; }>(
                 "sendAnalysis",
                 { body: { analysisType: selectedOption, promptId: selectedPrompt, checkIns: checkIns, journalEntries: journalEntries } },
             );
@@ -420,11 +427,13 @@ export default function Analysis() {
                 let details = "";
 
                 if (response instanceof Response) {
+
                     const body = await response.text();
                     try {
                         const payload: unknown = JSON.parse(body);
-                        if (payload && typeof payload === "object" && "error" in payload &&
-                            typeof payload.error === "string") {
+
+                        if (payload && typeof payload === "object" && "error" in payload && typeof payload.error === "string") {
+                            
                             details = payload.error;
                             if ("upstreamStatus" in payload && typeof payload.upstreamStatus === "number") {
                                 details += ` (Gemini HTTP ${payload.upstreamStatus})`;
@@ -449,14 +458,28 @@ export default function Analysis() {
             if (!data) {
                 throw new Error("The analysis function returned no data.");
             }
-            if (typeof data.output !== 'string' || !data.output.trim()) {
-                throw new Error("The analysis function returned an empty response.");
+            if (typeof data.analysis_explanation !== 'string' || typeof data.activity_suggestion !== 'string') {
+                throw new Error("The analysis function returned an invaild response.");
             }
 
-            setAnalysis(data.output);
+            const latestData = await selectData(selectedCheckInDataOption ?? '', selectedJournalEntryDataOption ?? '', selectedCheckInDuration ?? '', selectedJournalEntryDuration ?? '');
+            if(JSON.stringify(latestData.checkIns) != originalCheckIns || JSON.stringify(latestData.journalEntries) != originalJournalEntries){
+                setAnalysisError("Your selected check-ins or journal entries changed while the analysis was being generated. Please try again.");
+                setAnalysis(null);
+                return;
+            }
+
+            const analysisOutput = data.analysis_explanation + "\n\n" + data.activity_suggestion;
+
+            if(!analysisOutput.trim()){
+                throw new Error("The analysis function returned an empty response");
+            }
+
+            setAnalysis(analysisOutput);
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            console.log("Gemini AI API has failed the fallback is being used: ", message)
+
+            console.error("Analysis failed (fallback used): ", error);
+            Toast.show({type: "error", text1:"AI Analysis is Currently Unavailable", text2: "A fallback is being presented, for the full experience try again later."});
 
             const fallbackResult = await fallback(checkIns, journalEntries, selectedOption, selectedPrompt);
             setAnalysis(fallbackResult);
@@ -471,6 +494,7 @@ export default function Analysis() {
     <ScrollView
         style={style.container}
         contentContainerStyle={style.contentContainer}
+        indicatorStyle='white'
     >
 
         <Text style={style.title}>Would you like to analyze your stress?</Text>

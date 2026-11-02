@@ -65,22 +65,95 @@ memos, or the reflections is generated text.
 | 2026-10-25 | Copilot - Auto | Can you look at these errors and help me fix my ci smoke test and make the test simplier so it is faster and actually works consistently; please help me with the iOS simulator test it keeps failing | I kept the code it gave me to fix it because it finally worked | I removed the failing code from the script if it failed | How I verified these changes was looking into what it was doing and the error but then it kept giving half a fix so I tested them until the ci ran green | 
 | 2026-10-27 | Copilot - Auto | I have implemented the developmentSeed.js and running the smoke script back in, can you double check if I have missed anything? | I kept the code it gave me to make small edits to it to make it actually work | I removed the failing code and then also the extra words and lines it added that weren't neccessary anymore | How I verified these changes was looking into what it was doing and I tested the ci again until the ci ran green | 
 | 2026-10-29 | ChatGPT - GPT-5.6 Luna | Instead of a bunch of if statements for the journal entries topic and word counts can you help me make it cleaner and ensure that it works. | I kept the cleaner format that it added to ensure the strings were accurate and displayed properly, and the code and for loops for the topic and word count. | I removed extra edits that it made to a random part in my code because I wanted to keep my original code. | How I verified these changes was by checking that the for loops did what they were supposed to and that it worked | 
+| 2026-10-31 | ChatGPT - GPT-5.6 Luna | I have created a page where Journal entries are written, I want to keep the Journal page one page. I want to be able to first see all the rest of the journal entries that were completed then have a button to click on to bring up the writting journal entry component that I have right now that is located in the journal.tsx. Keep it simple, display the journal entries, allowing them to be clicked into and have a button that brings the already coded writing area up. Do not change anything else, then list every assumption you made that I did not state. | I kept the three seperate view it created so that the journal sections can be neatly seperated and gone into | I changed how the views were named, I fixed the spacing of a lot of items, I changed how the styling what done for every component, I changed how the header was presented, I removed the safeareaview, and I changed how the date was presented on both the listing of all the entries and looking into the entries | How I verified these changes was by clicking into each of the past entries to ensure I could see the whole entry, I checked that the writing of the journal entry still worked, and I checked to see if I could see all the journal entries. | 
+| 2026-10-31 | ChatGPT - GPT-5.6 Luna | Can you please look at the error handling I have in place now and verify if I have added them in properly and if I am missing anything else? Also can you please help me with adding in the 200 check and if possible the 409 error check. | I kept the additional malformed response, 400, and 429 edits to the checks I had made so they would fully work. Then I kept what it added in for the 200 and 409 checks. | I didn’t keep half of the random error handling it presented me and added in more logging. Then I only had to change a few messages for the 200 and 409 checks. | How I verified these changes was by testing and verifying the errors were necessary and helpful. | 
+| 2026-11-01 | ChatGPT - GPT-5.6 Luna | I need to create unit test(s) for the Analysis Page analysis.tsx and index.ts, how would I go about this for my initially, can you give me two base unit tests that I can go off of so I can get an understanding of how it works in this project and with the structure I have in place? | I followed and kept the basic structure it gave me and kept the first example one on the page. I then also kept the beginning of the more complex unit test for the fallback. | I changed the first example to fit my project and the based for the other unit tests and I modified the rest of the more complex unit test for the fallback to fit what mine actually checks. | How I verified these changes was running the units tests with npm test to test if they passed and verified that they were accurate based on the analysis.tsx | 
 
 
 
-<!--
-  A BAD entry (do not imitate):
-    | Week 3 | ChatGPT | requirements | most of it | some | looked fine |
 
-  A GOOD entry:
-    | 2026-09-22 | <assistant + the model version you actually used>
-    | "Interview me about a household food-tracking app and list functional requirements."
-    | 6 of 19 proposed requirements, as raw material only.
-    | Rewrote all 6 into FR form with actor + condition; deleted 13 as out of scope
-      (it invented multi-household sharing and a mobile app I never mentioned).
-    | Checked each against my Week-2 scoping decision; confirmed FR-004's "3 days"
-      threshold with my actual user instead of accepting the model's default.
+**Log an entry whenever:** assistant-drafted code, config, schema, or prose
+survived into the repository; an assistant materially shaped a decision you
+kept; or an assistant did the debugging that produced a fix you committed.
 
-  The good entry takes ninety seconds and is evidence of judgment.
-  The bad one is evidence of nothing.
--->
+**You do not need an entry for:** autocomplete of a line you were already
+typing, spell-check, or a question you asked and did not use.
+
+---
+
+## Entry format
+
+```
+### YYYY-MM-DD — <short title>
+Tool: <assistant name>, <model / version if you know it>
+Asked for: <one line: the actual task, plus where the full prompt is stored>
+Accepted: <file or function, and roughly how much survived>
+Changed: <the edits you made, and why>
+Verified: <the tests or checks that proved it works, plus the requirement id>
+```
+
+---
+
+## Good entry
+
+```
+### 2026-03-19 — barcode lookup client
+Tool: <assistant name>, <model/version if known>
+Asked for: an HTTP client `lookupProduct(barcode)` for the product API, with a
+  3s timeout, one retry on 5xx only, 404 => null, never throws. Full prompt in
+  prompts/2026-03-19-lookup.txt.
+Accepted: `pantry/barcode/client.*` — the retry loop and the response mapping;
+  about 40 of 95 lines survived.
+Changed: rewrote error handling to match `pantry/items` (it swallowed timeouts
+  silently); replaced a hard-coded key with PANTRY_API_KEY; renamed three
+  variables; deleted a caching layer I did not ask for and do not need yet.
+Verified: 4 unit tests with a stubbed HTTP layer (200 / 404 / 500-then-200 / timeout), green in CI on feat/fr-12-barcode. Checked against FR-12 AC-1 and AC-3. DEF-014 filed for the retry-count edge case.
+```
+
+Why it earns points: it shows judgment (a rejected caching layer), verification
+(four named cases), traceability (FR-12, DEF-014), and honest proportion
+(40 of 95 lines).
+
+---
+
+## Bad entry
+
+```
+3/19 - used AI for the barcode stuff
+```
+
+Why it costs points: no tool, no file, no prompt, no proportion, no test, no
+requirement. A grader learns nothing except that you know the word "AI" — and a
+hostile reading is the only one available.
+
+---
+
+## Other entries worth logging (short forms)
+
+```
+### 2026-03-20 — explained an error message
+Tool: <assistant name>
+Asked for: what "connection reset by peer" means for my HTTP client under load.
+Accepted: nothing into the repo — explanation only.
+Changed: n/a
+Verified: n/a. Logged because it shaped the retry decision in ADR-0004.
+```
+
+```
+### 2026-03-21 — test scaffolding for FR-18
+Tool: <assistant name>
+Asked for: a table-driven test skeleton for the expiring-soon date rule.
+Accepted: the skeleton and 2 of 7 cases.
+Changed: wrote the boundary cases myself (exactly 3 days, DST change, past date)
+  because the drafted cases all sat safely in the middle of the range.
+Verified: all 7 pass; FR-18 AC-2 now has a test that fails if the rule flips to
+  inclusive.
+```
+
+---
+
+## End-of-term self-check
+
+Before the Week-16 submission, read this file straight through and ask: **where
+is the "Changed" line empty?** Those are the modules you accepted rather than
+built. Re-read them, or rewrite them, before someone asks you about them.

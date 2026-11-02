@@ -41,10 +41,79 @@ Reflect: How many H tasks did you have? Horizontal tasks are not evil — a migr
 
 ## Rep 3 — Adapt the definition of done, then use it as a weapon
 
-Task: ______________   Checks passed: __/10   Checks that fail: __________
-What I am doing about it:  fix now / log a defect / accept with reason
+Task: I-7 [NFR-AVA-01] Display Analysis Fallback when Gemini isn't available   Checks passed: 7/10   Checks that fail: #1, #2, #5
+What I am doing about it:  fixing now
 Reflect: Which check failed first? Almost every student fails on the same one — the test, the docs update, or the log entry. That is your personal weak point for the next six weeks; name it out loud.
+- The check that failed first was Check 1 because I just forgot to add in a toast to really highlight that the fallback is happening for when the AI Analysis fails. My personal weakness if forgetting to go back and check that all the AC are completed.
 
-- Then reference it from your pull-request template so you cannot merge without seeing it.
+## Rep 4 — The four passes on your ugliest file
+
+| Pass | Findings | Fixed / logged / accepted |
+| 1 Diff | 0 | n/a |
+| 2 Stranger | 0 | n/a |
+| 3 Adversary | 4 | Fixed |
+| 4 Contract | 1 | Fixed |
+
+Reflect: Which pass found the most? Pass 3 usually wins, and pass 4 usually finds the one that matters. If pass 4 found an acceptance criterion with no line of code behind it, you just caught a requirement you were about to claim falsely in Week 16.
+- Pass 3 won because I just need to add in more error handling. Pass for found AC-3 for FR-AIA-01/FR-AIA-04 so I just need to add in a check in for invaild prompts.
+
+## Rep 5 — Open a pull request to yourself
+
+Branch, push, open a pull request in the web interface, review your own diff there, leave at least two review comments on your own code, then merge. Confirm CI ran on the branch before the merge.
+
+Branch: 
+
+Reflect: Did the web diff view show you anything the editor did not? Most students find at least one thing — unfamiliar presentation is a cheap substitute for a second pair of eyes.
+- No, the diff view did not show me any problems that I am not unfamiliar with.
+
+## Rep 6 — A prompt contract, not a wish
+
+Wish prompt:  _Can you create a place for me to see all of the journal entries that were done and have a button for the writing area_
+Contract prompt:  saved at prompts/2026-10-31-JournalPrompt.txt
+Assumptions the model listed that I had not stated: _the newest journal entries should appear first, Entries should be read-only, submitting an entry should return the user to the list, and a Cancel button should return to the list without saving the draft._
+Reflect: Compare the two outputs. What did the wish version assume about your project that is not true? Those assumptions are the two hours of reconciliation you just avoided.
+- The wish prompt output assumed it was in html and that the write area and the journal entries done, would be side by side.
+
+## Rep 7 — Explain it, break it, rewrite it
+
+Lines I stalled on:        __I did not stalled on any lines__
+What broke it:             __If a blank journal is submitted empty it still provides messsage stating you can't submit a blank entry__
+Could I rewrite it?        yes
+
+Reflect: If you could not rewrite it, you have found the module you do not own yet. What are you going to do about that this week — study it, or replace it?
+- I was able to rewrite it.
+
+## Rep 8 — Write both ai-usage entries
+
+Reflect: Read the bad one as if you were a grader who has never met you. What would you assume about the student who wrote it? That assumption is exactly what a thin log buys you.
+- What I would have assumed about the student who wrote it was that they just accepted it without really trying to understand it or verify that it worked.
+
+## Rep 9 — Rewrite five bad commit messages
+
+| Actual message | What it should have said |
+|---|---|
+| Hours log update for 10-28 hours were added wrong | Hours-log.csv 10-28 entry hours were logged wrong. I put down the hours going from 14:00 to 16:00 though I looked at the time wrong and I was supposed to end at 15:30  |
+| accidentlly removed half my ci | Accidentally deleted half my CI. Right before committing I controlled all and deleted it instead of saving it so my CI appeared wrong, so this commit just added the CI I deleted back in. |
+| actual last test | Last Test on the CI for Week 9. Added in a new try statement in the CI for the smoke test to test a different variation to see if the CI passes. |
+| small error | Removed Comments. I accidentlly kept the comments in the CI when testing it so I had to remove it so that the CI could run. |
+| updated ai usage | Updated AI Usage Date. Accidentlly put the wrong date for the 2026-10-25 entry, as I had guessed that it was the 23rd so I updated it to the correct date which is the 25th. |
+
+Reflect: How much of why is recoverable from your history right now — say, three weeks from now, when you need to know why you chose the retry count you chose? Be honest.
+- I believe that three weeks from now I would still be able to understand what was happening in that commit and what was changed in that commit with these new commit messages and their whys.
+
+## Rep 10 — Reconstruct one honest day, then run the report
+
+Reflect: What did the report flag? And separately: what does your phase distribution say about where the semester actually went? If Construction is 15% of your hours in Week 10, that is not a scandal — it is a fact you now have to plan around.
+- It did not report any pattern flags. Then what my phase distribution says about where the semester actualy went is that I spend the most time in the inception phase as it is where 24.0% of my hours when then to the construction phases which is where 21.8% of my hours went, this does line up with what I thought.
+
+## Rep 11 — The secret you almost committed
+
+Credentials my project uses:  Google API Key & the Supabase URL and anon key
+Read from:                    Expo env var and Supabase Edge Function secret
+In history?                   no
+Ignore file covers:          __.env, .env.*, .env*.local, docker.env, *pem, *.key, credentials.json, service-account*.json__
+
+Reflect: If a real key were in your history right now, what would your next four steps be, in order? Write them down. The reason to write them today is that the day you need them you will be panicking.
+- I would follow the runbook.md: Where each credential comes from, How to rotate it, Who to tell, How long rotation takes.
 
 
