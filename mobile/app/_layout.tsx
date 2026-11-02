@@ -3,6 +3,7 @@ import { Platform, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { openDatabase } from '../src/lib/database'; 
 import { SQLiteProvider } from 'expo-sqlite';
+import Toast from 'react-native-toast-message';
 
 type HeaderProps = {
   navigation: { goBack: () => void };
@@ -52,6 +53,7 @@ export default function RootLayout() {
         <Stack.Screen name="analysis" options={{ title: 'Analysis', headerBackTitle: 'Home' }} />
         <Stack.Screen name="checkin" options={{ title: 'Check-in', headerBackTitle: 'Home' }} />
       </Stack>
+      <Toast />
     </SQLiteProvider>
   );
 }

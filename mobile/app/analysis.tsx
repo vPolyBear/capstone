@@ -478,7 +478,7 @@ export default function Analysis() {
             setAnalysis(analysisOutput);
         } catch (error) {
 
-            console.error("Analysis failed (fallback used): ", error);
+            console.log("Analysis failed (fallback used): ", error);
             Toast.show({type: "error", text1:"AI Analysis is Currently Unavailable", text2: "A fallback is being presented, for the full experience try again later."});
 
             const fallbackResult = await fallback(checkIns, journalEntries, selectedOption, selectedPrompt);

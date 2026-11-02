@@ -52,18 +52,18 @@ Deno.serve(async (req) => {
   }
 
   if (req.method !== "POST") {
-    console.error("Invalid request method, ", req.method);
+    console.log("Invalid request method, ", req.method);
     return jsonResponse({ error: "Method not allowed." }, 405);
   }
 
   if(!checkRequestAmount()) {
-    console.error("Too many request, AI Analysis requests exceeded the limit of 5 requests in the time limit of 5 seconds");
+    console.log("Too many request, AI Analysis requests exceeded the limit of 5 requests in the time limit of 5 seconds");
     return jsonResponse({ error: "To many AI Analysis requests were sent in too short of a time period. Please wait a few seconds between each request before trying again."}, 429);
   }
 
   const apiKey = Deno.env.get("GOOGLE_API_KEY");
   if (!apiKey) {
-    console.error("GOOGLE_API_KEY is not configured for sendAnalysis.");
+    console.log("GOOGLE_API_KEY is not configured for sendAnalysis.");
     return jsonResponse({ error: "Analysis service is not configured." }, 500);
   }
 
@@ -71,12 +71,12 @@ Deno.serve(async (req) => {
   try {
     requestBody = await req.json();
   } catch {
-    console.error("Invalid request: Request body must be valid JSON.");
+    console.log("Invalid request: Request body must be valid JSON.");
     return jsonResponse({ error: "Request body must be valid JSON." }, 400);
   }
 
   if (!requestBody || typeof requestBody !== "object") {
-    console.error("Invalid request: Request body must be valid JSON object.");
+    console.log("Invalid request: Request body must be valid JSON object.");
     return jsonResponse({ error: "Request body must be a JSON object." }, 400);
   }
 
@@ -88,47 +88,47 @@ Deno.serve(async (req) => {
   };
   
   if(!Array.isArray(checkIns)){
-    console.error("Invalid request, Check-ins must be an array.");
+    console.log("Invalid request, Check-ins must be an array.");
     return jsonResponse({ error: "Check-ins must be an array."}, 400);
   }
   if(!Array.isArray(journalEntries)){
-    console.error("Invalid request, Journal Entries must be an array.");
+    console.log("Invalid request, Journal Entries must be an array.");
     return jsonResponse({ error: "Journal Entries must be an array."}, 400);
   }
 
   for(let i = 0; i < checkIns.length; i++ ){
     if (typeof checkIns[i] !== "object" || Array.isArray(checkIns[i]) || checkIns[i] === null) {
-    console.error("Invalid request, Check-in response is malformed.");
+    console.log("Invalid request, Check-in response is malformed.");
       return jsonResponse({ error: "There was an invaid check in response." }, 400);
     }
   }
   for(let i = 0; i < journalEntries.length; i++ ){
     if (typeof journalEntries[i] !== "object" || Array.isArray(journalEntries[i]) || journalEntries[i] === null) {
-      console.error("Invalid request, Journal Entry response is malformed.");
+      console.log("Invalid request, Journal Entry response is malformed.");
       return jsonResponse({ error: "There was an invaid journal entry response." }, 400);
     }
   }
 
   if (typeof analysisType !== "string" || !analysisTypes[analysisType]) {
-    console.error("Invalid request, Analysis type is malformed.");
+    console.log("Invalid request, Analysis type is malformed.");
     return jsonResponse({ error: "Choose a valid analysis type." }, 400);
   }
 
   if (typeof promptId !== "string" || !promptInstructions[promptId] || !promptId.startsWith(analysisType)) {
-    console.error("Invalid request, Prompt is malformed.");
+    console.log("Invalid request, Prompt is malformed.");
     return jsonResponse({ error: "Choose a valid prompt for the selected analysis type." }, 400);
   }
 
   for (let i = 0; i < checkIns.length; i++){
      if ((checkIns[i].stress_level == null || checkIns[i].stress_level === '') || (checkIns[i].mood === null || checkIns[i].mood === '') || (checkIns[i].eaten_recently === null || checkIns[i].eaten_recently === '') || (checkIns[i].concentration_level === null || checkIns[i].concentration_level === '')){
-      console.error("Invalid request, Check-in response is missing.");
+      console.log("Invalid request, Check-in response is missing.");
       return jsonResponse({ error: "A required check-in response is missing" }, 400);
      }
   }
 
   for (let i = 0; i < journalEntries.length; i++){
      if ((journalEntries[i].entry == null || journalEntries[i].entry === '')){
-      console.error("Invalid request, Journal Entry response is missing.");
+      console.log("Invalid request, Journal Entry response is missing.");
       return jsonResponse({ error: "A required journal entry response is missing" }, 400);
      }
   }
@@ -150,15 +150,15 @@ Deno.serve(async (req) => {
         Activity: [Your suggested activity, or leave this empty if it was not requested]
       `,
             generation_config: {
-              max_output_tokens: 1500,
-              thinking_level: "medium",
+              max_output_tokens: 600,
+              thinking_level: "low",
             },
             store: false,
           });
 
           const output = interaction.output_text?.trim();
           if (!output) {
-            console.error("Gemini returned no analysis text.");
+            console.log("Gemini returned no analysis text.");
             return jsonResponse({ error: "The analysis service returned an empty response." }, 500);
           }
 
@@ -176,7 +176,7 @@ Deno.serve(async (req) => {
               activity_suggestion
           }, 200);
         } catch (error) {
-          console.error("Gemini analysis request failed.", error);
+          console.log("Gemini analysis request failed.", error);
 
           let message = "Gemini was not able to complete the analysis. Please try again.";
           if (typeof error === "object" && error !== null && "status" in error) {

@@ -59,9 +59,7 @@ Reflect: Which pass found the most? Pass 3 usually wins, and pass 4 usually find
 
 ## Rep 5 — Open a pull request to yourself
 
-Branch, push, open a pull request in the web interface, review your own diff there, leave at least two review comments on your own code, then merge. Confirm CI ran on the branch before the merge.
-
-Branch: 
+Branch: us/kspencer/FourSlicesErrorHandlingJournalViewsUnitTests
 
 Reflect: Did the web diff view show you anything the editor did not? Most students find at least one thing — unfamiliar presentation is a cheap substitute for a second pair of eyes.
 - No, the diff view did not show me any problems that I am not unfamiliar with.
@@ -116,4 +114,66 @@ Ignore file covers:          __.env, .env.*, .env*.local, docker.env, *pem, *.ke
 Reflect: If a real key were in your history right now, what would your next four steps be, in order? Write them down. The reason to write them today is that the day you need them you will be panicking.
 - I would follow the runbook.md: Where each credential comes from, How to rotate it, Who to tell, How long rotation takes.
 
+## Rep 12 — The five-minute demo, rehearsed and recorded
+Write the demo script — literal clicks or commands, in order, with the exact input values — commit your seed data, and rehearse the three acts on a timer: the claim (45 s), the software (3 min), the evidence and the gap (75 s). Then record it.
 
+
+ACT 1 opening line (write it verbatim):
+Stress Manager now fully closes NFR-AVA-01: where an analysis fallback is provided for when Gemini or Supabase aren't available. I would like to note that FR-AIA-01 and FR-AIA-04 are 99% done: where an AI Analysis is provided based on prompts and data selection. The reason I didn't consider it fully done is because Gemini takes longer than 25 seconds. When this is done, this would result in NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, to be fully done too, which focuses on the Analysis performance, data privacy, and security. Here is the AI Analysis, starting from the seeded pantry.
+
+ACT 2 script steps:
+1. On the Anaylsis Page
+2. After clicking a prompt option, a prompt type, then to select a data range from both check ins and journal entries to have AI use for the Analysis
+    1. Click the Generate button (to show that still need prompt)
+    2. Clicks a prompt option
+    3. Then prompt type
+    4. Then Check In button
+    5. Duration
+    6. Click the Generate button (to show that still need journal entry clicked on)
+    7. Then Click Journal Entry button
+    8. Duration
+3. Then to Generate an Analysis,
+    1. Click the Generate button
+    2. The View Analysis Response (when it loads)
+
+- Then the failure path for the AI Analysis fallback is shown in a seperate video.
+
+ACT 2 failure path shown (Recorded in different video listed below):
+This is the failure path for when the AI Analysis is down.
+1. After clicking a prompt option, a prompt type, then to select a data range from both check ins and journal entries to have AI use for the Analysis
+    1. Clicks a prompt option
+    2. Then prompt type
+    3. Then Check In button
+    4. Duration
+    5. Then Journal Entry button
+    6. Duration
+2. Then Generate an Analysis, however, this time this fallback is presented
+    1. Click Generate button
+    2. View Fallback response
+
+ACT 3 what is NOT done, and when it is scheduled: 
+The requirements that are not done because final tests and error handling is still needed are FR-JOU-01: that allows for writing in a journal entry, saving it, viewing, and previewing it. Then also FR-QUES-01: where you can add a check in and save the check in after it is submitted. Then along with FR-JOU-02 for entry edits, these are scheduled for Week 12. [*STEPS HERE*]
+Then what is not started is FR-OVER-01: which displays the check-ins in overview graphs and FR-ACT-01 which is for the destressing activities to play, these are scheduled for Week 11. Then the final pass through tests and documentation for the rest of the other NFRs are scheduled in Weeks 13 and 14. I have an estimated 13 hours scheduled each week for all of these. If any one of these takes longer than expected the first thing I will cut is the Journal Edits which is the Should FR-JOU-02 and if the Gemini can't take under 25 seconds to load the Analysis I will need a potential Change Request, fallback at 25 seconds, or to accept it and that is the Stress Manager state currently.
+[*STEPS*]
+1. Scroll through the Journal page
+    1. Show Previous Journal Entries
+    2. Click into the only Previous Journal Entry 
+    3. Click Write Journal Entry
+    4. Submit Blank Entry
+    5. Then enter in Journal the entry 
+    6. Enter "School is stressful right now"
+    7. Submit Entry
+    8. View Created entry on the page
+2. Scroll through the Check in page
+    1. Enter Stress level 7, mood tense, eaten Yes
+    2. Click Submit
+    3. Click out of still need the concentration level input
+    4. Enter concentration level input
+    5. Show it submits
+
+
+Recorded fallback saved at: ____________________________________
+
+
+Reflect: Time the first run. Where did you go over? The overrun is almost always in Act 2, and almost always because you improvised instead of following the script. What are you cutting?
+- The time the first run was in 5 minutes thought I actually went over in ACT 1 by a few seconds because I struggled saying the NFR and FR names. I just shorted the names.
