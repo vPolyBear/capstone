@@ -25,6 +25,8 @@ export default StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   title: {
       fontSize: 18,
@@ -146,8 +148,39 @@ export default StyleSheet.create({
       height: 250,
       width: 300,
       borderRadius: 25,
-      padding: 15
-
+      padding: 15,
+  },
+    previewContainer: {
+      gap: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+    previewBody: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      color: '#FFFFFF',
+      textAlign:'left',
+      backgroundColor: '#112f2c',
+      height: 100,
+      width: '95%',
+      borderRadius: 25,
+      padding: 15,
+  },
+   previewContainerView: {
+      gap: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+    previewBodyView: {
+      fontSize: 16,
+      fontWeight: 'normal',
+      color: '#FFFFFF',
+      textAlign:'left',
+      backgroundColor: '#112f2c',
+      height: 250,
+      width: '95%',
+      borderRadius: 25,
+      padding: 15,
   },
     selectDataContainer: {
       width: '100%',

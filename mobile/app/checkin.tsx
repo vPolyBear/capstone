@@ -70,7 +70,6 @@ export default function Checkin() {
             const submittedCheckIn = await db.getAllAsync(
                 'SELECT * FROM check_ins'
             );
-            console.log('Submitted Check-in:', submittedCheckIn);
 
             setForm({
                 stressLevel: null,
@@ -97,6 +96,7 @@ return (
     <ScrollView
         style={[style.container, {backgroundColor: '#112f2c'}]}
         contentContainerStyle={style.contentContainer}
+        indicatorStyle='white'
     >
     
         <Text style={style.header}>Check-in on yourself!</Text>

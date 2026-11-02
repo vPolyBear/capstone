@@ -63,8 +63,7 @@ A task is DONE when ALL of the following are true:
 6. No secrets, credentials, or personal data appear anywhere in the diff.
 7. Any assistant contribution is recorded in `docs/ai-usage.md`.
 8. The issue links to its requirement id and has been moved on the board.
-9. Docs touched: `README.md`, `docs/runbook.md`, or an ADR updated if this
-   changed how the system is built, run, or configured.
+9. Docs touched: `README.md`, `docs/runbook.md`, or an ADR updated if this changed how the system is built, run, or configured.
 10. Hours are logged in `docs/hours-log.csv` with a real description.
 
 ---
@@ -83,53 +82,33 @@ nothing on a rubric a stranger applies.
 
 ---
 
-
-
-## Journal FR-JOU-01 Add a Journal Entry
+## Analysis Fallback NFR-AVA-01 Fallback result for even when Gemini or Supabase isn't available
 
 | Check | Evidence |
 |---|---|
-| 1 | AC-1 scan resolves a name; AC-2 unknown barcode falls through to manual entry |
-| 2 | `test_lookup_200`, `test_lookup_404`, `test_lookup_5xx_retry`, `test_timeout` |
-| 3 | Run #211 green on `feat/fr-12-barcode` |
-| 4 | Timeout, 404, 429, and garbage-body cases handled per spec §4.3 |
-| 5 | Four passes done 3/19; 3 findings fixed, DEF-014 logged and deferred |
-| 6 | Key read from `PANTRY_API_KEY`; `git diff --staged` reviewed hunk by hunk |
-| 7 | `docs/ai-usage.md` entry 2026-03-19 (client draft, ~40 of 95 lines kept) |
-| 8 | Issue #34 closed, labeled `FR-12`, moved to Done |
-| 9 | `README.md` prerequisites updated with the new env var |
-| 10 | 3.75 h construction + 1.00 h debugging logged 3/19 |
+| 1 |  FR-AIA-04, AC-2 Provides a fallback for when the AI model or Supabase is down, still should add a toast to pop up too to better inform. |
+| 2 | There are no automated tests yet |
+| 3 | Ran green 50f3b67 on us/kspencer/AiAnalysisFallbackAndDataSelections |
+| 4 | Handled all errors and edge cases (the Dependency failure & Exhaustion and Edge case numbers = 9 + 10 where completed) |
+| 5 | Four passes done 10/31; 3/4 passed, Pass 4 for the toast popping failed |
+| 6 | No secrets, credentials, or personal data appear anywhere |
+| 7 | `docs/ai-usage.md` entry 2026-10-29 (word count and topics part of the fallback, ~30-35 lines kept) |
+| 8 | Issue #39 closed, labeled I-7 [NFR-AVA-01] Display Analysis Fallback when Gemini or Supabase isn't available, moved to Done | 
+| 9 | Nothing needed to be updated as nothing changed how the system is built, run, or configured |
+| 10 | 3.25 hrs for the keyword and 4.00 hrs for the pattern checks logged 2026-10-29 |
 
-
-
-## Worked example — PantryPilot, FR-12 (add an item by barcode)
-
-| Check | Evidence |
-|---|---|
-| 1 | AC-1 scan resolves a name; AC-2 unknown barcode falls through to manual entry |
-| 2 | `test_lookup_200`, `test_lookup_404`, `test_lookup_5xx_retry`, `test_timeout` |
-| 3 | Run #211 green on `feat/fr-12-barcode` |
-| 4 | Timeout, 404, 429, and garbage-body cases handled per spec §4.3 |
-| 5 | Four passes done 3/19; 3 findings fixed, DEF-014 logged and deferred |
-| 6 | Key read from `PANTRY_API_KEY`; `git diff --staged` reviewed hunk by hunk |
-| 7 | `docs/ai-usage.md` entry 2026-03-19 (client draft, ~40 of 95 lines kept) |
-| 8 | Issue #34 closed, labeled `FR-12`, moved to Done |
-| 9 | `README.md` prerequisites updated with the new env var |
-| 10 | 3.75 h construction + 1.00 h debugging logged 3/19 |
+- Note: I will be fixing all the failed Checks (1,2,5).
 
 ---
 
 ## The four-pass self-review (check 5, expanded)
 
 **Pass 1 — Diff (mechanical).** `git diff --staged` and `git diff --staged --stat`.
-Hunt debug prints, commented-out blocks, files staged by accident, hard-coded
-hosts, and TODOs you forgot. Five minutes; finds about half of everything.
+Hunt debug prints, commented-out blocks, files staged by accident, hard-coded hosts, and TODOs you forgot. Five minutes; finds about half of everything.
 
-**Pass 2 — Stranger (comprehension).** Read from the entry point as if you had
-never seen it. Flag ambiguous names, functions doing three jobs, magic numbers, nesting deeper than three.
+**Pass 2 — Stranger (comprehension).** Read from the entry point as if you had never seen it. Flag ambiguous names, functions doing three jobs, magic numbers, nesting deeper than three.
 
-**Pass 3 — Adversary (destruction).** For every input ask what the worst version
-looks like:
+**Pass 3 — Adversary (destruction).** For every input ask what the worst version looks like:
 
 | Input | Hostile version |
 |---|---|
@@ -142,8 +121,7 @@ looks like:
 Fix now, log a defect, or accept with a written reason. All three are fine.
 Silence is not.
 
-**Pass 4 — Contract (traceability).** Read each acceptance criterion out loud and
-point at the line of code that satisfies it. No line, no criterion met.
+**Pass 4 — Contract (traceability).** Read each acceptance criterion out loud and point at the line of code that satisfies it. No line, no criterion met.
 
 
 ---
