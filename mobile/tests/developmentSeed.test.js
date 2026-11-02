@@ -31,7 +31,7 @@ test('development seed inserts a check-in and journal entry into SQLite', () => 
     expect(checkIn.concentration_level).toBe(7);
 
     const journalEntry = db.prepare('SELECT * FROM journal_entries').get();
-    expect(journalEntry.entry).toBe('School has been really stressful so I feel overwhelmed all the time because I feel like time is always running out.');
+    expect(journalEntry.entry).toBe('School has been really stressful.');
   }
   finally{
     db.close();

@@ -9,6 +9,6 @@ export const DEVELOPMENT_SEED_SQL = `
   INSERT INTO journal_entries (
     date, entry
   )
-  SELECT CURRENT_TIMESTAMP, 'School has been really stressful so I feel overwhelmed all the time because I feel like time is always running out.'
+  SELECT CURRENT_TIMESTAMP, 'School has been really stressful.'
   WHERE NOT EXISTS (SELECT 1 FROM journal_entries);
 `;
