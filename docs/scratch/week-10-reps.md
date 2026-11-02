@@ -119,7 +119,7 @@ Write the demo script — literal clicks or commands, in order, with the exact i
 
 
 ACT 1 opening line (write it verbatim):
-Stress Manager now fully closes NFR-AVA-01: where an analysis fallback is provided for when Gemini or Supabase aren't available. I would like to note that FR-AIA-01 and FR-AIA-04 are 99% done: where an AI Analysis is provided based on prompts and data selection. The reason I didn't consider it fully done is because Gemini takes longer than 25 seconds. When this is done, this would result in NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, to be fully done too, which focuses on the Analysis performance, data privacy, and security. Here is the AI Analysis, starting from the seeded pantry.
+Stress Manager now fully closes NFR-AVA-01: where an analysis fallback is provided for when Gemini or Supabase aren't available. I would like to note that FR-AIA-01 and FR-AIA-04 are 99% done: where an AI Analysis is provided based on prompts and data selection. The reason I didn't consider it fully done is because Gemini takes longer than 25 seconds. When this is done, this would result in NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, to be fully done too, which focuses on the Analysis performance, data privacy, and security. Here is the AI Analysis, starting from the seeded data.
 
 ACT 2 script steps:
 1. On the Anaylsis Page
@@ -153,7 +153,7 @@ This is the failure path for when the AI Analysis is down.
 
 ACT 3 what is NOT done, and when it is scheduled: 
 The requirements that are not done because final tests and error handling is still needed are FR-JOU-01: that allows for writing in a journal entry, saving it, viewing, and previewing it. Then also FR-QUES-01: where you can add a check in and save the check in after it is submitted. Then along with FR-JOU-02 for entry edits, these are scheduled for Week 12. [*STEPS HERE*]
-Then what is not started is FR-OVER-01: which displays the check-ins in overview graphs and FR-ACT-01 which is for the destressing activities to play, these are scheduled for Week 11. Then the final pass through tests and documentation for the rest of the other NFRs are scheduled in Weeks 13 and 14. I have an estimated 13 hours scheduled each week for all of these. If any one of these takes longer than expected the first thing I will cut is the Journal Edits which is the Should FR-JOU-02 and if the Gemini can't take under 25 seconds to load the Analysis I will need a potential Change Request, fallback at 25 seconds, or to accept it and that is the Stress Manager state currently.
+Then what is not started is FR-OVER-01: which displays the check-ins in overview graphs and FR-ACT-01 which is for the destressing activities to play, these are scheduled for Week 11. Then the final pass through tests and documentation for the rest of the other NFRs are scheduled in Weeks 13 and 14. I have an estimated 13 hours scheduled each week for all of these. If any one of these takes longer than expected the first thing I will cut is the Journal Edits which is the Should FR-JOU-02 and if the Gemini can't take under 25 seconds for every instance to load the Analysis I will need a potential Change Request, fallback at 25 seconds, or to accept it and so this is the Stress Manager's state currently.
 [*STEPS*]
 1. Scroll through the Journal page
     1. Show Previous Journal Entries
@@ -165,10 +165,10 @@ Then what is not started is FR-OVER-01: which displays the check-ins in overview
     7. Submit Entry
     8. View Created entry on the page
 2. Scroll through the Check in page
-    1. Enter Stress level 7, mood tense, eaten Yes
+    1. Enter (required check ins) Stress level 7, mood tense, eaten Yes
     2. Click Submit
     3. Click out of still need the concentration level input
-    4. Enter concentration level input
+    4. Enter concentration level 7
     5. Show it submits
 
 
