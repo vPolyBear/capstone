@@ -43,7 +43,7 @@ try {
 
   const journalEntry = db.prepare(`
     SELECT entry FROM journal_entries
-    WHERE entry LIKE 'School has been really stressful'
+    WHERE entry LIKE 'School has been really stressful.%'
     LIMIT 1
   `).get();
 

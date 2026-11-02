@@ -94,6 +94,11 @@ jobs:
                 eaten_recently INTEGER,
                 concentration_level INTEGER
               );
+              CREATE TABLE journal_entries (
+                id INTEGER PRIMARY KEY,
+                date TEXT NOT NULL,
+                entry TEXT NOT NULL
+              );
             `);
 
             db.exec(DEVELOPMENT_SEED_SQL);
@@ -108,5 +113,5 @@ jobs:
         run: bash ./script/smoke
         env:
           SMOKE_DATABASE_PATH: Documents/SQLite/smoke.db
-          SMOKE_EXPECT: calm
+          SMOKE_EXPECT: tense
 
