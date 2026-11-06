@@ -37,6 +37,8 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "test": "jest",
+    "seed:testdata": "node scripts/generate-test-data.js",
+    "test:hostile": "node scripts/test-hostile.js",
     "build": "expo export --platform ios",
     "build:ios": "eas build --platform ios --profile preview",
     "start": "expo start",

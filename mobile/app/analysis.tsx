@@ -5,6 +5,7 @@ import {FunctionsFetchError, FunctionsHttpError, FunctionsRelayError} from "@sup
 import { supabase } from "../src/lib/supabase";
 import style from '../style';
 import { useSQLiteContext } from 'expo-sqlite';
+import { ANALYSIS_PROMPTS, buildAnalysisPayload, getPromptValidationError, hasSufficientAnalysisData } from '../src/lib/validation';
 
 export default function Analysis() {
     
@@ -376,7 +377,12 @@ export default function Analysis() {
         }
 
         if (!selectedOption || !selectedPrompt) {
-            setAnalysisError('Choose an analysis type and prompt first.');
+            setAnalysisError('Choose an analysis type and one of its predetermined prompts first.');
+            return;
+        }
+        const promptError = getPromptValidationError(selectedOption, selectedPrompt);
+        if (promptError) {
+            setAnalysisError(promptError);
             return;
         }
         
@@ -401,14 +407,14 @@ export default function Analysis() {
             const originalCheckIns = JSON.stringify(checkIns);
             const originalJournalEntries = JSON.stringify(journalEntries);
 
-            if (checkIns.length === 0 || journalEntries.length === 0) {
+            if (!hasSufficientAnalysisData(checkIns, journalEntries)) {
                 setAnalysisError("More check-in question responses and journal entries are needed before the AI can provide a useful stress explanation.");
                 return;
             }
 
             const { data, error } = await supabase.functions.invoke<{ analysis_explanation: string; activity_suggestion: string; }>(
                 "sendAnalysis",
-                { body: { analysisType: selectedOption, promptId: selectedPrompt, checkIns: checkIns, journalEntries: journalEntries } },
+                { body: buildAnalysisPayload(selectedOption, selectedPrompt, checkIns, journalEntries) },
             );
 
             if (error instanceof FunctionsRelayError) {
@@ -526,10 +532,10 @@ export default function Analysis() {
                 <Text style={style.promptText}>Explanation Prompts</Text>
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('explanation1')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.explanation[0])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'explanation1' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.explanation[0] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -538,10 +544,10 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('explanation2')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.explanation[1])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'explanation2' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.explanation[1] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -550,23 +556,23 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('explanation3')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.explanation[2])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'explanation3' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.explanation[2] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
                         <Text style={style.radioText}>Explain what the progression and patterns of stress and mood may suggest and how to help it.</Text>
                     </Pressable>
 
-                {selectedPrompt === 'explanation1' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.explanation[0] && (
                     <Text style={style.promptText}>You have chosen Explanation Prompt 1</Text>
                 )}
-                {selectedPrompt === 'explanation2' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.explanation[1] && (
                     <Text style={style.promptText}>You have chosen Explanation Prompt 2</Text>
                 )}
-                {selectedPrompt === 'explanation3' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.explanation[2] && (
                     <Text style={style.promptText}>You have chosen Explanation Prompt 3</Text>
                 )}
             </View>
@@ -577,10 +583,10 @@ export default function Analysis() {
                 <Text style={style.promptText}>Activities Prompts</Text>
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('activities1')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.activities[0])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'activities1' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.activities[0] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -589,10 +595,10 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('activities2')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.activities[1])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'activities2' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.activities[1] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -601,23 +607,23 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('activities3')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.activities[2])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'activities3' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.activities[2] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
                         <Text style={style.radioText}>Suggest a longer activity to do that will make the most impact on the reported stress.</Text>
                     </Pressable>
 
-                {selectedPrompt === 'activities1' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.activities[0] && (
                     <Text style={style.promptText}>You have chosen Activities Prompt 1</Text>
                 )}
-                {selectedPrompt === 'activities2' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.activities[1] && (
                     <Text style={style.promptText}>You have chosen Activities Prompt 2</Text>
                 )}
-                {selectedPrompt === 'activities3' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.activities[2] && (
                     <Text style={style.promptText}>You have chosen Activities Prompt 3</Text>
                 )}
             </View>
@@ -628,10 +634,10 @@ export default function Analysis() {
                 <Text style={style.promptText}>Both Prompts</Text>
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('both1')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.both[0])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'both1' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.both[0] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -640,10 +646,10 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('both2')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.both[1])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'both2' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.both[1] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
@@ -652,23 +658,23 @@ export default function Analysis() {
 
                     <Pressable
                         style={[style.radio, { width: '100%' }]}
-                        onPress={() => setSelectedPrompt('both3')}
+                        onPress={() => setSelectedPrompt(ANALYSIS_PROMPTS.both[2])}
                     >
                         <View style={style.radioCircle}>
-                            {selectedPrompt === 'both3' && (
+                            {selectedPrompt === ANALYSIS_PROMPTS.both[2] && (
                                 <View style={style.radioCircleSelected} />
                             )}
                         </View>
                         <Text style={style.radioText}>Pair a longer explanation on the reported stress with one longer activity.</Text>
                     </Pressable>
 
-                {selectedPrompt === 'both1' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.both[0] && (
                     <Text style={style.promptText}>You have chosen Both Prompt 1</Text>
                 )}
-                {selectedPrompt === 'both2' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.both[1] && (
                     <Text style={style.promptText}>You have chosen Both Prompt 2</Text>
                 )}
-                {selectedPrompt === 'both3' && (
+                {selectedPrompt === ANALYSIS_PROMPTS.both[2] && (
                     <Text style={style.promptText}>You have chosen Both Prompt 3</Text>
                 )}
             </View>
@@ -813,4 +819,3 @@ export default function Analysis() {
     
   );
 };
-

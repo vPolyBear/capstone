@@ -7,6 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import style from '../style';
 import { Color, Link } from 'expo-router';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { canSubmitJournalEntry } from '../src/lib/validation';
 
 
 
@@ -40,7 +41,7 @@ export default function Journal() {
     const handleSubmit = async () => {
         try{
 
-            if (!form.entry || !form.entry.trim()) {
+            if (!canSubmitJournalEntry(form.entry)) {
                 Alert.alert('Please input text into the Journal');
                 return;
             }

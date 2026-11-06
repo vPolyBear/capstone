@@ -1,0 +1,548 @@
+{
+  "name": "happy",
+  "seed": 20261105,
+  "generatedAt": "2026-11-05",
+  "description": "Thirty synthetic, plausible check-in and journal records.",
+  "records": [
+    {
+      "id": "happy-001",
+      "date": "2026-02-01T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 7,
+        "mood": "worried",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 7.5,
+        "water_consumed": 42,
+        "eaten_recently": 1,
+        "concentration_level": 2,
+        "stress_cause": "work",
+        "stress_duration": 45
+      },
+      "journalEntry": "Work was busy today. A short walk after my shift helped me reset before dinner.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-002",
+      "date": "2026-02-03T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 6,
+        "mood": "tense",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "headache",
+        "hours_slept": 7,
+        "water_consumed": 84.5,
+        "eaten_recently": 0,
+        "concentration_level": 5,
+        "stress_cause": "deadline",
+        "stress_duration": 27
+      },
+      "journalEntry": "I have a paper due this week, so I made an outline and set aside time to work on it.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-003",
+      "date": "2026-02-05T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 1,
+        "mood": "tense",
+        "physical_stress_location": "head",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 5.5,
+        "water_consumed": 50.5,
+        "eaten_recently": 0,
+        "concentration_level": 5,
+        "stress_cause": "family",
+        "stress_duration": 32
+      },
+      "journalEntry": "My schedule felt crowded, so I moved one task and left some time to rest.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-004",
+      "date": "2026-02-07T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 10,
+        "mood": "worried",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "headache",
+        "hours_slept": 7,
+        "water_consumed": 86,
+        "eaten_recently": 1,
+        "concentration_level": 2,
+        "stress_cause": "relationship",
+        "stress_duration": 31
+      },
+      "journalEntry": "I have a paper due this week, so I made an outline and set aside time to work on it.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-005",
+      "date": "2026-02-09T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 8,
+        "mood": "happy",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "tense muscles",
+        "hours_slept": 5.5,
+        "water_consumed": 68,
+        "eaten_recently": 0,
+        "concentration_level": 6,
+        "stress_cause": "work",
+        "stress_duration": 15
+      },
+      "journalEntry": "Work was busy today. A short walk after my shift helped me reset before dinner.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-006",
+      "date": "2026-02-11T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 2,
+        "mood": "excited",
+        "physical_stress_location": "back",
+        "physical_symptoms": null,
+        "hours_slept": 5,
+        "water_consumed": 65,
+        "eaten_recently": 0,
+        "concentration_level": 10,
+        "stress_cause": "finances",
+        "stress_duration": 2
+      },
+      "journalEntry": "I felt more relaxed after taking a break outside and drinking some water.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-007",
+      "date": "2026-02-13T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 6,
+        "mood": "worried",
+        "physical_stress_location": "neck",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 6,
+        "water_consumed": 71.5,
+        "eaten_recently": 0,
+        "concentration_level": 4,
+        "stress_cause": "work",
+        "stress_duration": 1
+      },
+      "journalEntry": "I have a paper due this week, so I made an outline and set aside time to work on it.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-008",
+      "date": "2026-02-15T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 8,
+        "mood": "worried",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "headache",
+        "hours_slept": 8.5,
+        "water_consumed": 48.5,
+        "eaten_recently": 0,
+        "concentration_level": 2,
+        "stress_cause": "family",
+        "stress_duration": 43
+      },
+      "journalEntry": "I was worried this morning, but checking in helped me name what was bothering me.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-009",
+      "date": "2026-02-17T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 5,
+        "mood": "tense",
+        "physical_stress_location": "shoulders/traps",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 8.5,
+        "water_consumed": 37,
+        "eaten_recently": 0,
+        "concentration_level": 6,
+        "stress_cause": "finances",
+        "stress_duration": 28
+      },
+      "journalEntry": "I felt more relaxed after taking a break outside and drinking some water.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-010",
+      "date": "2026-02-19T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 10,
+        "mood": "nervous",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 5.5,
+        "water_consumed": 41.5,
+        "eaten_recently": 0,
+        "concentration_level": 5,
+        "stress_cause": "finances",
+        "stress_duration": 45
+      },
+      "journalEntry": "A difficult conversation took energy today. Writing down my thoughts helped.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-011",
+      "date": "2026-02-21T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 1,
+        "mood": "worried",
+        "physical_stress_location": "shoulders/traps",
+        "physical_symptoms": "headache",
+        "hours_slept": 8.5,
+        "water_consumed": 41.5,
+        "eaten_recently": 1,
+        "concentration_level": 5,
+        "stress_cause": "family",
+        "stress_duration": 11
+      },
+      "journalEntry": "Work was busy today. A short walk after my shift helped me reset before dinner.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-012",
+      "date": "2026-02-23T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 8,
+        "mood": "worried",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "tense muscles",
+        "hours_slept": 7,
+        "water_consumed": 79.5,
+        "eaten_recently": 1,
+        "concentration_level": 4,
+        "stress_cause": "relationship",
+        "stress_duration": 42
+      },
+      "journalEntry": "I am balancing classes and family plans. I will focus on one task at a time.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-013",
+      "date": "2026-02-25T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 3,
+        "mood": "happy",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": null,
+        "hours_slept": 5.5,
+        "water_consumed": 38,
+        "eaten_recently": 0,
+        "concentration_level": 7,
+        "stress_cause": "school",
+        "stress_duration": 21
+      },
+      "journalEntry": "I felt more relaxed after taking a break outside and drinking some water.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-014",
+      "date": "2026-02-27T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 2,
+        "mood": "happy",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 8,
+        "water_consumed": 58,
+        "eaten_recently": 1,
+        "concentration_level": 1,
+        "stress_cause": "family",
+        "stress_duration": 38
+      },
+      "journalEntry": "I have a paper due this week, so I made an outline and set aside time to work on it.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-015",
+      "date": "2026-03-01T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 3,
+        "mood": "tense",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": null,
+        "hours_slept": 7,
+        "water_consumed": 93,
+        "eaten_recently": 1,
+        "concentration_level": 6,
+        "stress_cause": "relationship",
+        "stress_duration": 1
+      },
+      "journalEntry": "I felt tense before my presentation, but practicing with a friend made it easier.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-016",
+      "date": "2026-03-03T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 10,
+        "mood": "excited",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "tense muscles",
+        "hours_slept": 8.5,
+        "water_consumed": 88.5,
+        "eaten_recently": 1,
+        "concentration_level": 2,
+        "stress_cause": "finances",
+        "stress_duration": 11
+      },
+      "journalEntry": "I slept less than usual and noticed it was harder to concentrate this afternoon.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-017",
+      "date": "2026-03-05T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 3,
+        "mood": "excited",
+        "physical_stress_location": "stomach",
+        "physical_symptoms": "headache",
+        "hours_slept": 8,
+        "water_consumed": 54.5,
+        "eaten_recently": 0,
+        "concentration_level": 3,
+        "stress_cause": "work",
+        "stress_duration": 29
+      },
+      "journalEntry": "Work was busy today. A short walk after my shift helped me reset before dinner.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-018",
+      "date": "2026-03-07T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 1,
+        "mood": "sad",
+        "physical_stress_location": "back",
+        "physical_symptoms": "headache",
+        "hours_slept": 6.5,
+        "water_consumed": 76,
+        "eaten_recently": 1,
+        "concentration_level": 2,
+        "stress_cause": "family",
+        "stress_duration": 18
+      },
+      "journalEntry": "I was worried this morning, but checking in helped me name what was bothering me.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-019",
+      "date": "2026-03-09T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 7,
+        "mood": "worried",
+        "physical_stress_location": "back",
+        "physical_symptoms": null,
+        "hours_slept": 6,
+        "water_consumed": 45,
+        "eaten_recently": 0,
+        "concentration_level": 4,
+        "stress_cause": "finances",
+        "stress_duration": 39
+      },
+      "journalEntry": "My schedule felt crowded, so I moved one task and left some time to rest.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-020",
+      "date": "2026-03-11T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 4,
+        "mood": "nervous",
+        "physical_stress_location": "back",
+        "physical_symptoms": "headache",
+        "hours_slept": 9,
+        "water_consumed": 60,
+        "eaten_recently": 1,
+        "concentration_level": 8,
+        "stress_cause": "finances",
+        "stress_duration": 40
+      },
+      "journalEntry": "A deadline is coming up. I finished the first step and will continue tomorrow.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-021",
+      "date": "2026-03-13T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 4,
+        "mood": "happy",
+        "physical_stress_location": "back",
+        "physical_symptoms": "headache",
+        "hours_slept": 8.5,
+        "water_consumed": 45,
+        "eaten_recently": 0,
+        "concentration_level": 9,
+        "stress_cause": "work",
+        "stress_duration": 8
+      },
+      "journalEntry": "I was worried this morning, but checking in helped me name what was bothering me.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-022",
+      "date": "2026-03-15T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 3,
+        "mood": "tense",
+        "physical_stress_location": "back",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 7,
+        "water_consumed": 61,
+        "eaten_recently": 0,
+        "concentration_level": 5,
+        "stress_cause": "finances",
+        "stress_duration": 33
+      },
+      "journalEntry": "I have a paper due this week, so I made an outline and set aside time to work on it.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-023",
+      "date": "2026-03-17T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 9,
+        "mood": "happy",
+        "physical_stress_location": "neck",
+        "physical_symptoms": "headache",
+        "hours_slept": 6,
+        "water_consumed": 92.5,
+        "eaten_recently": 1,
+        "concentration_level": 8,
+        "stress_cause": "family",
+        "stress_duration": 21
+      },
+      "journalEntry": "My schedule felt crowded, so I moved one task and left some time to rest.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-024",
+      "date": "2026-03-19T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 9,
+        "mood": "excited",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "headache",
+        "hours_slept": 8.5,
+        "water_consumed": 89,
+        "eaten_recently": 0,
+        "concentration_level": 10,
+        "stress_cause": "finances",
+        "stress_duration": 19
+      },
+      "journalEntry": "I slept less than usual and noticed it was harder to concentrate this afternoon.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-025",
+      "date": "2026-03-21T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 5,
+        "mood": "tense",
+        "physical_stress_location": "head",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 7,
+        "water_consumed": 46,
+        "eaten_recently": 0,
+        "concentration_level": 8,
+        "stress_cause": "deadline",
+        "stress_duration": 33
+      },
+      "journalEntry": "I was worried this morning, but checking in helped me name what was bothering me.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-026",
+      "date": "2026-03-23T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 4,
+        "mood": "excited",
+        "physical_stress_location": "shoulders/traps",
+        "physical_symptoms": null,
+        "hours_slept": 8.5,
+        "water_consumed": 30.5,
+        "eaten_recently": 1,
+        "concentration_level": 9,
+        "stress_cause": "work",
+        "stress_duration": 18
+      },
+      "journalEntry": "Work was busy today. A short walk after my shift helped me reset before dinner.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-027",
+      "date": "2026-03-25T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 6,
+        "mood": "happy",
+        "physical_stress_location": "shoulders/traps",
+        "physical_symptoms": "headache",
+        "hours_slept": 6,
+        "water_consumed": 84.5,
+        "eaten_recently": 1,
+        "concentration_level": 2,
+        "stress_cause": "finances",
+        "stress_duration": 40
+      },
+      "journalEntry": "A difficult conversation took energy today. Writing down my thoughts helped.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-028",
+      "date": "2026-03-27T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 6,
+        "mood": "excited",
+        "physical_stress_location": "head",
+        "physical_symptoms": "headache",
+        "hours_slept": 6,
+        "water_consumed": 36.5,
+        "eaten_recently": 0,
+        "concentration_level": 4,
+        "stress_cause": "family",
+        "stress_duration": 47
+      },
+      "journalEntry": "I felt more relaxed after taking a break outside and drinking some water.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-029",
+      "date": "2026-03-29T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 10,
+        "mood": "sad",
+        "physical_stress_location": "jaw",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 7,
+        "water_consumed": 24.5,
+        "eaten_recently": 1,
+        "concentration_level": 9,
+        "stress_cause": "school",
+        "stress_duration": 18
+      },
+      "journalEntry": "I felt more relaxed after taking a break outside and drinking some water.",
+      "expectedInsert": "accepted"
+    },
+    {
+      "id": "happy-030",
+      "date": "2026-03-31T12:00:00.000Z",
+      "checkIn": {
+        "stress_level": 2,
+        "mood": "happy",
+        "physical_stress_location": "shoulders/traps",
+        "physical_symptoms": "fatigue",
+        "hours_slept": 7,
+        "water_consumed": 72,
+        "eaten_recently": 1,
+        "concentration_level": 10,
+        "stress_cause": "school",
+        "stress_duration": 33
+      },
+      "journalEntry": "My schedule felt crowded, so I moved one task and left some time to rest.",
+      "expectedInsert": "accepted"
+    }
+  ]
+}

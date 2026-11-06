@@ -6,21 +6,18 @@ import { Picker } from '@react-native-picker/picker';
 //import { Picker } from '@expo/ui/community/picker';
 import style from '../style';
 import { Color, Link } from 'expo-router';
+import { CHECK_IN_REQUIRED_FIELD_MESSAGES, getMissingCheckInField, type CheckInRequiredFields } from '../src/lib/validation';
 
 
 export default function Checkin() {
     const db = useSQLiteContext();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-    type checkInForm = {
-        stressLevel: number | null;
-        mood: string | null;
+    type checkInForm = CheckInRequiredFields & {
         physicalStressLocation: string | null;
         physicalSymptoms: string | null;
         hoursSlept: number | null;
         waterConsumed: number | null;
-        eatenRecently: number | null;
-        concentrationLevel: number | null;
         stressCause: string | null
         stressDuration: number | null;
 
@@ -42,20 +39,9 @@ export default function Checkin() {
     const handleSubmit = async () => {
         try{
 
-            if (form.stressLevel === null) {
-                Alert.alert('Please select a Stress Level');
-                return;
-            }
-            if(form.mood === null || form.mood === ''){
-                Alert.alert('Please select the mood option you align the best with');
-                return;
-            }
-            if(form.eatenRecently === null){
-                Alert.alert('Have you eaten in the past 6 hours?');
-                return;
-            }
-            if(form.concentrationLevel === null){
-                Alert.alert('Please select a Concentration Level');
+            const missingField = getMissingCheckInField(form);
+            if (missingField) {
+                Alert.alert(CHECK_IN_REQUIRED_FIELD_MESSAGES[missingField]);
                 return;
             }
             const currentDate = new Date().toISOString();
