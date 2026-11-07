@@ -46,3 +46,20 @@ FR-JOU-01 AC-1
   - seed --set boundary -> 10 records (empty, one, max, zero, negative, earliest, latest)
   - seed --set hostile -> 12 records (unicode, emoji, apostrophes, 10000 chars, injection strings, path traversal, wrong file type)
 
+## Rep 8 — Triage ten defects with a real deadline
+
+FIX ORDER (in the hours you actually have left):
+  1. __DEF-004__  2. __DEF-005__  3. __DEF-006__  4. __DEF-007__  5. __DEF-009__  6. __DEF-010__  7. __DEF-008__
+
+SHIPS WITH KNOWN DEFECTS (with the workaround a user needs):
+  __DEF-001__  workaround: just wait for the AI Analysis to load
+  __DEF-002__  workaround: just wait for the Analysis to load and fail to see the toast
+  __DEF-003__  workaround: just wait for the Analysis to load and fail to see the predetermined fallback
+
+Reflect: Which defect did you want to fix that you cannot? Write one sentence defending the decision to a user who is affected by it. If you cannot write that sentence, re-triage — you got the priority wrong.
+- The AI Analysis timing seems very unlikely that I will get to it to fix. I really wanted it to be quicker but I haven't been successful yet. If time somehow remain I will try to fix it again, otherwise, this known defect will have to ship. To the user that is affected by it I'm sorry that I couldn't make the AI respond faster, you'll have to wait a bit for now to get a response, it was a goal but it seems unlikly at this point in time.
+
+## Rep 12 — The pesticide check
+
+Reflect: How many defects did a green suite fail to catch? Beizer’s pesticide paradox says the bugs your existing methods can find are already gone.
+- 7
