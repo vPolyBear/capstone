@@ -146,7 +146,7 @@ export default StyleSheet.create({
       textAlign:'left',
       backgroundColor: '#FFFFFF',
       height: 250,
-      width: 300,
+      width: 325,
       borderRadius: 25,
       padding: 15,
   },
@@ -162,7 +162,7 @@ export default StyleSheet.create({
       textAlign:'left',
       backgroundColor: '#112f2c',
       height: 100,
-      width: '95%',
+      width: 325,
       borderRadius: 25,
       padding: 15,
   },
@@ -178,7 +178,7 @@ export default StyleSheet.create({
       textAlign:'left',
       backgroundColor: '#112f2c',
       height: 250,
-      width: '95%',
+      width: 325,
       borderRadius: 25,
       padding: 15,
   },
@@ -204,8 +204,18 @@ export default StyleSheet.create({
       flex: 1,
       gap: 10,
   },
+  alignButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+    activityBody: {
+      backgroundColor: '#112f2c',
+      height: 75,
+      width: 325,
+      borderRadius: 25,
+      padding: 15,
+  },
     
 
 
 })
-

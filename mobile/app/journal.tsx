@@ -1,12 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput } from 'react-native';
-import InputSpinner from 'react-native-input-spinner';
 import { useSQLiteContext } from 'expo-sqlite';
-import { Picker } from '@react-native-picker/picker';
-//import { Picker } from '@expo/ui/community/picker';
 import style from '../style';
-import { Color, Link } from 'expo-router';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
 import { canSubmitJournalEntry } from '../src/lib/validation';
 
 
@@ -86,14 +82,14 @@ return (
                             <Text style={style.buttonText}>Write Journal Entry</Text>
                         </Pressable>
 
-                        <Link href="/analysis" asChild>
+                        <Link href="/activities" asChild>
                             <Pressable style={style.button}>
-                                <Text style={style.buttonText}>Analysis Page</Text>
+                                <Text style={style.buttonText}>Activities Page</Text>
                             </Pressable>
                         </Link>
                         <Text style={style.header}>Previous Entries</Text>
                     </View>
-                    <View style={style.previewContainer}>
+                    <View style={[style.previewContainer, {paddingTop: 10}]}>
                         {entries.map((item, index) => (
                             <Pressable 
                                 key={index} 

@@ -296,9 +296,9 @@ return (
             <Text style={style.buttonText}>Submit Check-in</Text>
         </Pressable>
 
-        <Link href="/journal" asChild>
+        <Link href="/overview" asChild>
             <Pressable style={style.button}>
-              <Text style={style.buttonText}>Journal Page</Text>
+              <Text style={style.buttonText}>Overview Page</Text>
             </Pressable>
         </Link>
 

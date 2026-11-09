@@ -46,6 +46,36 @@ Steps:  1. Open Overview with loading delayed.  2. Observe the loading state.  3
 Expected: The delayed load shows a loading message within 5 seconds; the failed load shows an error message.
 Fails if: Either state is absent, or a failed load is presented as successful or remains indefinitely loading.
 
+### TC-102  Verifies: FR-OVER-01-AC1   Level: unit   Data: Multiple daily stress values and a null value
+Preconditions: The selected month has two check-ins on one day with stress values 4 and 5, and another check-in on a different day with stress value 8. A check-in with no stress value is also present.
+Steps:  1. Open the Overview page.  2. Select the month containing these check-ins.  3. Look at the Stress Level graph and compare the daily points with the saved check-ins.
+Expected: Monthly data is grouped by day, averaged, rounded to one decimal, and excludes null measurements.
+Fails if: Grouping, rounding, or null filtering produces an incorrect result.
+
+### TC-103  Verifies: FR-OVER-01-AC1   Level: unit   Data: Stress values on multiple dates and months
+Preconditions: The selected year has check-ins with stress values on multiple dates in January and a check-in without a stress value in February.
+Steps:  1. Open the Overview page.  2. Select Year.  3. Look at the Stress Level graph and compare the monthly point with the January check-ins.
+Expected: Yearly data is grouped by month and averages only non-null measurements.
+Fails if: Monthly grouping or averaging is incorrect.
+
+### TC-104  Verifies: FR-OVER-01-AC1   Level: integration   Data: SQLite check-ins in the selected and previous months
+Preconditions: The local store contains two check-ins on different days this month and one check-in last month.
+Steps:  1. Open Overview in Month view.  2. Confirm that the graph shows this month's check-ins and not last month's.  3. Select Year.  4. Confirm the graph shows the monthly results for this year.
+Expected: Month view shows only selected-month values; year view queries the selected year and shows monthly averages.
+Fails if: The query range or displayed chart data includes the wrong period or incorrect averages.
+
+### TC-105  Verifies: FR-OVER-01-AC2   Level: integration   Data: No check-ins in the selected month
+Preconditions: There are no check-ins saved for the selected month.
+Steps:  1. Open the Overview page.  2. Look for the message explaining that there are no check-ins for this period.
+Expected: The empty-state message is displayed.
+Fails if: The empty state is missing.
+
+### TC-106  Verifies: FR-OVER-01-AC3   Level: integration   Data: Delayed and failed SQLite query
+Preconditions: The test environment is set to delay the Overview data load, then make it fail.
+Steps:  1. Open the Overview page.  2. If loading takes longer than one second, check that the loading indicator and message appear.  3. When the load fails, check that an error message appears instead of the graphs.
+Expected: Loading is hidden before one second, shown after one second while loading continues, and replaced by an error after the query fails.
+Fails if: The loading threshold or failure state is incorrect.
+
 ## Journal
 
 ### TC-023  Verifies: FR-JOU-01-AC1   Level: acceptance   Data: Non-empty journal entry
@@ -103,6 +133,12 @@ Preconditions: An activity can be started and its state can be resumed after lea
 Steps:  1. Start the activity and advance to a recognizable state.  2. Leave the app without finishing.  3. Reopen the app.
 Expected: Within 5 seconds of reentry, the same activity is resumed at the state where it was left.
 Fails if: The activity restarts, resets, or fails to resume within 5 seconds.
+
+### TC-107  Verifies: FR-ACT-01-AC1   Level: integration   Data: Two activities in each of the five sections
+Preconditions: The Activities page is available.
+Steps:  1. Tap Breathing Activity and confirm two choices appear.  2. Open the first activity, tap Back, and open it again.  3. Return to the Activities list and repeat for Sound, Creative, Physical, and Self-Care.
+Expected: Each section lists two choices; an activity can be opened, returned from, and opened again.
+Fails if: Any section or activity choice is missing, or the activity cannot be replayed.
 
 ## AI analysis - stress explanation
 
