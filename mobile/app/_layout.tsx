@@ -52,6 +52,9 @@ export default function RootLayout() {
         <Stack.Screen name="home" options={{ title: 'Home' }} />
         <Stack.Screen name="analysis" options={{ title: 'Analysis', headerBackTitle: 'Home' }} />
         <Stack.Screen name="checkin" options={{ title: 'Check-in', headerBackTitle: 'Home' }} />
+        <Stack.Screen name="overview" options={{ title: 'Overview', headerBackTitle: 'Home' }} />
+        <Stack.Screen name="journal" options={{ title: 'Journal', headerBackTitle: 'Home' }} />
+        <Stack.Screen name="activities" options={{ title: 'Activities', headerBackTitle: 'Home' }} />
       </Stack>
       <Toast />
     </SQLiteProvider>

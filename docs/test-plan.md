@@ -35,9 +35,9 @@ Destressing Activites:
 
 | Level | What it covers here | How it runs | Roughly how many |
 |---|---|---|---|
-| Unit | <modules / pure logic> | `<command>` | <n> |
-| Integration | <named seams: DB, HTTP client, queue> | `<command>` | <n> |
-| Acceptance | <requirement acceptance criteria, end to end> | `<command or manual script>` | <n> |
+| Unit | Checks individual validation and feature logic throughout the app | `cd mobile; npm test` | 70+ |
+| Integration | Checks app screens and their database or service connections | `cd mobile; npm test` | 20+ |
+| Acceptance | Checks app features against  requirements | Follow `docs/test-cases.md` | 30+ |
 
 ## 4. Environment
 
@@ -55,7 +55,7 @@ Destressing Activites:
 - [ ] The build under test is tagged and pushed; CI is green on the pipeline from Chapter 9.
 - [ ] Every Must requirement has at least one written test case.
 - [ ] The test data set is checked in and loads without manual steps.
-- [ ] <your own>
+- [ ] Priority and Severity tasks are completed first
 
 ## 6. Exit criteria — verification is DONE when
 
@@ -67,12 +67,6 @@ Destressing Activites:
 - [ ] Every defect fixed this iteration has a named unit test that fails on the old code.
 - [ ] The full suite runs from one documented command and passes in CI.
 - [ ] The Accessibility checks for user experience NFR-ACC-01 and NFR-ACC-2 tests succeed minimally 4 out of 5 times.
-
-## 7. Risks to the testing itself
-
-| Risk | Trigger | Response |
-|---|---|---|
-| <e.g. third-party sandbox unavailable> | <how you'd notice> | <stub + a manual test before release> |
 
 ## 8. Schedule
 
@@ -86,4 +80,4 @@ Destressing Activites:
 
 I have read this plan and I am accountable for the exit criteria above.
 
-Signed: <you>  ·  Date: <YYYY-MM-DD>
+Signed: Katherine Spencer  ·  Date: 2026-11-08
