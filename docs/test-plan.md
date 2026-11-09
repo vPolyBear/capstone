@@ -10,8 +10,8 @@ Check Ins:
     - requirement FR-QUES-01 at commit d2329ef, 
 
 Journal:
-    - requirement FR-JOU-01 at commit d2329ef, d4308c5
-        - requirement FR-JOU-02 no commits yet
+    - requirement FR-JOU-01 at commit d2329ef, d4308c5 (still implementing)
+        - requirement FR-JOU-02 no commits yet (not started yet)
 
 AI Analysis:
     - requirements FR-AIA-01 & FR-AIA-04, NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, NFR-SEC-01, NFR-AVA-01 at commit d2329ef, 50f3b67, d4308c5

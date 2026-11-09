@@ -1,7 +1,5 @@
 # Defect Report & Defect Log
 
----
-
 ## The seven required fields
 
 1. **ID and one-line title** — `DEF-014 — Expiry warning misses items expiring today`

@@ -2,6 +2,6 @@
 Traceability Matrix Results: docs/traceability.csv
 
 Requirements:        20
-Verified:            11  (55%)
+Verified:            13  (65%)
 Must requirements:   16
-Verified Musts:      8  (50%)
+Verified Musts:      10  (62%)
