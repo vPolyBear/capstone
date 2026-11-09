@@ -74,32 +74,17 @@ jobs:
           mkdir -p Documents/SQLite
 
           node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
           import { DatabaseSync } from 'node:sqlite';
           import { DEVELOPMENT_SEED_SQL } from './src/lib/developmentSeed.js';
 
           const db = new DatabaseSync('Documents/SQLite/smoke.db');
 
           try {
-            db.exec(`
-              CREATE TABLE schema_migrations (
-                version INTEGER PRIMARY KEY
-              );
-
-              INSERT INTO schema_migrations VALUES (1), (2);
-
-              CREATE TABLE check_ins (
-                date TEXT,
-                stress_level INTEGER,
-                mood TEXT,
-                eaten_recently INTEGER,
-                concentration_level INTEGER
-              );
-              CREATE TABLE journal_entries (
-                id INTEGER PRIMARY KEY,
-                date TEXT NOT NULL,
-                entry TEXT NOT NULL
-              );
-            `);
+            db.exec(readFileSync('./migrations/0001-initial.sql', 'utf8'));
+            db.prepare('INSERT INTO schema_migrations (version) VALUES (?)').run(1);
+            db.exec(readFileSync('./migrations/0002-checkin-checks-update.sql', 'utf8'));
+            db.prepare('INSERT INTO schema_migrations (version) VALUES (?)').run(2);
 
             db.exec(DEVELOPMENT_SEED_SQL);
 
@@ -114,4 +99,3 @@ jobs:
         env:
           SMOKE_DATABASE_PATH: Documents/SQLite/smoke.db
           SMOKE_EXPECT: tense
-

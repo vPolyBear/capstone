@@ -1,6 +1,6 @@
 # Test Plan — Stress Manager
 
-**Version:** 1.0  ·  **Author:** Katherine Spencer  ·  **Date:** 2026-11-02  ·  **Baseline commit:** <sha>
+**Version:** 1.0  ·  **Author:** Katherine Spencer  ·  **Date:** 2026-11-02  ·  **Baseline commit:** 0763250
 
 ---
 
@@ -17,10 +17,11 @@ AI Analysis:
     - requirements FR-AIA-01 & FR-AIA-04, NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, NFR-SEC-01, NFR-AVA-01 at commit d2329ef, 50f3b67, d4308c5
 
 Overview:
-    - requirement FR-OVER-01 no commits yet
+    - requirement FR-OVER-01 at 0763250
 
 Destressing Activites:
-    - requirement FR-ACT-01 no commits yet
+    - requirement FR-ACT-01 at 0763250 (start commit)
+
 
 ## 2. Out of scope — what is NOT under test, and why
 
