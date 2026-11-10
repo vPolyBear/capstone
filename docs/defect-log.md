@@ -336,3 +336,8 @@ Tester
 | DEF-008 | Journal Seeded data date is wrong | FR-JOU-01 | S4 | P3 | Katherine Spencer | Not Fixed Yet | — | TC-023 |
 | DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-084 |
 | DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-001 |
+
+### SHIPS WITH KNOWN DEFECTS (with the workaround a user needs):
+  __DEF-001__  workaround: just wait for the AI Analysis to load
+  __DEF-002__  workaround: just wait for the Analysis to load and fail to see the toast
+  __DEF-003__  workaround: just wait for the Analysis to load and fail to see the predetermined fallback
