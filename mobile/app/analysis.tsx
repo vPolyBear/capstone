@@ -31,14 +31,12 @@ export default function Analysis() {
     {/* Select Check Ins Section for Analysis*/}
     const selectCheckInsForAnalysis = (type: string) => {
         setSelectedCheckInDataOption(type);
-        setSelectedCheckInDuration(null);
         setAnalysisError(null);
     };
 
     {/* Select Journal Entries Section for Analysis*/}
     const selectJournalEntriesForAnalysis = (type: string) => {
         setSelectedJournalEntryDataOption(type);
-        setSelectedJournalEntryDuration(null);
         setAnalysisError(null);
     };
 
@@ -134,7 +132,7 @@ export default function Analysis() {
         let healthCount = 0;
         let hardshipCount = 0;
 
-        const basicWords = new Set(["a", "the", "to", "of", "be", "by", "but", "because", "use", "most", "take", "tell", "just", "my", "me", "i", "am", "are", "about", "and", "an", "on", "in", "it", "its", "it's", "is", "isn't", "them", "their", "they", "there", "they're", "that", "that's", "this", "do", "doing", "does", "did", "was", "were", "where", "who", "whom", "when", "with", "will", "well", "want", "therefore", "however", "how", "can", "can't", "should", "shouldn't", "would", "won't", "was", "have", "haven't", "not", "with", "without", "for", "from", "he", "his", "her", "she", "him", "lady", "sir", "man", "many", "give", "get", "day", "week", "month", "year", "matter", "journal", "entry", "works", "first", "one", "you", "you're", "believe", "catch", "really", "right"]);
+        const basicWords = new Set(["a", "the", "to", "of", "be", "by", "but", "because", "use", "most", "take", "tell", "just", "my", "me", "i", "am", "are", "about", "and", "an", "on", "in", "it", "its", "it's", "is", "isn't", "them", "their", "they", "there", "they're", "that", "that's", "this", "do", "doing", "does", "did", "was", "were", "where", "who", "whom", "when", "with", "will", "well", "want", "therefore", "however", "how", "can", "can't", "should", "shouldn't", "would", "won't", "have", "haven't", "not", "without", "for", "from", "he", "his", "her", "she", "him", "lady", "sir", "man", "many", "give", "get", "day", "week", "month", "year", "matter", "journal", "entry", "works", "first", "one", "you", "you're", "catch", "really", "right", "able", "better", "felt", "know", "knew", "think", "thought", "feel", "feeling", "said", "says", "going", "go", "went", "come", "came", "see", "saw", "look", "looking", "make", "made", "took", "put", "putting", "let", "letting", "begin", "began", "end", "ended", "finish", "finished", "try", "tried", "trying", "need", "needed", "wanted", "like", "liked", "liking", "loved", "loving", "hated", "hating", "understand", "understood", "understanding", "believe", "believed", "believing", "remember", "remembered", "forget", "forgot", "hear", "heard", "listen", "listened", "listening", "speak", "spoke", "speaking", "talk", "talked", "talking", "write", "wrote", "writing", "read", "reading", "learn", "learned", "learning", "keep", "kept", "lose", "lost", "losing", "find", "found", "finding", "told", "telling", "ask", "asked", "asking", "help", "helped", "helping", "stop", "stopped", "stopping", "start", "started", "starting", "continue", "change", "changed", "changing", "move", "moved", "moving", "depart", "departed", "departing", "return", "returned", "returning", "visit", "visited", "visiting", "travel", "traveled", "traveling", "drive", "drove", "driving", "ride", "rode", "riding", "fly", "flew", "flying", "swim", "swam", "swimming", "run", "ran", "running", "walk", "walked", "walking", "sit", "sat", "sitting", "stand", "stood", "standing", "lie", "lay", "lying", "sleep", "slept", "sleeping", "eat", "ate", "eating", "drink", "drank", "drinking", "buy", "bought", "buying", "sell", "sold", "selling", "pay", "paid", "paying", "receive", "received", "receiving", "send", "sent", "sending", "keeping", "show", "showed", "showing", "answer", "answered", "answering", "continued", "continuing", "stay", "stayed", "staying", "leave", "leaving", "arrive", "arrived", "arriving", "more"]);
         const wordCounts: Record<string, number> = {};
         let fallbackExplanation = "";
 
@@ -389,10 +387,22 @@ export default function Analysis() {
         let checkIns: any[] = [];
         let journalEntries: any[] = [];
         
-        if((!selectedCheckInDataOption && !selectedCheckInDuration) || (selectedCheckInDataOption === 'checkIns' && !selectedCheckInDuration) || (selectedJournalEntryDataOption === 'journalEntries' && !selectedJournalEntryDuration)){
-            setAnalysisError("Select at least one duration from a least one of the sections: Check-ins or Journal Entries");
+        if (!selectedCheckInDataOption && !selectedJournalEntryDataOption) {
+            setAnalysisError("Select Check-ins and Journal Entries to analyze.");
             return;
         }
+
+        if (selectedCheckInDataOption === 'checkIns' && !selectedCheckInDuration) {
+            setAnalysisError("Select a duration for your Check-ins.");
+            return;
+        }
+
+        if (selectedJournalEntryDataOption === 'journalEntries' && !selectedJournalEntryDuration) {
+            setAnalysisError("Select a duration for your Journal Entries.");
+            return;
+        }
+
+        
 
         setIsLoading(true);
         setAnalysis(null);
@@ -408,7 +418,7 @@ export default function Analysis() {
             const originalJournalEntries = JSON.stringify(journalEntries);
 
             if (!hasSufficientAnalysisData(checkIns, journalEntries)) {
-                setAnalysisError("More check-in question responses and journal entries are needed before the AI can provide a useful stress explanation.");
+                setAnalysisError("There must be at least one check-in and journal entry completed before the AI can provide a useful response.");
                 return;
             }
 
@@ -429,7 +439,11 @@ export default function Analysis() {
             }
 
             if (error instanceof FunctionsHttpError) {
+
                 const response = error.context;
+                console.log("Supabase HTTP status:", response.status);
+                console.log("Supabase response context:", response);
+                
                 let details = "";
 
                 if (response instanceof Response) {
@@ -483,9 +497,10 @@ export default function Analysis() {
 
             setAnalysis(analysisOutput);
         } catch (error) {
-
-            console.log("Analysis failed (fallback used): ", error);
-            Toast.show({type: "error", text1:"AI Analysis is Currently Unavailable", text2: "A fallback is being presented, for the full experience try again later."});
+            console.log("Analysis failed:", error);
+            console.log("Error name:", error instanceof Error ? error.name : typeof error);
+            console.log("Error message:", error instanceof Error ? error.message : error);
+            Toast.show({type: "error", text1:"AI Analysis is Currently Unavailable", text2: "A fallback is being presented"});
 
             const fallbackResult = await fallback(checkIns, journalEntries, selectedOption, selectedPrompt);
             setAnalysis(fallbackResult);
@@ -682,22 +697,22 @@ export default function Analysis() {
 
         <Text style={style.header}>Select Past Responses To Base The Analysis On</Text>
 
-        <View style={style.selectDataButtons}>
-            <Pressable style={[style.button, {flex: 1}]} onPress={() => selectCheckInsForAnalysis('checkIns')}>
-                <Text style={style.buttonText}>Select Check-Ins</Text>
+        <View style={[style.selectDataButtons, {paddingHorizontal: 12, alignItems: 'center'}]}>
+            <Pressable style={[style.checkInDurationButton, {flex: 1}]} onPress={() => selectCheckInsForAnalysis('checkIns')}>
+                <Text style={[style.durationButtonText, {textAlign: 'center'}]}>Select Check-Ins</Text>
             </Pressable>
 
-            <Pressable style={[style.button, {flex: 1}]} onPress={() => selectJournalEntriesForAnalysis('journalEntries')}>
-                <Text style={style.buttonText}>Select Journal Entries</Text>
+            <Pressable style={[style.journalDurationButton, {flex: 1, }]} onPress={() => selectJournalEntriesForAnalysis('journalEntries')}>
+                <Text style={[style.durationButtonText, {textAlign: 'center'}]}>Select Journal Entries</Text>
             </Pressable>
         </View>
 
-        <View style={style.selectDataColumns}>
+        <View style={[style.selectDataColumns, {paddingHorizontal: 12}]}>
         <View style={style.dataSection}>
         {selectedCheckInDataOption === 'checkIns' && (
             <>
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedCheckInDuration('dayCheckIns')}
                 >
                     <View style={style.radioCircle}>
@@ -705,11 +720,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Day</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Day</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedCheckInDuration('weekCheckIns')}
                 >
                     <View style={style.radioCircle}>
@@ -717,11 +732,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Week</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Week</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedCheckInDuration('monthCheckIns')}
                 >
                     <View style={style.radioCircle}>
@@ -729,11 +744,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Month</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Month</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedCheckInDuration('allTimeCheckIns')}
                 >
                     <View style={style.radioCircle}>
@@ -741,7 +756,7 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>All Time</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>All Time</Text>
                 </Pressable>
             
             </>
@@ -752,7 +767,7 @@ export default function Analysis() {
             {selectedJournalEntryDataOption === 'journalEntries' && (
                 <>
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedJournalEntryDuration('dayJournalEntries')}
                 >
                     <View style={style.radioCircle}>
@@ -760,11 +775,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Day</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Day</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedJournalEntryDuration('weekJournalEntries')}
                 >
                     <View style={style.radioCircle}>
@@ -772,11 +787,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Week</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Week</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedJournalEntryDuration('monthJournalEntries')}
                 >
                     <View style={style.radioCircle}>
@@ -784,11 +799,11 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>Month</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>Month</Text>
                 </Pressable>
 
                 <Pressable
-                    style={[style.radio]}
+                    style={[style.durationRadio]}
                     onPress={() => setSelectedJournalEntryDuration('allTimeJournalEntries')}
                 >
                     <View style={style.radioCircle}>
@@ -796,7 +811,7 @@ export default function Analysis() {
                             <View style={style.radioCircleSelected} />
                         )}
                     </View>
-                    <Text style={style.radioText}>All Time</Text>
+                    <Text style={[style.radioText, {paddingRight: 0}]}>All Time</Text>
                 </Pressable>
                 </>
             )}

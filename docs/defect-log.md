@@ -39,7 +39,7 @@ Severity: S3 — A requirement is partly met; where the whole point of the AI An
 
 Priority: P3 — it isn't that crucial to have the AI Analysis to respond within 25 seconds though it would be nice especially when presenting the final app. If time allows it would be nice to fix. However, I've already tried to fix it and haven't had any luck.
 
-Status:   Not Fixed.
+Status:   Accepted Defect.
 Owner:    Katherine Spencer
 
 
@@ -70,7 +70,7 @@ Severity: S3 — A requirement is partly met; where the whole point of if the AI
 
 Priority: P4 — it isn't that crucial or something that techinally needs to be fixed as the toast pops up right away when the AI Analysis fails anyways, though its still a defect as the AC can't be fully fulfilled. 
 
-Status:   Not Fixed.
+Status:   Accepted Defect.
 Owner:    Katherine Spencer
 
 
@@ -101,7 +101,7 @@ Severity: S3 — A requirement is partly met; where the whole point of if the AI
 
 Priority: P4 — it isn't that crucial or something that techinally needs to be fixed as the predetermined fallback response appears right away when the AI Analysis fails anyways, though its still a defect as the AC can't be fully fulfilled. 
 
-Status:   Not Fixed.
+Status:   Accepted Defect.
 Owner:    Katherine Spencer
 
 
@@ -129,7 +129,7 @@ Severity: S4 — How the check-in's UI input spinner presents is a bit misleadin
 
 Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something than make the useability cleaner and would be nice to fix.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 
 
@@ -155,7 +155,7 @@ Severity: S4 — How the check-in's picker presents is a bit misleading so it wo
 
 Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something than make the useability cleaner and would be nice to fix, even though it still presents an error when this happens, I think it would be better to switch to submitting null when a non required field is changed back to being unanswered.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 
 
@@ -178,16 +178,16 @@ Steps to reproduce:
   8. Click Generate
   9. Note error message
 
-Expected: A consistent error message across the instances when either just one duration or one duration and just a button is chosen that just states: to select a duration for both Check-in and Journal Entry ranges
+Expected: An accurate error message across the instances when either just one duration button or one duration button and a duration button are chosen, stating the field missing and saying and not or as both check ins and journal entries are needed
 Actual:   An error appears that differs where when one duration is clicked it states to: more check-in question responses and journal entries are needed before...;then when a duration and the others button is click it states to select a duration from a least one of the sections: Check-ins or Journal Entries
 
-Evidence: After clicking one duration or then one duration and a button for the durations the error messages differ
+Evidence: After clicking one duration or then one duration and a button for the durations the error messages differ from the expect result of wanting both check ins and journal entries
 
-Severity: S4 — How the error messages for duration are presents is a bit misleading as they both are for the same reasons so it would be nice to fix it and it only slightly affects usability
+Severity: S4 — How the error messages for duration that are presented are a bit misleading as they both are for the different reasons so it would be nice to fix it and it only slightly affects usability
 
-Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something than make the error message cleaner and would be nice to fix, even though it still presents an error when this happens, I think it would be better to switch to a consistent error message.
+Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something than make the error message cleaner and would be nice to fix, even though it still presents an error when this happens, I think it would be better to switch to an accurate error message.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 
 
@@ -215,7 +215,7 @@ Severity: S4 — The clearing from clicking on the same duration button again is
 
 Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something that shouldn't be happening so it is good to fix it even though the durations still work as expected, this clearing isn't so it is better to fix it.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 
 
@@ -294,7 +294,7 @@ Severity: S4 — The clicking into the input spinner is not intended as it was i
 
 Priority: P2 — I would like to fix this sooner than later as though it isn't critical it is something that would be good to fit so it isn't also misused.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 ---
 
@@ -326,16 +326,16 @@ Tester
 
 | ID | Title | Req | Sev | Pri | Found by | Status | Fix commit | Regression test |
 |---|---|---|---|---|---|---|---|---|
-| DEF-001 | AI Analysis isn't able to response back within twenty five seconds | FR-AIA-01, FR-AIA-04, NFR-PERF-01 | S3 | P3 | Katherine Spencer | Not Fixed Yet | — | TC-038, TC-065, TC-069 |
-| DEF-002 | The toast after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | FR-AIA-01, FR-AIA-04 | S3 | P4 | Katherine Spencer | Not Fixed | — | TC-096, TC-099 |
-| DEF-003 | The predetermined fallback response after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | NFR-AVA-01 | S3 | P4 | Katherine Spencer | Not Fixed | — | TC-071 |
-| DEF-004 | The Check in input spinner base number shown on the UI is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-001 |
-| DEF-005 | The Check in picker base field when an non required field changed from answered to unanswer result is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-085 |
-| DEF-006 | AI Analysis message when only one data duration is selected is misleading | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-038, TC-065 |
-| DEF-007 | AI Analysis duration buttons allow for the selected duration to be removed | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-038, TC-065 |
+| DEF-001 | AI Analysis isn't able to response back within twenty five seconds | FR-AIA-01, FR-AIA-04, NFR-PERF-01 | S3 | P3 | Katherine Spencer | Accepted Defect. | — | TC-038, TC-065, TC-069 |
+| DEF-002 | The toast after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | FR-AIA-01, FR-AIA-04 | S3 | P4 | Katherine Spencer | Accepted Defect. | — | TC-096, TC-099 |
+| DEF-003 | The predetermined fallback response after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | NFR-AVA-01 | S3 | P4 | Katherine Spencer | Accepted Defect. | — | TC-071 |
+| DEF-004 | The Check in input spinner base number shown on the UI is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-001 |
+| DEF-005 | The Check in picker base field when an non required field changed from answered to unanswer result is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-085 |
+| DEF-006 | AI Analysis message when only one data duration is selected is misleading | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-038, TC-065 |
+| DEF-007 | AI Analysis duration buttons allow for the selected duration to be removed | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-038, TC-065 |
 | DEF-008 | Journal Seeded data date is wrong | FR-JOU-01 | S4 | P3 | Katherine Spencer | Not Fixed Yet | — | TC-023 |
-| DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-084 |
-| DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Not Fixed Yet | — | TC-001 |
+| DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-084 |
+| DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-001 |
 
 ### SHIPS WITH KNOWN DEFECTS (with the workaround a user needs):
   __DEF-001__  workaround: just wait for the AI Analysis to load

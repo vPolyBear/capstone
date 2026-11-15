@@ -197,8 +197,9 @@ export default StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'flex-start',
+      justifyContent: 'center',
       gap: 10,
-      marginTop: 10,
+      marginBottom: 10,
   },
     dataSection: {
       flex: 1,
@@ -215,6 +216,44 @@ export default StyleSheet.create({
       borderRadius: 25,
       padding: 15,
   },
+  journalDurationButton: {
+    backgroundColor: '#b71f57',
+    paddingHorizontal: 0,
+    paddingVertical: 6,
+    marginHorizontal: 0,
+    borderRadius: 8,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#ffffff',
+  },
+  checkInDurationButton: {
+    backgroundColor: '#b71f57',
+    paddingHorizontal: 0,
+    paddingVertical: 14,
+    marginHorizontal: 0,
+    borderRadius: 8,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#ffffff',
+  },
+  durationButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  durationRadio: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#96d1aa',
+    alignSelf: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+},
+  
     
 
 

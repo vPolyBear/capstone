@@ -12,6 +12,7 @@ import { CHECK_IN_REQUIRED_FIELD_MESSAGES, getMissingCheckInField, type CheckInR
 export default function Checkin() {
     const db = useSQLiteContext();
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [spinnerResetKey, setSpinnerResetKey] = useState(0);
 
     type checkInForm = CheckInRequiredFields & {
         physicalStressLocation: string | null;
@@ -53,9 +54,6 @@ export default function Checkin() {
             );
             Alert.alert('The Check-in was submitted successfully!');
 
-            const submittedCheckIn = await db.getAllAsync(
-                'SELECT * FROM check_ins'
-            );
 
             setForm({
                 stressLevel: null,
@@ -69,6 +67,7 @@ export default function Checkin() {
                 stressCause: null,
                 stressDuration: null
             });
+            setSpinnerResetKey(prev => prev + 1);
 
         } catch (error) {
             console.error(error);
@@ -94,16 +93,21 @@ return (
         <Text style={style.header}>From 1-10 how is your stress</Text>
         <Text style={style.header}>1 = very mild - 10 = very bad</Text>
         <InputSpinner
+            resetKey={spinnerResetKey}
+            editable={false}
+            emptied={true}
+            placeholderOnZero={true}
             min={1}
             max={10}
             color="#b71f57"
             textColor="#000000"
             skin="round"
-            width={100}
+            width={255}
             height={35}
             fontSize={16}
-            value={form.stressLevel ?? 0}
-            onChange={(value) => setForm({...form, stressLevel: Number(value) })}
+            placeholder="Enter stress level"
+            value={form.stressLevel ?? ""}
+            onChange={(value) => { if(value == null || value === "") { setForm((prev) => ({...prev, stressLevel: null})); return;} if (Number(value) === 0) { return false;} setForm((prev) => ({...prev, stressLevel: Number(value)}));}}
         />
 
 <View style={style.line}/>
@@ -111,7 +115,7 @@ return (
 
         <Text style={style.header}>What is your current mood?</Text>
         <View style={style.pickerOutside}>
-            <Picker selectedValue={form.mood} onValueChange={value => setForm({...form, mood: String(value) })}>
+            <Picker selectedValue={form.mood ?? ""} onValueChange={value => setForm((prev) => ({...prev, mood: value === "" ? null : String(value) }))}>
                 <Picker.Item label="Select Mood" value=""/>
                 <Picker.Item label="Happy" value="happy" />
                 <Picker.Item label="Angry" value="angry" />
@@ -132,7 +136,7 @@ return (
 <View style={style.line}/>
         <Text style={style.header}>Where in stress most prevelant in your body?</Text>
         <View style={style.pickerOutside}>
-            <Picker selectedValue={form.physicalStressLocation} onValueChange={value => setForm({...form, physicalStressLocation: String(value) })}>
+            <Picker selectedValue={form.physicalStressLocation ?? ""} onValueChange={value => setForm((prev) => ({...prev, physicalStressLocation: value === "" ? null : String(value) }))}>
                 <Picker.Item label="Stress Location" value=""/>
                 <Picker.Item label="Jaw" value="jaw" />
                 <Picker.Item label="Teeth" value="teeth" />
@@ -156,7 +160,7 @@ return (
 
         <Text style={style.header}>What is the most prevelant physical symptom?</Text>
         <View style={style.pickerOutside}>
-            <Picker selectedValue={form.physicalSymptoms} onValueChange={value => setForm({...form, physicalSymptoms: String(value) })}>
+            <Picker selectedValue={form.physicalSymptoms ?? ""} onValueChange={value => setForm((prev) => ({...prev, physicalSymptoms: value === "" ? null : String(value) }))}>
                 <Picker.Item label="Physical Symptoms" value="" />
                 <Picker.Item label="Headache" value="headache" />
                 <Picker.Item label="Migraine" value="migraine" />
@@ -178,35 +182,45 @@ return (
 
         <Text style={style.header}>How much sleep did you get?</Text>
         <InputSpinner
+            resetKey={spinnerResetKey}
+            editable={false}
+            emptied={true}
+            placeholderOnZero={true}
             min={0}
             max={1000}
-            step={0.5}
+            startAtZeroOnFirstIncrement={true}
             color="#b71f57"
             textColor="#000000"
             skin="round"
-            width={100}
+            width={255}
             height={35}
             fontSize={16}
-            value={form.hoursSlept ?? 0}
-            onChange={(value) => setForm({...form, hoursSlept: Number(value) })}
+            placeholder="Enter hours slept"
+            value={form.hoursSlept ?? ""}
+            onChange={(value) => setForm((prev) => ({...prev, hoursSlept: value === null || value === "" ? null : Number(value)}))}
         />
 
 <View style={style.line}/>
 
-        <Text style={style.header}>How much water have you dranken today?</Text>
+        <Text style={style.header}>How much water have you drank today?</Text>
         <Text style={style.header}>Measured in ounces</Text>
         <InputSpinner
+            resetKey={spinnerResetKey}
+            editable={false}
+            emptied={true}
+            placeholderOnZero={true}
             min={0}
             max={1000}
-            step={0.5}
+            startAtZeroOnFirstIncrement={true}
             color="#b71f57"
             textColor="#000000"
             skin="round"
-            width={100}
+            width={255}
             height={35}
             fontSize={16}
-            value={form.waterConsumed ?? 0}
-            onChange={(value) => setForm({...form, waterConsumed: Number(value) })}
+            placeholder="Enter water consumed"
+            value={form.waterConsumed ?? ""}
+            onChange={(value) => setForm((prev) => ({...prev, waterConsumed: value === null || value === "" ? null : Number(value)}))}
         />
 <View style={style.line}/>
 
@@ -233,24 +247,28 @@ return (
         <Text style={style.header}>How easy does it feel to focus?</Text>
         <Text style={style.header}>1 = very easy - 10 = very difficult</Text>
         <InputSpinner
+            resetKey={spinnerResetKey}
+            editable={false}
+            emptied={true}
+            placeholderOnZero={true}
             min={1}
             max={10}
-            step={1}
             color="#b71f57"
             textColor="#000000"
             skin="round"
-            width={100}
+            width={255}
             height={35}
             fontSize={16}
-            value={form.concentrationLevel ?? 0}
-            onChange={(value) => setForm({...form, concentrationLevel: Number(value) })}
+            placeholder="Enter concentration level"
+            value={form.concentrationLevel ?? ""}
+            onChange={(value) => { if(value == null || value === "") { setForm((prev) => ({...prev, concentrationLevel: null})); return;} if (Number(value) === 0) { return false;} setForm((prev) => ({...prev, concentrationLevel: Number(value)}));}}
         />
 
 <View style={style.line}/>
 
         <Text style={style.header}>What do you believe to be the main cause of your stress?</Text>
         <View style={style.pickerOutside}>
-            <Picker selectedValue={form.stressCause} onValueChange={value => setForm({...form, stressCause: String(value) })}>
+            <Picker selectedValue={form.stressCause ?? ""} onValueChange={value => setForm((prev) => ({...prev, stressCause: value === "" ? null : String(value) }))}>
                 <Picker.Item label="Stress Cause" value="" />
                 <Picker.Item label="School" value="school" />
                 <Picker.Item label="Work" value="work" />
@@ -278,17 +296,22 @@ return (
         <Text style={style.header}>How long has your stress been happening?</Text>
         <Text style={style.header}>Measured with hours</Text>
         <InputSpinner
+            resetKey={spinnerResetKey}
+            editable={false}
+            emptied={true}
+            placeholderOnZero={true}
             min={0}
-            max={8760}
-            step={1}
+            max={1000}
+            startAtZeroOnFirstIncrement={true}
             color="#b71f57"
             textColor="#000000"
             skin="round"
-            width={100}
+            width={255}
             height={35}
             fontSize={16}
-            value={form.stressDuration ?? 0}
-            onChange={(value) => setForm({...form, stressDuration: Number(value) })}
+            placeholder="Enter stress duration"
+            value={form.stressDuration ?? ""}
+            onChange={(value) => setForm((prev) => ({...prev, stressDuration: value === null || value === "" ? null : Number(value)}))}
         />
 <View style={style.line}/>
 
