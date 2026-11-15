@@ -23,9 +23,9 @@ jest.mock('react-native-input-spinner', () => {
   const { TextInput } = require('react-native');
   return {
     __esModule: true,
-    default: ({ min, max, step, value, onChange }) =>
+    default: ({ value, onChange, placeholder }) =>
       React.createElement(TextInput, {
-        testID: `spinner-${min}-${max}-${step ?? 'default'}`,
+        testID: placeholder,
         value: String(value),
         onChangeText: (text) => onChange(Number(text)),
       }),
@@ -100,10 +100,10 @@ describe('Check-in screen and SQLite integration', () => {
     mockDb.runAsync.mockRejectedValueOnce(new Error('database unavailable'));
     const { getByTestId, getByText } = await render(<Checkin />);
 
-    await fireEvent.changeText(getByTestId('spinner-1-10-default'), '5');
+    await fireEvent.changeText(getByTestId('Enter stress level'), '5');
     await fireEvent.press(getByTestId('picker-calm'));
     await fireEvent.press(getByText('No'));
-    await fireEvent.changeText(getByTestId('spinner-1-10-1'), '6');
+    await fireEvent.changeText(getByTestId('Enter concentration level'), '6');
     await fireEvent.press(getByText('Submit Check-in'));
 
     await waitFor(() => {
