@@ -135,7 +135,7 @@ describe('Analysis Page', () => {
         await selectAnalysisData(getByText, getAllByText);
         await fireEvent.press(getByText('Generate Analysis'));
 
-        expect(await getByText(/More check-in question responses and journal entries are needed/)).toBeTruthy();
+        expect(await getByText(/There must be at least one check-in and journal entry completed before the AI can provide a useful response./)).toBeTruthy();
         expect(mockInvoke).not.toHaveBeenCalled();
     });
 
@@ -146,7 +146,7 @@ describe('Analysis Page', () => {
         await selectAnalysisData(getByText, getAllByText);
         await fireEvent.press(getByText('Generate Analysis'));
 
-        expect(await getByText(/More check-in question responses and journal entries are needed/)).toBeTruthy();
+        expect(await getByText(/There must be at least one check-in and journal entry completed before the AI can provide a useful response./)).toBeTruthy();
         expect(mockInvoke).not.toHaveBeenCalled();
     });
 

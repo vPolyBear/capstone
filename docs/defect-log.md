@@ -329,13 +329,13 @@ Tester
 | DEF-001 | AI Analysis isn't able to response back within twenty five seconds | FR-AIA-01, FR-AIA-04, NFR-PERF-01 | S3 | P3 | Katherine Spencer | Accepted Defect. | — | TC-038, TC-065, TC-069 |
 | DEF-002 | The toast after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | FR-AIA-01, FR-AIA-04 | S3 | P4 | Katherine Spencer | Accepted Defect. | — | TC-096, TC-099 |
 | DEF-003 | The predetermined fallback response after the AI Analysis fails is dependent on the AI Analysis' timing so it takes longer than 30 seconds if the AI Analysis does so | NFR-AVA-01 | S3 | P4 | Katherine Spencer | Accepted Defect. | — | TC-071 |
-| DEF-004 | The Check in input spinner base number shown on the UI is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-001 |
-| DEF-005 | The Check in picker base field when an non required field changed from answered to unanswer result is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-085 |
-| DEF-006 | AI Analysis message when only one data duration is selected is misleading | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-038, TC-065 |
-| DEF-007 | AI Analysis duration buttons allow for the selected duration to be removed | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-038, TC-065 |
+| DEF-004 | The Check in input spinner base number shown on the UI is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-001 |
+| DEF-005 | The Check in picker base field when an non required field changed from answered to unanswer result is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-085 |
+| DEF-006 | AI Analysis message when only one data duration is selected is misleading | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-038, TC-065 |
+| DEF-007 | AI Analysis duration buttons allow for the selected duration to be removed | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-038, TC-065 |
 | DEF-008 | Journal Seeded data date is wrong | FR-JOU-01 | S4 | P3 | Katherine Spencer | Not Fixed Yet | — | TC-023 |
-| DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-084 |
-| DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | — | TC-001 |
+| DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-084 |
+| DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-001 |
 
 ### SHIPS WITH KNOWN DEFECTS (with the workaround a user needs):
   __DEF-001__  workaround: just wait for the AI Analysis to load
