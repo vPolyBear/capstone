@@ -1,0 +1,318 @@
+diff --git a/node_modules/react-native-input-spinner/src/InputSpinner.js b/node_modules/react-native-input-spinner/src/InputSpinner.js
+index 8763177..178160a 100644
+--- a/node_modules/react-native-input-spinner/src/InputSpinner.js
++++ b/node_modules/react-native-input-spinner/src/InputSpinner.js
+@@ -74,14 +74,24 @@ class InputSpinner extends Component {
+ 			this._setStateMin.bind(this),
+ 			this.props.typingTime,
+ 		);
+-		this._updateValue = debounce((value) => {
+-			this.setState({value: value});
+-		}, 250);
++		this._updateValue = (value) => {
++			clearTimeout(this.updateValueTimer);
++
++			this.updateValueTimer = setTimeout(() => {
++				this.setState({ value: value });
++			}, 250);
++		};
++
++		this._cancelUpdateValue = () => {
++			clearTimeout(this.updateValueTimer);
++			this.updateValueTimer = null;
++		};
+ 
+ 		this.state = {
+ 			min: min,
+ 			max: max,
+ 			value: initialValue,
++			hasBeenChanged: false,
+ 			step: spinnerStep,
+ 			longStep: spinnerLongStep,
+ 			focused: false,
+@@ -94,43 +104,70 @@ class InputSpinner extends Component {
+ 	 * @param prevProps
+ 	 * @returns {*}
+ 	 */
+-	componentDidUpdate(prevProps) {
+-		// Parse Value
+-		if (this.props.value !== prevProps.value) {
++	
++componentDidUpdate(prevProps) {
++    // Reset spinner only when resetKey changes.
++    if (this.props.resetKey !== prevProps.resetKey) {
++        let newValue;
++
++        if (this.props.value == null || this.props.value === "") {
++            newValue = null;
++        } else {
++            newValue = this._parseNum(this.props.value);
++            newValue = this._withinRange(newValue);
++        }
++
++        this.setState({
++            value: newValue,
++            hasBeenChanged: false,
++        });
++    }
++    // Otherwise, update the value without resetting the placeholder.
++    else if (this.props.value !== prevProps.value) {
++		if (this.props.value == null || this.props.value === "") {
++			this._cancelUpdateValue();
++			this.setState({ value: null });
++		} else {
+ 			let newValue = this._parseNum(this.props.value);
+ 			newValue = this._withinRange(newValue);
+ 			this._updateValue(newValue);
+ 		}
+-		// Parse Min
+-		if (this.props.min !== prevProps.min) {
+-			this.setState({
+-				min: this.props.min != null ? this._parseNum(this.props.min) : null,
+-			});
+-		}
+-		// Parse Max
+-		if (this.props.max !== prevProps.max) {
+-			this.setState({
+-				max: this.props.max != null ? this._parseNum(this.props.max) : null,
+-			});
+-		}
+-		// Parse Step
+-		if (this.props.step !== prevProps.step) {
+-			let spinnerStep = this._parseNum(this.props.step);
+-			if (!this.isTypeDecimal() && spinnerStep < 1) {
+-				spinnerStep = 1;
+-			}
+-			this.setState({step: spinnerStep});
+-		}
+-		// Parse longStep
+-		if (this.props.longStep !== prevProps.longStep) {
+-			let spinnerLongStep = this._parseNum(this.props.longStep);
+-			if (!this.isTypeDecimal() && spinnerLongStep < 1) {
+-				spinnerLongStep = 0;
+-			}
+-			this.setState({longStep: spinnerLongStep});
+-		}
+ 	}
+ 
++    // Parse Min
++    if (this.props.min !== prevProps.min) {
++        this.setState({
++            min: this.props.min != null ? this._parseNum(this.props.min) : null,
++        });
++    }
++
++    // Parse Max
++    if (this.props.max !== prevProps.max) {
++        this.setState({
++            max: this.props.max != null ? this._parseNum(this.props.max) : null,
++        });
++    }
++
++    // Parse Step
++    if (this.props.step !== prevProps.step) {
++        let spinnerStep = this._parseNum(this.props.step);
++        if (!this.isTypeDecimal() && spinnerStep < 1) {
++            spinnerStep = 1;
++        }
++        this.setState({ step: spinnerStep });
++    }
++
++    // Parse longStep
++    if (this.props.longStep !== prevProps.longStep) {
++        let spinnerLongStep = this._parseNum(this.props.longStep);
++        if (!this.isTypeDecimal() && spinnerLongStep < 1) {
++            spinnerLongStep = 0;
++        }
++        this.setState({ longStep: spinnerLongStep });
++    }
++}
++
++
+ 	/**
+ 	 * Set state to min
+ 	 * @param callback
+@@ -267,11 +304,26 @@ class InputSpinner extends Component {
+ 		const isEmptyValue = isEmpty(value);
+ 		this._clearOnChangeTimers();
+ 
++		if (isEmptyValue && this.isEmptied()) {
++			if (this.props.disabled) return;
++
++			if (isCallable(this.props.onChange)) {
++				await this.props.onChange(null);
++			}
++
++			// Cancel any delayed update from a previous button press.
++			this._cancelUpdateValue();
++			
++			this.setState({
++				value: null,
++				hasBeenChanged: true,
++			});
++
++			return;
++		}
++
+ 		let num = value;
+ 		let parsedNum = value;
+-		if (isEmptyValue) {
+-			num = this.state.min;
+-		}
+ 
+ 		if (this.props.disabled) return;
+ 
+@@ -296,14 +348,10 @@ class InputSpinner extends Component {
+ 				}
+ 			}
+ 		} else {
+-			if (!isEmptyValue) {
+-				this.minTimer = this._debounceSetMin();
+-			}
+-
+ 			if (isEmptyValue && this.isEmptied()) {
+ 				num = parsedNum = null;
+ 			} else {
+-				parsedNum = this.state.min;
++				num = parsedNum = this.state.min;
+ 			}
+ 
+ 			this.onMin(parsedNum);
+@@ -315,8 +363,7 @@ class InputSpinner extends Component {
+ 			num = this._withinRange(num);
+ 		}
+ 
+-		if (this.state.value !== num && isCallable(this.props.onChange)) {
+-			const res = await this.props.onChange(parsedNum);
++		if ((this.state.value !== num || !this.state.hasBeenChanged) && isCallable(this.props.onChange)) {			const res = await this.props.onChange(parsedNum);
+ 			if (!isEmptyValue) {
+ 				if (res === false) {
+ 					return;
+@@ -326,7 +373,7 @@ class InputSpinner extends Component {
+ 			}
+ 		}
+ 
+-		this.setState({value: num});
++		this.setState({value: num, hasBeenChanged: true});
+ 	}
+ 
+ 	/**
+@@ -485,8 +532,7 @@ class InputSpinner extends Component {
+ 		} else {
+ 			value = String(this._parseNum(value));
+ 		}
+-		let hasPlaceholder = value === "0" && !isEmpty(this.props.placeholder);
+-		
++		let hasPlaceholder = !this.state.hasBeenChanged && !isEmpty(this.props.placeholder);
+ 		let accountingForDecimals = hasPlaceholder
+ 		? ""
+ 		: value.replace(
+@@ -618,7 +664,19 @@ class InputSpinner extends Component {
+ 	 */
+ 	async increase(event, isLongPress = false) {
+ 		if (this._isDisabledButtonRight()) return;
++
++		// If empty or still showing the initial placeholder, start at the minimum.
++		if (isEmpty(this.state.value) || !this.state.hasBeenChanged) {
++			const firstValue = this.props.startAtZeroOnFirstIncrement
++				? 0
++				: this.state.min;
++
++			await this.onChange(firstValue, true);
++			return;
++		}
++
+ 		let currentValue = this._parseNum(this.state.value);
++
+ 		let num =
+ 			currentValue +
+ 			this._parseNum(
+@@ -626,9 +684,11 @@ class InputSpinner extends Component {
+ 					? this.state.longStep
+ 					: this.state.step,
+ 			);
++
+ 		if (isLongPress && this.state.longStep > 0) {
+ 			num = Math.round(num / this.state.longStep) * this.state.longStep;
+ 		}
++
+ 		if (this.isTypeDecimal()) {
+ 			num = Number(num.toFixed(this.props.precision));
+ 		}
+@@ -686,6 +746,9 @@ class InputSpinner extends Component {
+ 	 */
+ 	async decrease(event, isLongPress = false) {
+ 		if (this._isDisabledButtonLeft()) return;
++
++    // Do nothing while the spinner is showing its initial placeholder or is empty.
++    if (isEmpty(this.state.value) || !this.state.hasBeenChanged) return;
+ 		let currentValue = this._parseNum(this.state.value);
+ 		let num =
+ 			currentValue -
+@@ -701,15 +764,15 @@ class InputSpinner extends Component {
+ 			num = Number(num.toFixed(this.props.precision));
+ 		}
+ 
+-		if (
+-			this.isMinReached(currentValue) &&
+-			!this.isEmptied() &&
+-			this.isContinuos()
+-		) {
+-			// Continuity mode
+-			num = this.state.max;
+-		} else if (this.isMinReached(currentValue)) {
+-			return;
++		if (this.isMinReached(currentValue)) {
++			if (!this.isEmptied() && this.isContinuos()) {
++				num = this.state.max;
++			} else if (this.props.placeholderOnZero && this.isEmptied()) {
++				await this.onChange("", true);
++				return;
++			} else {
++				return;
++			}
+ 		}
+ 
+ 		const res = await this.onDecrease(num);
+@@ -1394,6 +1457,9 @@ InputSpinner.propTypes = {
+ 	selectTextOnFocus: PropTypes.bool,
+ 	placeholder: PropTypes.string,
+ 	placeholderTextColor: PropTypes.string,
++	placeholderOnZero: PropTypes.bool,
++	resetKey: PropTypes.number,
++	startAtZeroOnFirstIncrement: PropTypes.bool,
+ 	selectionColor: PropTypes.string,
+ 	returnKeyLabel: PropTypes.string,
+ 	returnKeyType: PropTypes.string,
+@@ -1472,6 +1538,7 @@ InputSpinner.propTypes = {
+ InputSpinner.defaultProps = {
+ 	type: "int",
+ 	skin: null,
++	resetKey: 0,
+ 	min: 0,
+ 	max: null,
+ 	value: 0,
+@@ -1531,6 +1598,9 @@ InputSpinner.defaultProps = {
+ 	rightButtonProps: null,
+ 	buttonTextProps: null,
+ 	formatter: null,
++	placeholderOnZero: true,
++	startAtZeroOnFirstIncrement: false,
++	
+ };
+ 
+ export default InputSpinner;
+diff --git a/node_modules/react-native-input-spinner/src/index.d.ts b/node_modules/react-native-input-spinner/src/index.d.ts
+index 6c29625..fe2347f 100644
+--- a/node_modules/react-native-input-spinner/src/index.d.ts
++++ b/node_modules/react-native-input-spinner/src/index.d.ts
+@@ -37,6 +37,9 @@ export interface ReactNativeInputSpinnerProps {
+ 	selectTextOnFocus?: boolean;
+ 	placeholder?: string;
+ 	placeholderTextColor?: string;
++	placeholderOnZero?: boolean;
++	startAtZeroOnFirstIncrement?: boolean;
++	resetKey?: number;
+ 	selectionColor?: string;
+ 	returnKeyLabel?: string;
+ 	returnKeyType?: string;

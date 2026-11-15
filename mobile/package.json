@@ -36,6 +36,7 @@
     "eas-cli": "^27.6.0",
     "jest": "~30.5.2",
     "jest-expo": "~58.0.13",
+    "patch-package": "^8.0.1",
     "supabase": "^2.122.0",
     "typescript": "~6.0.3"
   },
@@ -63,7 +64,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   },
   "jest": {
     "preset": "jest-expo"
