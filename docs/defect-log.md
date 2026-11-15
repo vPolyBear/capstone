@@ -242,7 +242,7 @@ Severity: S4 — Viewing the differences in the dates isn't that bad but can be 
 
 Priority: P3 — I would like to fix this sooner than later as though it isn't critical it is something that shouldn't be happening so it is good to fix it even though the normal journal page date still work as expected.
 
-Status:   Not Fixed Yet.
+Status:   Fixed.
 Owner:    Katherine Spencer
 
 
@@ -333,7 +333,7 @@ Tester
 | DEF-005 | The Check in picker base field when an non required field changed from answered to unanswer result is misleading | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-085 |
 | DEF-006 | AI Analysis message when only one data duration is selected is misleading | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-038, TC-065 |
 | DEF-007 | AI Analysis duration buttons allow for the selected duration to be removed | FR-AIA-01, FR-AIA-04 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-038, TC-065 |
-| DEF-008 | Journal Seeded data date is wrong | FR-JOU-01 | S4 | P3 | Katherine Spencer | Not Fixed Yet | — | TC-023 |
+| DEF-008 | Journal Seeded data date is wrong | FR-JOU-01 | S4 | P3 | Katherine Spencer | Fixed. | — | TC-023 |
 | DEF-009 | Analysis page data selection buttons are too close to the edges of the screen | NFR-PORT-02 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-084 |
 | DEF-010 | Check in input spinner allows for clicking into and inputting a number | FR-QUES-01 | S4 | P2 | Katherine Spencer | Fixed. | 2264745 | TC-001 |
 
