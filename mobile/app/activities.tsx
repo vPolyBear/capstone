@@ -18,7 +18,7 @@ export default function Journal() {
     const circleSize = useRef(new Animated.Value(1)).current;
     const player = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
 
-        useEffect(() => {
+    useEffect(() => {
         setAudioModeAsync({
             playsInSilentMode: true,
         });
