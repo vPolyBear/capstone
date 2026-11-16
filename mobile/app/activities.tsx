@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput, Animated } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import { useSQLiteContext } from 'expo-sqlite';
 import { Picker } from '@react-native-picker/picker';
@@ -7,15 +7,77 @@ import style from '../style';
 import { Color, Link } from 'expo-router';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { canSubmitJournalEntry } from '../src/lib/validation';
-
+import { useRef } from 'react';
+import { useAudioPlayer, setAudioModeAsync } from 'expo-audio';
 
 
 export default function Journal() {
     const [view, setView] = useState('listAllActivities');
-    
-return (
-    <ScrollView
-        style={[style.container, { backgroundColor: '#b71f57' }]}
+    const moveCircleForBoxBreathingVertically = useRef(new Animated.Value(0)).current;
+    const moveCircleForBoxBreathingHorizontally = useRef(new Animated.Value(0)).current;
+    const circleSize = useRef(new Animated.Value(1)).current;
+    const player = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
+
+
+
+    const moveCircleForBoxBreathingAnimation = () => {
+        moveCircleForBoxBreathingVertically.setValue(0);
+        moveCircleForBoxBreathingHorizontally.setValue(0);
+
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(moveCircleForBoxBreathingVertically, {
+                    toValue: -225,
+                    duration: 4000,
+                    useNativeDriver: true,
+                }),
+
+                Animated.timing(moveCircleForBoxBreathingHorizontally, {
+                    toValue: 225,
+                    duration: 4000,
+                    useNativeDriver: true,
+                }),
+
+                Animated.timing(moveCircleForBoxBreathingVertically, {
+                    toValue: 0,
+                    duration: 4000,
+                    useNativeDriver: true,
+                }),
+
+                Animated.timing(moveCircleForBoxBreathingHorizontally, {
+                    toValue: 0,
+                    duration: 4000,
+                    useNativeDriver: true,
+                }),
+            ]),
+            { iterations: 60 }
+        ).start();
+    };
+
+        const growCircleForBellyBreathingAnimation = () => {
+
+            Animated.loop(
+                Animated.sequence([
+                    Animated.timing(circleSize, {
+                        toValue: 3,
+                        duration: 4000,
+                        useNativeDriver: true,
+                    }),
+
+                    Animated.timing(circleSize, {
+                        toValue: 1,
+                        duration: 4000,
+                        useNativeDriver: true,
+                    }),
+            ]),
+            { iterations: 60 }
+        ).start();
+    };
+        
+
+    return (
+        <ScrollView
+            style={[style.container, { backgroundColor: '#b71f57' }]}
         contentContainerStyle={style.contentContainer}
         keyboardShouldPersistTaps="handled"
         indicatorStyle='white'
@@ -132,11 +194,28 @@ return (
                         <Text style={style.header}>Breathing Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={[style.activitiesBodyView, { height: 50 }]} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                Breathe in for 4 seconds, hold for 4 seconds, and breathe out for 4 seconds. Repeat this cycle for 4 minutes.
+                                Breathe in for 4 seconds, hold for 4 seconds, and breathe out for 4 seconds. This cycle is repeated for 4 minutes.
                             </Text>
+                            
                         </ScrollView>
+
+                        <View style={{alignItems: 'center', marginTop: 20}}>
+                            <View>
+                                <Animated.View style={[style.boxBreathingCircle, { transform: [{ translateY: moveCircleForBoxBreathingVertically }, { translateX: moveCircleForBoxBreathingHorizontally }] }]}>
+
+                                </Animated.View>
+                                <View style={style.boxBreathingBox}>
+                            </View>
+                        </View>
+                            <View style={{alignItems: 'center', marginTop: 20}}>
+                                <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={moveCircleForBoxBreathingAnimation}>
+                                    <Text style={style.buttonText}>Start Box Breathing Activity</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doBreathingActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
@@ -151,11 +230,23 @@ return (
                         <Text style={style.header}>Breathing Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={[style.activitiesBodyView, { height: 100 }]} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                flower breathing
+                                Lie on your back and place one hand on your chest and the other on your belly. Breathe in deeply through your nose, allowing your belly to rise, and exhale slowly through your mouth. Focus on your hand on your belly to feel the rise and fall for 5 minutes.
                             </Text>
                         </ScrollView>
+
+                        <View style={{alignItems: 'center', marginTop: 20}}>
+                            <Animated.View style={[style.bellyBreathingCircle, { transform: [{ scale: circleSize }] }]}>
+                                    
+                            </Animated.View>
+                            <View style={{alignItems: 'center', marginTop: 20}}>
+                                <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={growCircleForBellyBreathingAnimation}>
+                                    <Text style={style.buttonText}>Start Belly Breathing Activity</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doBreathingActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
@@ -207,11 +298,36 @@ return (
                         <Text style={style.header}>Sound Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 sounds
                             </Text>
                         </ScrollView>
+
+                            <View style={{alignItems: 'center', marginTop: 20, gap: 10}}>
+
+                                <Pressable 
+                                    style={[style.button, { backgroundColor: '#099197' }]} 
+                                    onPress={() => player.play()}
+                                >
+                                    <Text style={style.buttonText} >Play Music</Text>
+                                </Pressable>
+
+                                <Pressable 
+                                    style={[style.button, { backgroundColor: '#099197' }]} 
+                                    onPress={() => {player.seekTo(0); player.play();}}
+                                >
+                                    <Text style={style.buttonText}>Replay Music</Text>
+                                </Pressable>
+
+                                <Pressable 
+                                    style={[style.button, { backgroundColor: '#099197' }]} 
+                                    onPress={() => player.pause()}
+                                >
+                                    <Text style={style.buttonText}>Pause Music</Text>
+                                </Pressable>
+                            </View>
+
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSoundActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
@@ -226,7 +342,7 @@ return (
                         <Text style={style.header}>Sound Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 music
                             </Text>
@@ -282,7 +398,7 @@ return (
                         <Text style={style.header}>Creative Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 Draw a flower using your favorite colors. Focus on the details and let your creativity flow.
                             </Text>
@@ -301,7 +417,7 @@ return (
                         <Text style={style.header}>Creative Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 Draw your favorite animal using your favorite colors. Focus on the details and let your creativity flow.
                             </Text>
@@ -357,7 +473,7 @@ return (
                         <Text style={style.header}>Physical Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 stretch
                             </Text>
@@ -376,7 +492,7 @@ return (
                         <Text style={style.header}>Physical Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 walk outside
                             </Text>
@@ -432,7 +548,7 @@ return (
                         <Text style={style.header}>Self-Care Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 Take a nap.
                             </Text>
@@ -451,7 +567,7 @@ return (
                         <Text style={style.header}>Self-Care Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.previewBodyView} indicatorStyle='white'>
+                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 Take a shower.
                             </Text>

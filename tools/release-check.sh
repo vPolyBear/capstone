@@ -4,8 +4,9 @@
 # Stack-agnostic. Point it at YOUR real commands and run it from the root of
 # your repository, on the branch you intend to tag:
 #
-#   TEST_CMD="npm test" SETUP_CMD="npm ci" sh release-check.sh
-#   TEST_CMD="pytest -q" SETUP_CMD="pip install -r requirements.txt" sh release-check.sh
+#   SETUP_CMD="cd mobile && npm ci" \
+#   TEST_CMD="cd mobile && trap 'rm -f .smoke-test.db' EXIT && export EXPO_PUBLIC_SUPABASE_URL=https://your-project.supabase.co && export EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key && npm run lint && npm test -- --runInBand && npm run build && node scripts/prepare-smoke-db.js .smoke-test.db && SMOKE_DATABASE_PATH=.smoke-test.db ./script/smoke" \
+#   sh tools/release-check.sh
 #
 # It never modifies your repository: it clones a throwaway copy into a temp
 # directory and reports. Exit 0 means every check passed. A failure is not a

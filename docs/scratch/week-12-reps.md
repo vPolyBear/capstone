@@ -33,5 +33,5 @@ Reflect: What was its hit rate? And what class of problem did it miss entirely â
 [ ] every performance target measured; each miss has a recorded decision
 [ ] a clean clone sets up, runs, and passes tests using only documented steps
 
-Reflect: Which check failed first, and what undeclared state on your machine was it detecting? Write the sentence you will add to README.md in Week 13 so a stranger never hits it.
-- 
+Reflect: Which check failed first, and what undeclared state on your machine was it detecting?
+- The check that failed first was the first one as I hadn't committed my work yet so it detected uncommitted changes.
