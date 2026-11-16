@@ -19,7 +19,8 @@ Install Node.js 22.16.0, npm, and Expo Go on your iPhone. For Windows use Git Ba
 
 Before setup, create `mobile/.env` by copying `mobile/.env.example` and replacing the placeholders with your Supabase project URL and anon key. Find these in your Supabase project's API settings:
 
-```sh
+```bash
+cd mobile
 cp .env.example .env
 ```
 
@@ -27,10 +28,9 @@ Run this from the `mobile/` directory. `./script/setup` checks that both values 
 
 Keep the Google API key used by the Edge Function in Supabase's server-side function secrets. Never put it in this file or commit it. The `.env` file is ignored by Git.
 
-From the repository root, install dependencies and start Expo:
+From the `mobile/` root, install dependencies and start Expo:
 
-```sh
-cd mobile
+```bash
 ./script/setup
 ./script/start
 ```
@@ -40,7 +40,7 @@ cd mobile
 
 To check the iOS JavaScript bundle locally, run this from `mobile/`:
 
-```sh
+```bash
 ./script/build
 ```
 
@@ -48,7 +48,7 @@ To create an installable iOS preview build through EAS, run `./script/build-ios`
 
 Other project checks, run from `mobile/`:
 
-```sh
+```bash
 ./script/lint   # TypeScript check
 ./script/test   # Run tests
 ./script/smoke  # Check the running iOS app's SQLite data

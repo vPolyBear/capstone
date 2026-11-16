@@ -18,7 +18,11 @@ export default function Journal() {
     const circleSize = useRef(new Animated.Value(1)).current;
     const player = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
 
-
+        useEffect(() => {
+        setAudioModeAsync({
+            playsInSilentMode: true,
+        });
+    }, []);
 
     const moveCircleForBoxBreathingAnimation = () => {
         moveCircleForBoxBreathingVertically.setValue(0);
