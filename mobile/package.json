@@ -19,6 +19,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-native": "0.88.1",
+    "react-native-countdown-circle-timer": "^3.2.1",
     "react-native-gifted-charts": "^1.4.81",
     "react-native-input-spinner": "^1.8.1",
     "react-native-numeric-input": "^1.9.1",
@@ -72,8 +73,9 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
-
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
   },
   "private": true
 }

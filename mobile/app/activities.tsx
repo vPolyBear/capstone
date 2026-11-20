@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput, Animated } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput, Animated, Image } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import { useSQLiteContext } from 'expo-sqlite';
 import { Picker } from '@react-native-picker/picker';
@@ -9,20 +9,146 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { canSubmitJournalEntry } from '../src/lib/validation';
 import { useRef } from 'react';
 import { useAudioPlayer, setAudioModeAsync } from 'expo-audio';
-
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 export default function Journal() {
     const [view, setView] = useState('listAllActivities');
+    const [randomInsideActivity, setRandomInsideActivity] = useState<({ activity: string; picture: any } | null)>(null);
+    const [randomOutsideActivity, setRandomOutsideActivity] = useState<({ activity: string; picture: any } | null)>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+
     const moveCircleForBoxBreathingVertically = useRef(new Animated.Value(0)).current;
     const moveCircleForBoxBreathingHorizontally = useRef(new Animated.Value(0)).current;
     const circleSize = useRef(new Animated.Value(1)).current;
     const player = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
+    const insideActivities = [
+        {
+            activity: 'Walk on a Treadmill',
+            picture: require('../images/activities/walking-on-a-treadmill.png'),
+        },
+        {
+            activity: 'Run on a Treadmill',
+            picture: require('../images/activities/run-on-a-treadmill.png'),
+        },
+        {
+            activity: 'Stretching',
+            picture: require('../images/activities/stretching.png'),
+        },
+        {
+            activity: 'Yoga',
+            picture: require('../images/activities/yoga.png'),
+        },
+        {
+            activity: 'Bike Indoors',
+            picture: require('../images/activities/indoor-bike.png'),
+        },
+        {
+            activity: 'Weight Lift',
+            picture: require('../images/activities/weight-lift.png'),
+        },
+        {
+            activity: 'Dancing',
+            picture: require('../images/activities/dancing.png'),
+        },
+        {
+            activity: 'Indoor Bike',
+            picture: require('../images/activities/indoor-bike.png'),
+        },
+        {
+            activity: 'Squats',
+            picture: require('../images/activities/squats.png'),
+        },
+        {
+            activity: 'Push-ups',
+            picture: require('../images/activities/push-up.png'),
+        },
+        {
+            activity: 'Sit-ups',
+            picture: require('../images/activities/sit-up.png'),
+        },
+        {
+            activity: 'Plank',
+            picture: require('../images/activities/plank.png'),
+        },
+        {
+            activity: 'Play an Indoor Sport',
+            picture: require('../images/activities/indoor-sport.png'),
+        },
+        {
+            activity: 'Follow an Exercise Video',
+            picture: require('../images/activities/exercise-video.png'),
+        },
+    ]
+    
+    const outsideActivities = [
+        {
+            activity: 'Walk in the Park',
+            picture: require('../images/activities/walking.png'),
+        },
+        {
+            activity: 'Run on a Trail',
+            picture: require('../images/activities/run-on-a-trail.png'),
+        },
+        {
+            activity: 'Stretch Outdoors',
+            picture: require('../images/activities/stretching.png'),
+        },
+        {
+            activity: 'Do Yoga in the Park',
+            picture: require('../images/activities/yoga-in-park.png'),
+        },
+        {
+            activity: 'Ride a Bike',
+            picture: require('../images/activities/ride-a-bike.png'),
+        },
+        {
+            activity: 'Play Frisbee',
+            picture: require('../images/activities/frisbee.png'),
+        },
+        {
+            activity: 'Go for a Hike',
+            picture: require('../images/activities/hike.png'),
+        },
+        {
+            activity: 'Play an Outdoor Sport',
+            picture: require('../images/activities/outdoor-sport.png'),
+        },
+        {
+            activity: 'Follow an Exercise Video',
+            picture: require('../images/activities/exercise-video.png'),
+        },
+        {
+            activity: 'Go for a Swim',
+            picture: require('../images/activities/swim.png'),
+        },
+        {
+            activity: 'Rollerblade or Roller Skate',
+            picture: require('../images/activities/rollerblade-skate.png'),
+        },
+        {
+            activity: 'Jump Rope',
+            picture: require('../images/activities/jump-rope.png'),
+        }
+    ];
 
     useEffect(() => {
         setAudioModeAsync({
             playsInSilentMode: true,
         });
     }, []);
+
+    
+
+    const generateRandomInsideActivity = () => {
+        
+        const randomIndex = Math.floor(Math.random() * insideActivities.length);
+        setRandomInsideActivity(insideActivities[randomIndex]);
+    }
+
+    const generateRandomOutsideActivity = () => {
+        const randomIndex = Math.floor(Math.random() * outsideActivities.length);
+        setRandomOutsideActivity(outsideActivities[randomIndex]);
+    }
 
     const moveCircleForBoxBreathingAnimation = () => {
         moveCircleForBoxBreathingVertically.setValue(0);
@@ -443,7 +569,7 @@ export default function Journal() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doPhysicalActivity1'); }}
+                            onPress={() => { generateRandomInsideActivity(); setView('doPhysicalActivity1'); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Physical Activity 1</Text>
@@ -454,7 +580,7 @@ export default function Journal() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doPhysicalActivity2'); }}
+                            onPress={() => { generateRandomOutsideActivity(); setView('doPhysicalActivity2'); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Physical Activity 2</Text>
@@ -476,12 +602,27 @@ export default function Journal() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Physical Activity 1</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                stretch
-                            </Text>
+                    <View style={[style.previewContainerView]}>
+                        <ScrollView style={[style.activitiesBodyView]} indicatorStyle='white'>
+                            {randomInsideActivity && (
+                                
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, color: '#FFFFFF', paddingBottom: 30, fontWeight: 'bold'}}>
+                                        {randomInsideActivity && randomInsideActivity.activity ? randomInsideActivity.activity : 'No activity generated'}
+                                    </Text>
+                                    <View style={{ width: 250, height: 250, marginBottom: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Image source={require('../images/activities/frame.png')} style={{ width: 300, height: 300, resizeMode: 'contain', position: 'absolute'}} />
+                                        <Image source={randomInsideActivity.picture} style={{ width: 200, height: 200, marginBottom: 20, resizeMode: 'contain', position: 'absolute' }} />
+                                    </View>
+                                </View>
+                            )} 
+                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={generateRandomInsideActivity}>
+                                <Text style={[style.buttonText, {alignItems: 'flex-end'}]}>Generate New Activity</Text>
+                            </Pressable>
                         </ScrollView>
+
+
+
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doPhysicalActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
@@ -495,11 +636,24 @@ export default function Journal() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Physical Activity 2</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                walk outside
-                            </Text>
+                    <View style={[style.previewContainerView]}>
+                        <ScrollView style={[style.activitiesBodyView]} indicatorStyle='white'>
+                            {randomOutsideActivity && (
+                                
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, color: '#FFFFFF', paddingBottom: 30, fontWeight: 'bold'}}>
+                                        {randomOutsideActivity && randomOutsideActivity.activity ? randomOutsideActivity.activity : 'No activity generated'}
+                                    </Text>
+                                    <View style={{ width: 250, height: 250, marginBottom: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Image source={require('../images/activities/frame.png')} style={{ width: 300, height: 300, resizeMode: 'contain', position: 'absolute'}} />
+                                        <Image source={randomOutsideActivity.picture} style={{ width: 200, height: 200, marginBottom: 20, resizeMode: 'contain', position: 'absolute' }} />
+                                    </View>
+                                
+                                </View>
+                            )} 
+                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={generateRandomOutsideActivity}>
+                                <Text style={style.buttonText}>Generate New Activity</Text>
+                            </Pressable>
                         </ScrollView>
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doPhysicalActivity')}>
@@ -556,6 +710,27 @@ export default function Journal() {
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
                                 Take a nap.
                             </Text>
+
+                        <View style={style.container}>
+                            <CountdownCircleTimer
+                                isPlaying={isPlaying}
+                                duration={10}
+                                colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                                colorsTime={[10, 6, 3, 0]}
+                                onComplete={() => ({ shouldRepeat: true, delay: 2 })}
+                                updateInterval={1}
+                            >
+                            {({ remainingTime, color }) => (
+                                <Text style={{ color, fontSize: 40 }}>
+                                {remainingTime}
+                                </Text>
+                            )}
+                            </CountdownCircleTimer>
+                            <Pressable onPress={() => setIsPlaying(prev => !prev)}>
+                                <Text>Toggle Playing</Text>
+                            </Pressable>
+                        </View>
+
                         </ScrollView>
                         <View style={{alignItems: 'center'}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSelfCareActivity')}>

@@ -259,7 +259,7 @@ activitiesBodyView: {
       color: '#FFFFFF',
       textAlign:'left',
       backgroundColor: '#112f2c',
-      height: 125,
+      height: 350,
       width: 325,
       borderRadius: 25,
       padding: 15,

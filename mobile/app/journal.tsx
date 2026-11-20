@@ -121,7 +121,7 @@ return (
                     </View>
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         {entries.map((item, index) => (
-                            <View key={item.id} style={style.previewBody}>
+                            <Pressable key={item.id} style={style.previewBody} onPress={() => { setSelectedEntry(item); setView('lookInAnEntry'); }}>
                                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: -25, zIndex: 1, elevation: 1}}>
                                         <Text style={{fontSize: 16, color: '#FFFFFF'}}>{parseJournalDate(item.date).toLocaleDateString()}</Text>
                                         <View style={{alignItems: 'flex-end'}}>
@@ -130,10 +130,8 @@ return (
                                             </Pressable>
                                         </View>
                                     </View>
-                                    <Pressable onPress={() => { setSelectedEntry(item); setView('lookInAnEntry'); }}>
                                         <Text style={{fontSize: 14, color: '#FFFFFF', paddingRight: 45}} numberOfLines={3}> {item.entry}</Text>
-                                    </Pressable>
-                            </View>
+                            </Pressable>
                         ))}
                     </View>
                 </View>

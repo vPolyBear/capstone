@@ -31,7 +31,7 @@ describe('Activities screen integration', () => {
       title: 'Select A Physical Activity',
       first: 'Physical Activity 1',
       second: 'Physical Activity 2',
-      instructions: /stretch/,
+      instructions: /Generate New Activity/,
     },
     {
       button: 'Self-Care Activity 🍵',
