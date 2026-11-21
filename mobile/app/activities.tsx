@@ -22,6 +22,7 @@ export default function Activities() {
     const [timerKey, setTimerKey] = useState(0);
     const [timerFinished, setTimerFinished] = useState(false);
     const [randomMusic, setRandomMusic] = useState<({ name: string; audio: any } | null)>(null);
+    const [shouldPlayMusic, setShouldPlayMusic] = useState(true);
     const relaxingPlayer = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
     const peacefulPlayer = useAudioPlayer(require('../assets/audio/music/peaceful-music.mp3'));
     const energeticPlayer = useAudioPlayer(require('../assets/audio/music/energetic-music.mp3'));
@@ -134,8 +135,21 @@ export default function Activities() {
     const selectedPlayer = randomMusic?.audio ?? relaxingPlayer;
     const playerStatus = useAudioPlayerStatus(selectedPlayer);
 
+    useEffect(() => {
+        if (view === 'doSoundActivity1' && randomMusic) {
+            selectedPlayer.seekTo(0);
 
-        const longSelfCare = [
+            if (shouldPlayMusic) {
+                selectedPlayer.play();
+            } else {
+                selectedPlayer.pause();
+            }
+        } else {
+            selectedPlayer.pause();
+        }
+    }, [selectedPlayer, view, randomMusic, shouldPlayMusic]);
+
+    const longSelfCare = [
         {
             selfCare: 'Do Your Favorite Hobby',
         },
@@ -560,7 +574,7 @@ export default function Activities() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { generateRandomMusic(); setView('doSoundActivity1'); }}
+                            onPress={() => { generateRandomMusic(); setView('doSoundActivity1'); setShouldPlayMusic(true); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Sound Activity 1</Text>
@@ -597,7 +611,7 @@ export default function Activities() {
                         <ScrollView style={[style.activitiesBodyView, { height: 60, flexGrow: 0 }]} indicatorStyle='white'>
                             {randomMusic && (
                                 <View style={{ alignItems: 'center' }}>
-                                    <Text style={{ fontSize: 20, color: '#FFFFFF', fontWeight: 'bold' }}>
+                                    <Text style={{ fontSize: 20, color: '#FFFFFF' }}>
                                         {randomMusic.name}
                                     </Text>
                                 </View>
@@ -643,8 +657,10 @@ export default function Activities() {
                                         style={[style.button, { backgroundColor: '#099197' }]}
                                         onPress={() => {
                                             if (playerStatus.playing) {
+                                                setShouldPlayMusic(false);
                                                 selectedPlayer.pause();
                                             } else {
+                                                setShouldPlayMusic(true);
                                                 selectedPlayer.play();
                                             }
                                         }}
@@ -662,8 +678,8 @@ export default function Activities() {
 
 
                             
-                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={generateRandomMusic}>
-                                <Text style={[style.buttonText, {alignItems: 'flex-end'}]}>Generate New Activity</Text>
+                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={() => { setShouldPlayMusic(true); generateRandomMusic(); }}>
+                                <Text style={style.buttonText}>Generate New Music</Text>
                             </Pressable>
 
 
