@@ -299,6 +299,14 @@ activitiesBodyView: {
     borderWidth: 1,
     marginVertical: 100,
   },
+  timerCircle: {
+    backgroundColor: '#FFFFFF',
+    height: 200,
+    width: 200,
+    borderRadius: 100,
+    boxShadow: '0px 0px 10px #FFFFFF, 0px 0px 25px #FFFFFF',
+
+  }
   
 
   

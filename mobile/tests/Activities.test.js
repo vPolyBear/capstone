@@ -38,7 +38,7 @@ describe('Activities screen integration', () => {
       title: 'Select A Self-Care Activity',
       first: 'Self-Care Activity 1',
       second: 'Self-Care Activity 2',
-      instructions: /Take a nap/,
+      instructions: /Generate New Activity/,
     },
   ];
 

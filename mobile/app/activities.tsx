@@ -8,19 +8,166 @@ import { Color, Link } from 'expo-router';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { canSubmitJournalEntry } from '../src/lib/validation';
 import { useRef } from 'react';
-import { useAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
+import Slider from '@react-native-community/slider';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
-export default function Journal() {
+export default function Activities() {
     const [view, setView] = useState('listAllActivities');
     const [randomInsideActivity, setRandomInsideActivity] = useState<({ activity: string; picture: any } | null)>(null);
     const [randomOutsideActivity, setRandomOutsideActivity] = useState<({ activity: string; picture: any } | null)>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [randomShortSelfCare, setRandomShortSelfCare] = useState<({ selfCare: string;} | null)>(null);
+    const [randomLongSelfCare, setRandomLongSelfCare] = useState<({ selfCare: string;} | null)>(null);
+    const [timerKey, setTimerKey] = useState(0);
+    const [timerFinished, setTimerFinished] = useState(false);
+    const [randomMusic, setRandomMusic] = useState<({ name: string; audio: any } | null)>(null);
+    const relaxingPlayer = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
+    const peacefulPlayer = useAudioPlayer(require('../assets/audio/music/peaceful-music.mp3'));
+    const energeticPlayer = useAudioPlayer(require('../assets/audio/music/energetic-music.mp3'));
+    const powerfulPlayer = useAudioPlayer(require('../assets/audio/music/powerful-music.mp3'));
+    const chillPlayer = useAudioPlayer(require('../assets/audio/music/chill-music.mp3'));
+    const laidBackPlayer = useAudioPlayer(require('../assets/audio/music/laid-back-music.mp3'));
+    const feelGoodPlayer = useAudioPlayer(require('../assets/audio/music/feel-good-music.mp3'));
+    const calmingPlayer = useAudioPlayer(require('../assets/audio/music/calming-music.mp3'));
+
 
     const moveCircleForBoxBreathingVertically = useRef(new Animated.Value(0)).current;
     const moveCircleForBoxBreathingHorizontally = useRef(new Animated.Value(0)).current;
     const circleSize = useRef(new Animated.Value(1)).current;
-    const player = useAudioPlayer(require('../assets/audio/music/relaxing-music.mp3'));
+
+    const alarmPlayer = useAudioPlayer(require('../assets/audio/music/calm-alarm.mp3'));
+
+    const formatTime = (seconds: number) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+
+        return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`;
+    };
+
+    const resetTimer = () => {
+        setTimerKey(prev => prev + 1);
+        setTimerFinished(false);
+        setIsPlaying(false);
+        alarmPlayer.pause();
+        alarmPlayer.seekTo(0);
+    };
+
+    const toggleTimer = () => {
+        if (timerFinished) {
+            setTimerKey(prev => prev + 1);
+            setTimerFinished(false);
+            setIsPlaying(true);
+        } else {
+            setIsPlaying(prev => !prev);
+        }
+    };
+
+    const music = [
+        { 
+            name: 'Relaxing',
+            audio: relaxingPlayer
+        },
+        { 
+            name: 'Peaceful',
+            audio: peacefulPlayer
+        },
+        { 
+            name: 'Energetic',
+            audio: energeticPlayer
+        },
+        {
+            name: 'Powerful',
+            audio: powerfulPlayer
+        },
+        {
+            name: 'Chill',
+            audio: chillPlayer
+        },
+        { 
+            name: 'Laid-back',
+            audio: laidBackPlayer
+        },
+        { 
+            name: 'Feel-good',
+            audio: feelGoodPlayer
+        },
+        { 
+            name: 'Calming',
+            audio: calmingPlayer
+        },
+    ];
+
+    const shortSelfCare = [
+        {
+            selfCare: 'Splash Water on Your Face',
+        },
+        {
+            selfCare: 'Wash Your Face',
+        },
+        {
+            selfCare: 'Drink Some Water',
+        },
+        {
+            selfCare: 'Drink Some Tea',
+        },
+        {
+            selfCare: 'Take a Screen Break',
+        },
+        {
+            selfCare: 'Briefly Clean Up Around You',
+        },
+        {
+            selfCare: 'Listen to Your Favorite Song',
+        },
+        {
+            selfCare: 'Go Outside',
+        },
+        {
+            selfCare: 'Dim the Lights',
+        },
+        {
+            selfCare: 'Just Sit Down and Relax',
+        },
+    ]
+
+    const selectedPlayer = randomMusic?.audio ?? relaxingPlayer;
+    const playerStatus = useAudioPlayerStatus(selectedPlayer);
+
+
+        const longSelfCare = [
+        {
+            selfCare: 'Do Your Favorite Hobby',
+        },
+        {
+            selfCare: 'Take a Long Thinking Shower',
+        },
+        {
+            selfCare: 'Take a Long Everything Shower',
+        },
+        {
+            selfCare: 'Go Outside',
+        },
+        {
+            selfCare: 'Do a Deep Clean',
+        },
+        {
+            selfCare: 'Spa Time',
+        },
+        {
+            selfCare: 'Spend Time with Loved Ones',
+        },
+        {
+            selfCare: 'Cook a Healthy but Delicious Meal',
+        },
+        {
+            selfCare: 'Read a Book',
+        },
+        {
+            selfCare: 'Take a Bath',
+        },
+    ]
+
     const insideActivities = [
         {
             activity: 'Walk on a Treadmill',
@@ -137,7 +284,26 @@ export default function Journal() {
         });
     }, []);
 
+    const generateRandomMusic = () => {
+        if (randomMusic) {
+            randomMusic.audio.pause();
+            randomMusic.audio.seekTo(0);
+        }
+
+        const randomIndex = Math.floor(Math.random() * music.length);
+        setRandomMusic(music[randomIndex]);
+    };
+
     
+    const generateRandomShortSelfCare = () => {
+        const randomIndex = Math.floor(Math.random() * shortSelfCare.length);
+        setRandomShortSelfCare(shortSelfCare[randomIndex]);
+    }
+
+    const generateRandomLongSelfCare = () => {
+        const randomIndex = Math.floor(Math.random() * longSelfCare.length);
+        setRandomLongSelfCare(longSelfCare[randomIndex]);
+    }
 
     const generateRandomInsideActivity = () => {
         
@@ -309,7 +475,7 @@ export default function Journal() {
                                 </View>
                         </Pressable>
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center', paddingBottom: 75}}>
                         <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('listAllActivities')}>
                             <Text style={style.buttonText}>Back</Text>
                         </Pressable>
@@ -346,7 +512,7 @@ export default function Journal() {
                             </View>
                         </View>
 
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doBreathingActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -377,7 +543,7 @@ export default function Journal() {
                             </View>
                         </View>
 
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doBreathingActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -394,7 +560,7 @@ export default function Journal() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doSoundActivity1'); }}
+                            onPress={() => { generateRandomMusic(); setView('doSoundActivity1'); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Sound Activity 1</Text>
@@ -413,7 +579,7 @@ export default function Journal() {
                                 </View>
                         </Pressable>
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center', paddingBottom: 75}}>
                         <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('listAllActivities')}>
                             <Text style={style.buttonText}>Back</Text>
                         </Pressable>
@@ -427,38 +593,81 @@ export default function Journal() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Sound Activity 1</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                sounds
-                            </Text>
+                    <View style={[style.previewContainerView, { minHeight: 150, justifyContent: 'space-between'}]}>
+                        <ScrollView style={[style.activitiesBodyView, { height: 60, flexGrow: 0 }]} indicatorStyle='white'>
+                            {randomMusic && (
+                                <View style={{ alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 20, color: '#FFFFFF', fontWeight: 'bold' }}>
+                                        {randomMusic.name}
+                                    </Text>
+                                </View>
+                            )}
                         </ScrollView>
 
-                            <View style={{alignItems: 'center', marginTop: 20, gap: 10}}>
+                            <View style={{ alignItems: 'center', marginTop: 20, width: '90%' }}>
 
-                                <Pressable 
-                                    style={[style.button, { backgroundColor: '#099197' }]} 
-                                    onPress={() => player.play()}
-                                >
-                                    <Text style={style.buttonText} >Play Music</Text>
-                                </Pressable>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                    <Text style={{ color: '#FFFFFF' }}>
+                                        {formatTime(playerStatus.currentTime)}
+                                    </Text>
 
-                                <Pressable 
-                                    style={[style.button, { backgroundColor: '#099197' }]} 
-                                    onPress={() => {player.seekTo(0); player.play();}}
-                                >
-                                    <Text style={style.buttonText}>Replay Music</Text>
-                                </Pressable>
+                                    <Text style={{ color: '#FFFFFF' }}>
+                                        {formatTime(playerStatus.duration)}
+                                    </Text>
+                                </View>
 
-                                <Pressable 
-                                    style={[style.button, { backgroundColor: '#099197' }]} 
-                                    onPress={() => player.pause()}
-                                >
-                                    <Text style={style.buttonText}>Pause Music</Text>
-                                </Pressable>
+                                <Slider
+                                    style={{ width: '100%', height: 40}}
+                                    minimumValue={0}
+                                    maximumValue={playerStatus.duration || 1}
+                                    value={playerStatus.currentTime}
+                                    onSlidingComplete={(value) => selectedPlayer.seekTo(value)}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#888888"
+                                    thumbTintColor="#FFFFFF"
+                                />
+
+                                <View style={{ flexDirection: 'row', gap: 15 }}>
+                                    <Pressable
+                                        disabled={!randomMusic}
+                                        style={[style.button, { backgroundColor: '#099197' }]}
+                                        onPress={() => {
+                                            selectedPlayer.seekTo(0);
+                                            selectedPlayer.play();
+                                        }}
+                                    >
+                                        <Text style={style.buttonText}>↻</Text>
+                                    </Pressable>
+
+                                    <Pressable
+                                        style={[style.button, { backgroundColor: '#099197' }]}
+                                        onPress={() => {
+                                            if (playerStatus.playing) {
+                                                selectedPlayer.pause();
+                                            } else {
+                                                selectedPlayer.play();
+                                            }
+                                        }}
+                                    >
+                                        <Text style={style.buttonText}>
+                                            {playerStatus.playing ? '| |' : '▶︎'}
+                                        </Text>
+                                    </Pressable>
+                                </View>
+
                             </View>
 
-                        <View style={{alignItems: 'center'}}>
+
+
+
+
+                            
+                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={generateRandomMusic}>
+                                <Text style={[style.buttonText, {alignItems: 'flex-end'}]}>Generate New Activity</Text>
+                            </Pressable>
+
+
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSoundActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -477,7 +686,7 @@ export default function Journal() {
                                 music
                             </Text>
                         </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSoundActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -513,7 +722,7 @@ export default function Journal() {
                                 </View>
                         </Pressable>
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center', paddingBottom: 75}}>
                         <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('listAllActivities')}>
                             <Text style={style.buttonText}>Back</Text>
                         </Pressable>
@@ -533,7 +742,7 @@ export default function Journal() {
                                 Draw a flower using your favorite colors. Focus on the details and let your creativity flow.
                             </Text>
                         </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doCreativeActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -552,7 +761,7 @@ export default function Journal() {
                                 Draw your favorite animal using your favorite colors. Focus on the details and let your creativity flow.
                             </Text>
                         </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doCreativeActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -588,7 +797,7 @@ export default function Journal() {
                                 </View>
                         </Pressable>
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center', paddingBottom: 75}}>
                         <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('listAllActivities')}>
                             <Text style={style.buttonText}>Back</Text>
                         </Pressable>
@@ -623,7 +832,7 @@ export default function Journal() {
 
 
 
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doPhysicalActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -655,7 +864,7 @@ export default function Journal() {
                                 <Text style={style.buttonText}>Generate New Activity</Text>
                             </Pressable>
                         </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doPhysicalActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -672,7 +881,7 @@ export default function Journal() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doSelfCareActivity1'); }}
+                            onPress={() => { generateRandomShortSelfCare(); resetTimer(); setView('doSelfCareActivity1'); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Self-Care Activity 1</Text>
@@ -683,7 +892,7 @@ export default function Journal() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doSelfCareActivity2'); }}
+                            onPress={() => { generateRandomLongSelfCare(); resetTimer(); setView('doSelfCareActivity2'); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Self-Care Activity 2</Text>
@@ -691,7 +900,7 @@ export default function Journal() {
                                 </View>
                         </Pressable>
                     </View>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{alignItems: 'center', paddingBottom: 75}}>
                         <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('listAllActivities')}>
                             <Text style={style.buttonText}>Back</Text>
                         </Pressable>
@@ -705,34 +914,65 @@ export default function Journal() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Self-Care Activity 1</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                Take a nap.
-                            </Text>
+                        <View style={[style.previewContainerView, { minHeight: 550, justifyContent: 'space-between'}]}> 
+                            <View style={{alignItems: 'center'}}>                    
+                                <ScrollView style={[style.activitiesBodyView, { height: 135, flexGrow: 0 }]} indicatorStyle='white'>
+                                {randomShortSelfCare && (
+                                    
+                                    <View style={{alignItems: 'center'}}>
+                                        <Text style={{fontSize: 16, color: '#FFFFFF', paddingBottom: 30, fontWeight: 'bold'}}>
+                                            {randomShortSelfCare && randomShortSelfCare.selfCare ? randomShortSelfCare.selfCare : 'No activity generated'}
+                                        </Text>
+                                    </View>
+                                )} 
+                                <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 0}]} onPress={generateRandomShortSelfCare}>
+                                    <Text style={style.buttonText}>Generate New Activity</Text>
+                                </Pressable>
+                        
 
-                        <View style={style.container}>
-                            <CountdownCircleTimer
-                                isPlaying={isPlaying}
-                                duration={10}
-                                colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-                                colorsTime={[10, 6, 3, 0]}
-                                onComplete={() => ({ shouldRepeat: true, delay: 2 })}
-                                updateInterval={1}
-                            >
-                            {({ remainingTime, color }) => (
-                                <Text style={{ color, fontSize: 40 }}>
-                                {remainingTime}
-                                </Text>
-                            )}
-                            </CountdownCircleTimer>
-                            <Pressable onPress={() => setIsPlaying(prev => !prev)}>
-                                <Text>Toggle Playing</Text>
-                            </Pressable>
+                                </ScrollView>
+                            </View>   
+                        <View style={{alignItems: 'center', marginTop: 20}}>
+                            <View style={[style.timerCircle, { position: 'absolute', alignItems: 'center', justifyContent: 'center' }]}/>
+                            <View style={{alignItems: 'center'}}>
+                                
+                                <CountdownCircleTimer
+                                    key={timerKey}
+                                    isPlaying={isPlaying}
+                                    duration={900}
+                                    size={200}
+                                    colors={["#112f2c", "#96d1aa", "#099197", "#b71f57"]}
+                                    colorsTime={[900, 450, 225, 0]}
+                                    onComplete={() => {
+                                        setTimerFinished(true);
+                                        setIsPlaying(false);
+
+                                        alarmPlayer.seekTo(0);
+                                        alarmPlayer.play();
+
+                                        return { shouldRepeat: false };
+                                    }}
+                                    updateInterval={1}
+                                >
+                                    {({ remainingTime, color }) => {
+                                        const minutes = Math.floor(remainingTime / 60);
+                                        const seconds = remainingTime % 60;
+
+                                        return (
+                                            <Text style={{ color, fontSize: 50, fontWeight: 'bold' }}>
+                                                {minutes}:{String(seconds).padStart(2, '0')}
+                                            </Text>
+                                        );
+                                    }}
+                                </CountdownCircleTimer>
+                                <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={toggleTimer}>
+                                    <Text style={style.buttonText}>
+                                        {timerFinished ? 'Restart Timer' : isPlaying ? 'Pause Timer' : 'Play Timer'}
+                                    </Text>
+                                </Pressable>
+                            </View>
                         </View>
-
-                        </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{alignItems: 'center', marginTop: 20, paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSelfCareActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -745,13 +985,66 @@ export default function Journal() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Self-Care Activity 2</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                Take a shower.
-                            </Text>
-                        </ScrollView>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={[style.previewContainerView, { minHeight: 550, justifyContent: 'space-between'}]}> 
+                            <View style={{alignItems: 'center'}}>                    
+                                <ScrollView style={[style.activitiesBodyView, { height: 135, flexGrow: 0 }]} indicatorStyle='white'>
+                                {randomLongSelfCare && (
+                                    
+                                    <View style={{alignItems: 'center'}}>
+                                        <Text style={{fontSize: 16, color: '#FFFFFF', paddingBottom: 30, fontWeight: 'bold'}}>
+                                            {randomLongSelfCare && randomLongSelfCare.selfCare ? randomLongSelfCare.selfCare : 'No activity generated'}
+                                        </Text>
+                                    </View>
+                                )} 
+                                <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 0}]} onPress={generateRandomLongSelfCare}>
+                                    <Text style={style.buttonText}>Generate New Activity</Text>
+                                </Pressable>
+                        
+
+                                </ScrollView>
+                            </View>   
+                        <View style={{alignItems: 'center', marginTop: 20}}>
+                            <View style={[style.timerCircle, { position: 'absolute', alignItems: 'center', justifyContent: 'center' }]}/>
+                            <View style={{alignItems: 'center'}}>
+                                
+                                <CountdownCircleTimer
+                                    key={timerKey}
+                                    isPlaying={isPlaying}
+                                    duration={1800}
+                                    size={200}
+                                    colors={["#112f2c", "#96d1aa", "#099197", "#b71f57"]}
+                                    colorsTime={[1800, 900, 450, 0]}
+                                    onComplete={() => {
+                                        setTimerFinished(true);
+                                        setIsPlaying(false);
+
+                                        alarmPlayer.seekTo(0);
+                                        alarmPlayer.play();
+
+                                        return { shouldRepeat: false };
+                                    }}
+                                    updateInterval={1}
+                                >
+                                    {({ remainingTime, color }) => {
+                                        const minutes = Math.floor(remainingTime / 60);
+                                        const seconds = remainingTime % 60;
+
+                                        return (
+                                            <Text style={{ color, fontSize: 50, fontWeight: 'bold' }}>
+                                                {minutes}:{String(seconds).padStart(2, '0')}
+                                            </Text>
+                                        );
+                                    }}
+                                </CountdownCircleTimer>
+
+                                <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={toggleTimer}>
+                                    <Text style={style.buttonText}>
+                                        {timerFinished ? 'Restart Timer' : isPlaying ? 'Pause Timer' : 'Play Timer'}
+                                    </Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                        <View style={{alignItems: 'center', marginTop: 20, paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSelfCareActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
                             </Pressable>
@@ -759,7 +1052,6 @@ export default function Journal() {
                     </View>
                 </View>
             )}
-
       </ScrollView>
     
   );
