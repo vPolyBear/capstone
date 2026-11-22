@@ -156,7 +156,8 @@ Expected: the setup commands success lines are these
 - Expo SQLite creates the device database, applies migrations, and seeds development data on first app launch.
 
 Then open the QR code provided with the start command, opening it through your phones camera and you should see the Home screen for the Stress Manager app.
-Takes about 1 to 3 minutes on a first run.
+If this doesn't work use npx expo start --go --tunnel and ensure you click s so your in Expo Go not the development build and open the app by going to Expo Go then clicking on the development server after the app starts
+Takes about 1 to 5 minutes on a first run.
 
 **Verify it actually works:** {{one concrete action a stranger can take — create a record, run a query — and the result they should get. This is the difference between "it started" and "it works."}}
     - Create a check-in, filling minimally the four required fields and save it. Then check that the check-in appears on the Overview page properly.
@@ -200,7 +201,7 @@ capstone/
 |---|---|---|
 | Supabase URL and ANON Key missing | Didn't input it in or can't find it | Copy the .env.example into the .env, Go to Supabase.com, create a project, go into the project, open the left hand bar, open `Project Settings` add in from `General` the `Project ID` to the `your-project` spot in the URL keep the rest the same, then go back to the Supabase page and instead on in General go to API Keys and copy the `Publishable Key` and insert it into the `your-anon-key` spot in the `ANON Key` |
 | Edge Function is missing or out of date | Didn't input it, update it, or deploy it | Go to `mobile\supabase\functions\sendAnalysis\index.ts` and copy the code in it, then go to Supabase.com, go into the project, then open the left hand bar, open `Edge Functions` and either deploy new function `Via Editor` or open existing one, copy and paste new copy or original code and hit deploy |
-| Expo Go isn't connecting | Phone isn't able to connect or not starting the app properly | Retry internet connection, click Try Again in Expo Go or Ctrl + C on the computer and restart it, and ensure the command `npx expo start --tunnel` is being used |
+| Expo Go isn't connecting | Phone isn't able to connect or not starting the app properly | Retry internet connection, click Try Again in Expo Go or Ctrl + C on the computer and restart it, and ensure the command `npx expo start --tunnel` is being used OR If this doesn't work use npx expo start --go --tunnel and ensure you click s so your in Expo Go not the development build and open the app by going to Expo Go then clicking on the development server after the app starts |
 
 ## 10. License
 

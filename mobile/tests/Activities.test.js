@@ -17,7 +17,7 @@ describe('Activities screen integration', () => {
       title: 'Select A Sound Activity',
       first: 'Sound Activity 1',
       second: 'Sound Activity 2',
-      instructions: /sounds/,
+      instructions: /Generate New Music/,
     },
     {
       button: 'Creative Activity 🎨',

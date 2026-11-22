@@ -32,6 +32,17 @@ export default function Activities() {
     const feelGoodPlayer = useAudioPlayer(require('../assets/audio/music/feel-good-music.mp3'));
     const calmingPlayer = useAudioPlayer(require('../assets/audio/music/calming-music.mp3'));
 
+    const [randomNoise, setRandomNoise] = useState<({ name: string; audio: any } | null)>(null);
+    const [shouldPlayNoise, setShouldPlayNoise] = useState(true);
+    const rainPlayer = useAudioPlayer(require('../assets/audio/noise/rain-noise.mp3'));
+    const birdsPlayer = useAudioPlayer(require('../assets/audio/noise/birds-noise.mp3'));
+    const waterstreamPlayer = useAudioPlayer(require('../assets/audio/noise/waterstream-noise.mp3'));
+    const fireplacePlayer = useAudioPlayer(require('../assets/audio/noise/fireplace-noise.mp3'));
+    const windPlayer = useAudioPlayer(require('../assets/audio/noise/wind-noise.mp3'));
+    const keyboardPlayer = useAudioPlayer(require('../assets/audio/noise/keyboard-noise.mp3'));
+    const airplanePlayer = useAudioPlayer(require('../assets/audio/noise/airplane-noise.mp3'));
+    const cityPlayer = useAudioPlayer(require('../assets/audio/noise/city-noise.mp3'));
+
 
     const moveCircleForBoxBreathingVertically = useRef(new Animated.Value(0)).current;
     const moveCircleForBoxBreathingHorizontally = useRef(new Animated.Value(0)).current;
@@ -63,6 +74,58 @@ export default function Activities() {
             setIsPlaying(prev => !prev);
         }
     };
+
+    const noises = [
+        { 
+            name: 'Rain',
+            audio: rainPlayer
+        },
+        { 
+            name: 'Birds',
+            audio: birdsPlayer
+        },
+        { 
+            name: 'Water Stream',
+            audio: waterstreamPlayer
+        },
+        {
+            name: 'Fireplace',
+            audio: fireplacePlayer
+        },
+        {
+            name: 'Wind',
+            audio: windPlayer
+        },
+        { 
+            name: 'Keyboard Typing',
+            audio: keyboardPlayer
+        },
+        { 
+            name: 'Airplane',
+            audio: airplanePlayer
+        },
+        { 
+            name: 'City',
+            audio: cityPlayer
+        },
+    ];
+
+    const selectedPlayer2 = randomNoise?.audio ?? rainPlayer;
+    const playerStatus2 = useAudioPlayerStatus(selectedPlayer2);
+
+    useEffect(() => {
+        if (view === 'doSoundActivity2' && randomNoise) {
+            selectedPlayer2.seekTo(0);
+
+            if (shouldPlayNoise) {
+                selectedPlayer2.play();
+            } else {
+                selectedPlayer2.pause();
+            }
+        } else {
+            selectedPlayer2.pause();
+        }
+    }, [selectedPlayer2, view, randomNoise, shouldPlayNoise]);
 
     const music = [
         { 
@@ -99,6 +162,23 @@ export default function Activities() {
         },
     ];
 
+    const selectedPlayer = randomMusic?.audio ?? relaxingPlayer;
+    const playerStatus = useAudioPlayerStatus(selectedPlayer);
+
+    useEffect(() => {
+        if (view === 'doSoundActivity1' && randomMusic) {
+            selectedPlayer.seekTo(0);
+
+            if (shouldPlayMusic) {
+                selectedPlayer.play();
+            } else {
+                selectedPlayer.pause();
+            }
+        } else {
+            selectedPlayer.pause();
+        }
+    }, [selectedPlayer, view, randomMusic, shouldPlayMusic]);
+
     const shortSelfCare = [
         {
             selfCare: 'Splash Water on Your Face',
@@ -131,23 +211,6 @@ export default function Activities() {
             selfCare: 'Just Sit Down and Relax',
         },
     ]
-
-    const selectedPlayer = randomMusic?.audio ?? relaxingPlayer;
-    const playerStatus = useAudioPlayerStatus(selectedPlayer);
-
-    useEffect(() => {
-        if (view === 'doSoundActivity1' && randomMusic) {
-            selectedPlayer.seekTo(0);
-
-            if (shouldPlayMusic) {
-                selectedPlayer.play();
-            } else {
-                selectedPlayer.pause();
-            }
-        } else {
-            selectedPlayer.pause();
-        }
-    }, [selectedPlayer, view, randomMusic, shouldPlayMusic]);
 
     const longSelfCare = [
         {
@@ -297,6 +360,16 @@ export default function Activities() {
             playsInSilentMode: true,
         });
     }, []);
+
+    const generateRandomNoise = () => {
+        if (randomNoise) {
+            randomNoise.audio.pause();
+            randomNoise.audio.seekTo(0);
+        }
+
+        const randomIndex = Math.floor(Math.random() * noises.length);
+        setRandomNoise(noises[randomIndex]);
+    };
 
     const generateRandomMusic = () => {
         if (randomMusic) {
@@ -585,7 +658,7 @@ export default function Activities() {
                     <View style={[style.previewContainer, {paddingTop: 10}]}>
                         <Pressable 
                             style={[style.activityBody]}
-                            onPress={() => { setView('doSoundActivity2'); }}
+                            onPress={() => { generateRandomNoise(); setView('doSoundActivity2'); setShouldPlayNoise(true); }}
                         >
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, paddingHorizontal: 10 }}>
                                     <Text style={{fontSize: 20, color: '#FFFFFF'}}>Sound Activity 2</Text>
@@ -696,12 +769,77 @@ export default function Activities() {
                     <View style={{alignItems: 'center'}}>
                         <Text style={style.header}>Sound Activity 2</Text>
                     </View>
-                    <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
-                            <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                music
-                            </Text>
+                    <View style={[style.previewContainerView, { minHeight: 150, justifyContent: 'space-between'}]}>
+                        <ScrollView style={[style.activitiesBodyView, { height: 60, flexGrow: 0 }]} indicatorStyle='white'>
+                            {randomNoise && (
+                                <View style={{ alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 20, color: '#FFFFFF' }}>
+                                        {randomNoise.name}
+                                    </Text>
+                                </View>
+                            )}
                         </ScrollView>
+
+                            <View style={{ alignItems: 'center', marginTop: 20, width: '90%' }}>
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                    <Text style={{ color: '#FFFFFF' }}>
+                                        {formatTime(playerStatus2.currentTime)}
+                                    </Text>
+
+                                    <Text style={{ color: '#FFFFFF' }}>
+                                        {formatTime(playerStatus2.duration)}
+                                    </Text>
+                                </View>
+
+                                <Slider
+                                    style={{ width: '100%', height: 40}}
+                                    minimumValue={0}
+                                    maximumValue={playerStatus2.duration || 1}
+                                    value={playerStatus2.currentTime}
+                                    onSlidingComplete={(value) => selectedPlayer2.seekTo(value)}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#888888"
+                                    thumbTintColor="#FFFFFF"
+                                />
+
+                                <View style={{ flexDirection: 'row', gap: 15 }}>
+                                    <Pressable
+                                        disabled={!randomNoise}
+                                        style={[style.button, { backgroundColor: '#099197' }]}
+                                        onPress={() => {
+                                            selectedPlayer2.seekTo(0);
+                                            selectedPlayer2.play();
+                                        }}
+                                    >
+                                        <Text style={style.buttonText}>↻</Text>
+                                    </Pressable>
+
+                                    <Pressable
+                                        style={[style.button, { backgroundColor: '#099197' }]}
+                                        onPress={() => {
+                                            if (playerStatus2.playing) {
+                                                setShouldPlayNoise(false);
+                                                selectedPlayer2.pause();
+                                            } else {
+                                                setShouldPlayNoise(true);
+                                                selectedPlayer2.play();
+                                            }
+                                        }}
+                                    >
+                                        <Text style={style.buttonText}>
+                                            {playerStatus2.playing ? '| |' : '▶︎'}
+                                        </Text>
+                                    </Pressable>
+                                </View>
+
+                            </View>
+
+                            <Pressable style={[style.button, { backgroundColor: '#099197', marginTop: 20 }]} onPress={() => { setShouldPlayNoise(true); generateRandomNoise(); }}>
+                                <Text style={style.buttonText}>Generate New Noises</Text>
+                            </Pressable>
+
+
                         <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doSoundActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
