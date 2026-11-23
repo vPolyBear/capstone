@@ -41,8 +41,6 @@ const validMoods = new Set([
 ]);
 
 const MAX_REQUEST_SIZE = 64 * 1024;
-const MAX_CHECK_INS = 50;
-const MAX_JOURNAL_ENTRIES = 50;
 const MAX_JOURNAL_LENGTH = 10000;
 
 const jsonResponse = (body: Record<string, string | number>, status = 200) =>
@@ -205,14 +203,6 @@ Deno.serve(async (req) => {
 
   if (!Array.isArray(journalEntries)) {
     return jsonResponse({ error: "Journal entries must be an array." }, 400);
-  }
-
-  if (checkIns.length > MAX_CHECK_INS) {
-    return jsonResponse({ error: `You can submit no more than ${MAX_CHECK_INS} check-ins at once.` }, 400);
-  }
-
-  if (journalEntries.length > MAX_JOURNAL_ENTRIES) {
-    return jsonResponse({ error: `You can submit no more than ${MAX_JOURNAL_ENTRIES} journal entries at once.` }, 400);
   }
 
   for (const checkIn of checkIns) {

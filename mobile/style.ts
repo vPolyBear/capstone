@@ -306,7 +306,22 @@ activitiesBodyView: {
     borderRadius: 100,
     boxShadow: '0px 0px 10px #FFFFFF, 0px 0px 25px #FFFFFF',
 
-  }
+  },
+  svgContainer: {
+    backgroundColor: '#FFFFFF',
+    height: 300,
+    width: 300,
+    borderWidth: 3,
+    borderColor: '#099197',
+  },
+  colorCircle: {
+    backgroundColor: '#FFFFFF',
+    height: 25,
+    width: 25,
+    borderRadius: 12.5,
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+  },
   
 
   

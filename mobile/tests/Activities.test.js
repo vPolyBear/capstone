@@ -24,7 +24,7 @@ describe('Activities screen integration', () => {
       title: 'Select A Creative Activity',
       first: 'Creative Activity 1',
       second: 'Creative Activity 2',
-      instructions: /Draw a flower/,
+      instructions: /Draw your favorite animal/,
     },
     {
       button: 'Physical Activity 🌅',

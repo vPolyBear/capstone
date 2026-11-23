@@ -74,27 +74,28 @@ The smoke check reads the database from the running iOS app, verifies both migra
 
 # Stress Manager
 
-> {{ONE SENTENCE: what it does and who it is for. Not what you wish it did — what it does today.}}
+The Stress Manager app provides an array of basic tool options in one place to help a stressed individual destress and understand their stress a bit more; this app doesn't not provide complex tools or claim to cure anyone.
 
-**Status:** {{Working / Partially working — say plainly what does not work yet}}
-**Built by:** {{Your name}} · {{Course, term}}
+**Status:** Working
+**Built by:** Katherine Spencer · Capstone Project (CSC 4950), Fall 2026
 
 ## 1. What this is and who it is for
 
-{{2–4 sentences: the problem, the user, the thing it replaces. A reader who stops here should be able
-to decide whether to keep reading.}}
+Many individuals such as college students have a hard time dealing with, relieving, and understanding their stress. Some go to harmful crutches while some try to find an app that fits all their needs. This Stress Manager apps goal is to provide a stressed individual with a healthy crutch they can depend on when stress gets bad, to mitigate it and grow from it. 
 
 **What it does not do:** {{2–3 honest non-goals. This is the part that earns trust.}}
+- It does not aim to diagnose or claim to cure anyone
+- It does not provide super complex tools
 
 ## 2. Demo
 
-{{Screenshot, animated GIF, or a 60–90 second recording; for a CLI, a real terminal session. Commit the image under `docs/img/` and use a relative path so it renders on GitHub.}}
+App Images: docs\img
 
 ## 3. Prerequisites
 
 | Requirement | Version built and tested on | Check it with | What breaks without it |
 |---|---|---|---|
-| Node.js | v22.16.0 | `node --version ` | Typescript and Javascript wouldn't run properly  |
+| Node.js | v22.16.0 | `node --version` | Typescript and Javascript wouldn't run properly  |
 | npm | 10.9.2 | `npm --version` | Couldn't install any packages |
 | Git | 2.51.0.windows.1 | `git --version` | Could not be cloned |
 | Expo CLI | 58.1.19 | `npx expo --version` | The app could not build or start |

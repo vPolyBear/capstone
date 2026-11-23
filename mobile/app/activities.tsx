@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput, Animated, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert, TextInput, Animated, Image, NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
 import InputSpinner from 'react-native-input-spinner';
 import { useSQLiteContext } from 'expo-sqlite';
 import { Picker } from '@react-native-picker/picker';
@@ -11,6 +11,7 @@ import { useRef } from 'react';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import Slider from '@react-native-community/slider';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { Svg, Path } from 'react-native-svg';
 
 export default function Activities() {
     const [view, setView] = useState('listAllActivities');
@@ -42,6 +43,47 @@ export default function Activities() {
     const keyboardPlayer = useAudioPlayer(require('../assets/audio/noise/keyboard-noise.mp3'));
     const airplanePlayer = useAudioPlayer(require('../assets/audio/noise/airplane-noise.mp3'));
     const cityPlayer = useAudioPlayer(require('../assets/audio/noise/city-noise.mp3'));
+
+    const [paths, setPaths] = useState<{ points: string[]; color: string }[]>([]);
+    const [currentPath, setCurrentPath] = useState<string[]>([]);
+
+    const [colorOption, setColorOption] = useState("black");
+    
+
+    const changeColor = (color: string) => {
+
+        setColorOption(color);
+    };
+
+    const onTouchEnd = () => {
+        if (currentPath.length > 0) {
+            setPaths(prevPaths => [
+                ...prevPaths,
+                { points: currentPath, color: colorOption }
+            ]);
+        }
+
+        setCurrentPath([]);
+    };
+
+    const onTouchMove = (event: NativeSyntheticEvent<NativeTouchEvent>) => {
+        const newPath = [...currentPath];
+
+        const locationX = event.nativeEvent.locationX;
+        const locationY = event.nativeEvent.locationY;
+
+        const newPoint = `${newPath.length === 0 ? 'M' : 'L'}${locationX.toFixed(0)},${locationY.toFixed(0)}`;
+
+        newPath.push(newPoint);
+        setCurrentPath(newPath);
+    };
+
+    const handleClearButtonClick = () => {
+        setPaths([]);
+        setCurrentPath([]);
+
+    };
+
 
 
     const moveCircleForBoxBreathingVertically = useRef(new Animated.Value(0)).current;
@@ -461,10 +503,11 @@ export default function Activities() {
     return (
         <ScrollView
             style={[style.container, { backgroundColor: '#b71f57' }]}
-        contentContainerStyle={style.contentContainer}
-        keyboardShouldPersistTaps="handled"
-        indicatorStyle='white'
-    >
+            contentContainerStyle={style.contentContainer}
+            keyboardShouldPersistTaps="handled"
+            indicatorStyle='white'
+            scrollEnabled={view !== 'doCreativeActivity1' && view !== 'doCreativeActivity2'}
+        >
 
     {/* List All Activities */}
             {view === 'listAllActivities' && (
@@ -891,11 +934,60 @@ export default function Activities() {
                         <Text style={style.header}>Creative Activity 1</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
+                        <ScrollView style={[style.activitiesBodyView, { height: 50}]} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                Draw a flower using your favorite colors. Focus on the details and let your creativity flow.
+                                Draw your favorite animal using your favorite colors. Focus on the details and let your creativity flow.                            
                             </Text>
                         </ScrollView>
+
+                        <View style={style.svgContainer} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} onStartShouldSetResponder={() => true} onMoveShouldSetResponder={() => true}>
+                            <Svg style={{ flex: 1 }}>
+                                {paths.map((item, index) => (
+                                    <Path
+                                        key={`path-${index}`}
+                                        d={item.points.join(' ')}
+                                        stroke={item.color}
+                                        fill="transparent"
+                                        strokeWidth={3}
+                                        strokeLinejoin="round"
+                                        strokeLinecap="round"
+                                    />
+                                ))}
+
+                                <Path
+                                  d={currentPath.join(' ')}
+                                  stroke={colorOption}
+                                  fill="transparent"
+                                  strokeWidth={3}
+                                  strokeLinejoin='round'
+                                  strokeLinecap='round'
+
+                                
+                                />
+                                                             
+
+                            </Svg>
+
+                        </View>
+                        <View style={{flexDirection: "row", gap: 5}}>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "red" }]} onPress={() => changeColor("red")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "orange" }]} onPress={() => changeColor("orange")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "yellow" }]} onPress={() => changeColor("yellow")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "green" }]} onPress={() => changeColor("green")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "blue" }]} onPress={() => changeColor("blue")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "indigo" }]} onPress={() => changeColor("indigo")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "violet" }]} onPress={() => changeColor("violet")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "pink" }]} onPress={() => changeColor("pink")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "white" }]} onPress={() => changeColor("white")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "gray" }]} onPress={() => changeColor("gray")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "black" }]} onPress={() => changeColor("black")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "brown" }]} onPress={() => changeColor("brown")}/>
+                        </View>
+
+                        <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={handleClearButtonClick}>
+                            <Text style={style.buttonText}>Clear</Text>
+                        </Pressable>
+
                         <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doCreativeActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
@@ -910,11 +1002,60 @@ export default function Activities() {
                         <Text style={style.header}>Creative Activity 2</Text>
                     </View>
                     <View style={style.previewContainerView}>
-                        <ScrollView style={style.activitiesBodyView} indicatorStyle='white'>
+                        <ScrollView style={[style.activitiesBodyView, { height: 50}]} indicatorStyle='white'>
                             <Text style={{fontSize: 16, color: '#FFFFFF'}}>
-                                Draw your favorite animal using your favorite colors. Focus on the details and let your creativity flow.
+                                Draw a flower using your favorite colors. Focus on the details and let your creativity flow.
                             </Text>
                         </ScrollView>
+
+                        <View style={style.svgContainer} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} onStartShouldSetResponder={() => true} onMoveShouldSetResponder={() => true}>
+                            <Svg style={{ flex: 1 }}>
+                                {paths.map((item, index) => (
+                                    <Path
+                                        key={`path-${index}`}
+                                        d={item.points.join(' ')}
+                                        stroke={item.color}
+                                        fill="transparent"
+                                        strokeWidth={3}
+                                        strokeLinejoin="round"
+                                        strokeLinecap="round"
+                                    />
+                                ))}
+
+                                <Path
+                                  d={currentPath.join(' ')}
+                                  stroke={colorOption}
+                                  fill="transparent"
+                                  strokeWidth={3}
+                                  strokeLinejoin='round'
+                                  strokeLinecap='round'
+
+                                
+                                />
+                                                             
+
+                            </Svg>
+
+                        </View>
+                        <View style={{flexDirection: "row", gap: 5}}>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightcoral" }]} onPress={() => changeColor("lightcoral")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightsalmon" }]} onPress={() => changeColor("lightsalmon")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightyellow" }]} onPress={() => changeColor("lightyellow")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightgreen" }]} onPress={() => changeColor("lightgreen")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightblue" }]} onPress={() => changeColor("lightblue")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "slateblue" }]} onPress={() => changeColor("slateblue")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "plum" }]} onPress={() => changeColor("plum")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "lightpink" }]} onPress={() => changeColor("lightpink")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "white" }]} onPress={() => changeColor("white")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "gray" }]} onPress={() => changeColor("gray")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "black" }]} onPress={() => changeColor("black")}/>
+                            <Pressable style={[style.colorCircle, { backgroundColor: "tan" }]} onPress={() => changeColor("tan")}/>
+                        </View>
+
+                        <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={handleClearButtonClick}>
+                            <Text style={style.buttonText}>Clear</Text>
+                        </Pressable>
+
                         <View style={{alignItems: 'center', paddingBottom: 75}}>
                             <Pressable style={[style.button, { backgroundColor: '#099197' }]} onPress={() => setView('doCreativeActivity')}>
                                 <Text style={style.buttonText}>Back</Text>
