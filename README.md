@@ -21,7 +21,7 @@ Install Commands
 
 ```bash
 cd ~/Documents   # Example folder to clone the repository in
-git clone https://github.com/vPolyBear/capstone.git
+git clone https://github.com/vPolyBear/capstone.git capstone
 cd capstone
 ```
 
@@ -112,7 +112,7 @@ First install Expo Go from the App Store
 
 ```bash
 cd ~/Documents   # Example folder to clone the repository in
-git clone https://github.com/vPolyBear/capstone.git
+git clone https://github.com/vPolyBear/capstone.git capstone
 cd capstone
 cd mobile
 ```
