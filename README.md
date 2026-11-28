@@ -105,7 +105,6 @@ App Images: docs\img
 | Supabase key | n/a | see Configure | The AI Analysis requests would fail |
 
 
-
 ## 4. Install
 
 First install Expo Go from the App Store
@@ -200,9 +199,18 @@ capstone/
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| Supabase URL and ANON Key missing | Didn't input it in or can't find it | Copy the .env.example into the .env, Go to Supabase.com, create a project, go into the project, open the left hand bar, open `Project Settings` add in from `General` the `Project ID` to the `your-project` spot in the URL keep the rest the same, then go back to the Supabase page and instead on in General go to API Keys and copy the `Publishable Key` and insert it into the `your-anon-key` spot in the `ANON Key` |
+| Supabase URL and ANON Key missing | Didn't input it in or can't find it | Copy the .env.example into the .env, Go to Supabase.com, create a project, go into the project, open the left hand bar, open `Project Settings` and from `General` the `Project ID`, add it in to the `your-project` spot in the URL keep the rest the same, then go back to the Supabase page and instead on in General go to API Keys and copy the `Publishable Key` and insert it into the `your-anon-key` spot in the `ANON Key` |
 | Edge Function is missing or out of date | Didn't input it, update it, or deploy it | Go to `mobile\supabase\functions\sendAnalysis\index.ts` and copy the code in it, then go to Supabase.com, go into the project, then open the left hand bar, open `Edge Functions` and either deploy new function `Via Editor` or open existing one, copy and paste new copy or original code and hit deploy |
 | Expo Go isn't connecting | Phone isn't able to connect or not starting the app properly | Retry internet connection, click Try Again in Expo Go or Ctrl + C on the computer and restart it, and ensure the command `npx expo start --tunnel` is being used OR If this doesn't work use npx expo start --go --tunnel and ensure you click s so your in Expo Go not the development build and open the app by going to Expo Go then clicking on the development server after the app starts |
+
+
+### Extra Variable Documentation
+
+Google Gemini API Key
+Allows the sendAnalysis Edge Function to call Gemini
+Required = Yes (For AI Analysis)
+Go to Google AI Studio and create a free project then go to the left hand bar and open API Keys copy the API Key and then go to Supabase.con and go into you project then open the left hand bar click on Edge Functions then click on Secrets put in the Name field GOOGLE_API_KEY and in the Value field the Google AI Studio API Key
+Safe local value = Would be something like this GOOGLE_API_KEY=your-placeholder-key though the API Key doesn't go into the Expo/React Native app
 
 ## 10. License
 

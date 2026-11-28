@@ -10,8 +10,8 @@ Check Ins:
     - requirement FR-QUES-01 at commit d2329ef, 
 
 Journal:
-    - requirement FR-JOU-01 at commit d2329ef, d4308c5 (still implementing)
-        - requirement FR-JOU-02 no commits yet (not started yet)
+    - requirement FR-JOU-01 at commit d2329ef, d4308c5
+        - requirement FR-JOU-02 a877f2f
 
 AI Analysis:
     - requirements FR-AIA-01 & FR-AIA-04, NFR-PERF-01, NFR-PRIV-01, NFR-PRIV-02, NFR-SEC-01, NFR-AVA-01 at commit d2329ef, 50f3b67, d4308c5
@@ -20,7 +20,7 @@ Overview:
     - requirement FR-OVER-01 at 0763250
 
 Destressing Activites:
-    - requirement FR-ACT-01 at 0763250 (start commit)
+    - requirement FR-ACT-01 at 0763250, e8dd50c, 6166aa8, aa4b79c, 01198a1
 
 
 ## 2. Out of scope — what is NOT under test, and why
