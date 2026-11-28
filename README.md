@@ -68,7 +68,7 @@ Other project checks, run from `mobile/`:
 ./script/smoke-test     # Verifies SQLite database and sample data
 ```
 
-The smoke check reads the database from the running iOS app, verifies both migrations, and checks the development-seeded check-in. CI builds and launches a clean app in an iOS simulator before running it. To run it locally, start the app in an iOS simulator first. Since SQLite is embedded in the app, there is no separate database service to stop; for the failure check, rename the app's SQLite file in the simulator container and run `./script/smoke`. It must fail because the real database file is missing.
+The smoke check reads the database from the running iOS app, verifies both migrations, and checks the development-seeded check-in. CI builds and launches a clean app in an iOS simulator before running it. To run it locally, start the app in an iOS simulator first. Since SQLite is embedded in the app, there is no separate database service to stop; for the failure check, rename the app's SQLite file in the simulator container and run `./script/smoke-test`. It must fail because the real database file is missing.
 
 
 

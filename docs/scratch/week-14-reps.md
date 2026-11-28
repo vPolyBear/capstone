@@ -41,3 +41,12 @@ Every variable your code reads gets an entry, and every entry answers four quest
 Reflect: How many variables did you find that your code reads but the contract never listed? Each one would have been a silent failure for your successor. Write down the number.
 - 2, but only because one of them I put in the TEST_DATA_SET key in the README not in the .env.example (I also put the GOOGLE_API_KEY in the README because the key is only supposed to be filled in in Supabase) and then the other two fail (EXPO_PUBLIC_SUPABASE_ANON_KEY & EXPO_PUBLIC_SUPABASE_URL) for the first command but that is because they are supposed to because the example shouldn't have the actual keys in them as they have placeholder values in them and I don't want to export them unless necessary, though the second command confirmed that they are in the actual .env file as required.
 
+## Rep 5 — The amnesia test
+Prove the repository is self-contained. Run the preflight harness against a fresh clone:
+
+chmod +x code/preflight.sh
+./code/preflight.sh . "<your documented setup command>" "<your smoke test command>"
+Whatever it reports missing, fix — either commit the file or declare the prerequisite in README.md. Re-run until it passes, then record the total time.
+
+Reflect: What was not committed? There is almost always something. Say what it was, and how long your successor would have spent before figuring it out on their own.
+- 
