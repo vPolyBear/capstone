@@ -54,9 +54,9 @@ git clone --quiet "$SOURCE" "$WORKDIR/app"
 cd "$WORKDIR/app"
 echo "   HEAD: $(git rev-parse --short HEAD)   files: $(git ls-files | wc -l | tr -d ' ')"
 
-if [ -f .env.example ] && [ ! -f .env ]; then
-  echo "   note: copying .env.example -> .env (fill real values for a real run)"
-  cp .env.example .env
+if [ -f mobile/.env.example ] && [ ! -f mobile/.env ]; then
+    echo "   note: copying mobile/.env.example -> mobile/.env"
+    cp mobile/.env.example mobile/.env
 fi
 
 echo
